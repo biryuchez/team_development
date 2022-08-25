@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="here_what_we_find">Вот, что нам удалось найти:</string>
     <string name="enter_pills_item">Введите название препарата</string>
+    <string name="frequency">Как часто вы принимаете лекарство?</string>
+    <string name="once_per_day">Один раз в день</string>
+    <string name="twice_per_day">Два раза в день</string>
+    <string name="when_needed">По мере необходимости</string>
 </resources>
