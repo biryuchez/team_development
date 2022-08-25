@@ -1,5 +1,10 @@
 package pro.fateeva.pillsreminder.domain.entity.medicationevent
 
+/**
+ * Интерфейс и абстрактный класс, описывающие основные поля и функции события "Прием лекарства".
+ * Поля абстрактного класса приватные, доступ к ним снаружи через функции, названия которых
+ * повторяют имена полей.
+ */
 interface MedicationEventDomain {
 
     fun id(): Int

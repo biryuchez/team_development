@@ -1,5 +1,8 @@
 package pro.fateeva.pillsreminder.domain.entity.medicationevent
 
+/**
+ * Класс, отвечающий за событие "Одиночный прием лекарства"
+ */
 class SingleMedicationEvent(
     ID: Int,
     drugName: String,

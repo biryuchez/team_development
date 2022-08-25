@@ -1,5 +1,8 @@
 package pro.fateeva.pillsreminder.domain.entity.medicationevent
 
+/**
+ * Класс, отвечающий за событие "Повторяющийся прием лекарства"
+ */
 class RepeatingMedicationEvent(
     ID: Int,
     pillName: String,
