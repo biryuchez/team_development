@@ -27,7 +27,8 @@ interface NotificationEvent {
 
         @SuppressLint("UnspecifiedImmutableFlag")
         protected val pendingEventIntent: PendingIntent =
-            PendingIntent.getBroadcast(context,
+            PendingIntent.getBroadcast(
+                context,
                 medicationEvent.id(),
                 eventIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
