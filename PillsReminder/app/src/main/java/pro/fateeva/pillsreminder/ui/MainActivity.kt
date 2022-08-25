@@ -1,7 +1,8 @@
-package pro.fateeva.pillsreminder
+package pro.fateeva.pillsreminder.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import pro.fateeva.pillsreminder.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
