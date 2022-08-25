@@ -8,6 +8,9 @@ import android.content.Intent
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 
+/**
+ * Классы, отвечающие за формирование системного события о напоминании приема лекарства
+ */
 interface NotificationEvent {
     fun setEvent()
 
@@ -55,6 +58,9 @@ interface NotificationEvent {
         override fun setEvent() {
             TODO("Not yet implemented")
             // тут будет реализовано повторяющееся напоминание
+            // сейчас не реализовано, т.к. повторяющиеся события надо программно отменять,
+            // иначе они будут повторяться, пока устройство не будет перезагружено.
+            // реализуем, когда появится интерфейс
         }
     }
 }

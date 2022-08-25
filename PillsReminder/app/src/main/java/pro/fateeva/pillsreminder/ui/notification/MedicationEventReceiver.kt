@@ -17,6 +17,14 @@ import pro.fateeva.pillsreminder.ui.MainActivity
 private const val DEFAULT_REQUEST_CODE = -1
 private const val CHANNEL_ID = "Medication_channel"
 
+/**
+ * Ресивер интентов от AlarmManager.
+ * Когда AlarmManager сообщает, что настало время события "Прием лекарства", ресивер
+ * посылает уведомление.
+ * Если в момент клика на уведомление приложение на экране - выполнится заданное в MainActivity
+ * действие. Если приложение свернуто либо выгружено из памяти - по клику на уведомление запустится
+ * приложение и выполнится заданное в MainActivity действие.
+ */
 class MedicationEventReceiver : BroadcastReceiver() {
 
     companion object {
