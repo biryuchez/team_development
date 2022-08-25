@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">PillsReminder</string>
-    <string name="its_time_to_medicine">Пора принять лекарство</string>
+    <string name="its_time_to_medication">Пора принять лекарство</string>
 </resources>

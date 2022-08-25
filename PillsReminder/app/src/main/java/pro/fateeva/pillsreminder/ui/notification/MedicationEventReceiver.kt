@@ -15,9 +15,9 @@ class MedicationEventReceiver : BroadcastReceiver() {
 
     override fun onReceive(p0: Context?, p1: Intent?) {
         Toast.makeText(p0,
-            "${p1?.extras?.getString(EXTRA_KEY_NOTIFICATION_TITLE)}:" +
+            "${p1?.extras?.getString(EXTRA_KEY_NOTIFICATION_TITLE)}: " +
                     "${p1?.extras?.getString(EXTRA_KEY_NOTIFICATION_MESSAGE)}" +
-                    " // REQ_CODE: ${p1?.extras?.getString(EXTRA_KEY_NOTIFICATION_REQUEST_CODE)}",
+                    " // REQ_CODE: ${p1?.extras?.getInt(EXTRA_KEY_NOTIFICATION_REQUEST_CODE)}",
             Toast.LENGTH_SHORT).show()
     }
 }

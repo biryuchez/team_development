@@ -18,7 +18,7 @@ interface NotificationEvent {
     ) : NotificationEvent {
         private val eventIntent = Intent(context, MedicationEventReceiver::class.java).apply {
             putExtra(MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_TITLE,
-                context.getString(R.string.its_time_to_medicine))
+                context.getString(R.string.its_time_to_medication))
             putExtra(MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_MESSAGE,
                 medicationEvent.drugName())
             putExtra(MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_REQUEST_CODE,
