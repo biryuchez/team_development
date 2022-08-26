@@ -9,14 +9,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="15dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Аспирин"
             android:textColor="#303030"
@@ -30,10 +31,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="15dp"
-            android:text="НПВС. Оказывает противовоспалительное..."
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="НПВС. Оказывает противовоспалительное, анальгезирующее и жаропонижающее действие, а также угнетает агрегацию тромбоцитов. Механизм действия связан с угнетением активности ЦОГ - основного фермента метаболизма арахидоновой кислоты, являющейся предшественником простагландинов, которые играют главную роль в патогенезе воспаления, боли и лихорадки. Снижение содержания простагландинов (преимущественно Е1) в центре терморегуляции приводит к снижению температуры тела вследствие расширения сосудов кожи и возрастания потоотделения. Анальгезирующий эффект обусловлен как центральным, так и периферическим действием. Уменьшает агрегацию, адгезию тромбоцитов и тромбообразование за счет подавления синтеза тромбоксана А2 в тромбоцитах."
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/title_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

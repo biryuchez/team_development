@@ -9,12 +9,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
 
         <ImageView
             android:id="@+id/pill_icon_image_view"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="15dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/pill_icon"
@@ -25,7 +26,6 @@
             android:id="@+id/title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:layout_marginStart="15dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Аспирин"
@@ -36,13 +36,13 @@
 
         <TextView
             android:id="@+id/schedule_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
             android:text="Ежедневно - 8:00"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/pill_icon_image_view"
+            app:layout_constraintStart_toStartOf="@id/title_text_view"
             app:layout_constraintTop_toBottomOf="@+id/title_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

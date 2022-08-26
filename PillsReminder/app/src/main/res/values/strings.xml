@@ -8,4 +8,9 @@
     <string name="once_per_day">Один раз в день</string>
     <string name="twice_per_day">Два раза в день</string>
     <string name="when_needed">По мере необходимости</string>
+    <string name="planning">Планирование</string>
+    <string name="frequency_once_per_day">Частота - один раз в день</string>
+    <string name="hour">Час</string>
+    <string name="dose">Дозировка</string>
+    <string name="plan">Запланировать</string>
 </resources>
