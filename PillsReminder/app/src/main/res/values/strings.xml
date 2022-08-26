@@ -13,4 +13,6 @@
     <string name="hour">Час</string>
     <string name="dose">Дозировка</string>
     <string name="plan">Запланировать</string>
+    <string name="first_dose">Первая доза</string>
+    <string name="second_dose">Вторая доза</string>
 </resources>
