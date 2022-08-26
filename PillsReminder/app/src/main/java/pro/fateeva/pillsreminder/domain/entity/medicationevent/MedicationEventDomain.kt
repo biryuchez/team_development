@@ -32,5 +32,41 @@ interface MedicationEventDomain {
         override fun medicationPeriod() = medicationPeriod
         override fun medicationInterval() = medicationInterval
     }
+
+    /**
+     * Класс, отвечающий за событие "Одиночный прием лекарства"
+     */
+    class Single(
+        ID: Int,
+        drugName: String,
+        dosage: String,
+        firstMedicationTime: Long,
+        isRepeatingEvent: Boolean = false,
+    ) : BaseMedicationEvent(
+        ID,
+        drugName,
+        dosage,
+        isRepeatingEvent,
+        firstMedicationTime)
+
+    /**
+     * Класс, отвечающий за событие "Повторяющийся прием лекарства"
+     */
+    class Repeating(
+        ID: Int,
+        pillName: String,
+        dosage: String,
+        firstMedicationTime: Long,
+        medicationPeriod: Long,
+        medicationInterval: Long,
+        isRepeatingEvent: Boolean = true,
+    ) : BaseMedicationEvent(
+        ID,
+        pillName,
+        dosage,
+        isRepeatingEvent,
+        firstMedicationTime,
+        medicationPeriod,
+        medicationInterval)
 }
 

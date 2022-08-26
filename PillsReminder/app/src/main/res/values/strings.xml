@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PillsReminder</string>
+    <string name="its_time_to_medication">Пора принять лекарство</string>
+    <string name="notification_title_error">Ошибка получения заголовка уведомления</string>
+    <string name="drug_name_error">Ошибка получения название лекарства</string>
+    <string name="intent_error">Intent error</string>
 </resources>
