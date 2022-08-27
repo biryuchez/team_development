@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TwicePerDaySettingsFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -12,15 +11,15 @@
         android:layout_width="0dp"
         android:layout_height="120dp"
         app:cardBackgroundColor="#F0F0F0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp">
 
             <ImageView
@@ -37,25 +36,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Аспирин"
-                android:textColor="#303030"
+                android:textColor="@color/header_dark_grey"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/pill_icon_image_view"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Аспирин" />
 
             <TextView
                 android:id="@+id/schedule_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
-                android:text="Индивидуальный. Разовая доза - от 250 мг до 1 г, суточная - от 250 мг до 3 г; кратность применения - 2-6 раз/сут."
-                android:textSize="16sp"
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/roboto"
                 android:maxLines="2"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/title_text_view"
                 app:layout_constraintTop_toBottomOf="@+id/title_text_view"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                tools:text="Индивидуальный. Разовая доза - от 250 мг до 1 г, суточная - от 250 мг до 3 г; кратность применения - 2-6 раз/сут." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,167 +62,145 @@
 
     <TextView
         android:id="@+id/planning_text_view"
+        style="@style/HeaderStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pill_card_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginStart="15dp"
-        android:textColor="#303030"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
-        android:text="@string/planning"/>
+        android:text="@string/planning"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pill_card_view" />
 
     <TextView
         android:id="@+id/frequency_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planning_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/twice_per_day"
         android:textSize="16sp"
-        android:text="@string/twice_per_day"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/planning_text_view" />
 
     <TextView
         android:id="@+id/first_dose_title_text_view"
+        style="@style/HeaderStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frequency_text_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginStart="15dp"
-        android:textColor="#303030"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
-        android:text="@string/first_dose"/>
+        android:text="@string/first_dose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frequency_text_view" />
 
     <TextView
         android:id="@+id/first_hour_text_view"
+        style="@style/SettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/first_dose_title_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
-        android:textSize="24sp"
-        android:textColor="#303030"
-        android:text="@string/hour"/>
+        android:text="@string/hour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_dose_title_text_view" />
 
     <EditText
         android:id="@+id/first_time_picker_text_view"
+        style="@style/PickerSettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/first_hour_text_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginEnd="15dp"
-        android:textSize="24sp"
         android:enabled="false"
-        android:textColor="#303030"
-        android:text="08:00"/>
+        android:hint="08:00"
+        app:layout_constraintBaseline_toBaselineOf="@id/first_hour_text_view"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/first_dose_text_view"
+        style="@style/SettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/first_hour_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
-        android:textColor="#303030"
-        android:text="@string/dose"/>
+        android:text="@string/dose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_hour_text_view" />
 
     <EditText
         android:id="@+id/first_dose_picker_text_view"
+        style="@style/PickerSettingStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/first_time_picker_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/first_dose_text_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginEnd="15dp"
-        android:textSize="24sp"
         android:enabled="false"
-        android:textColor="#303030"
-        android:text="2"/>
+        android:hint="@string/dose_hint"
+        app:layout_constraintBaseline_toBaselineOf="@id/first_dose_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/first_time_picker_text_view" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/plan_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="20dp"
-        android:text="@string/plan"/>
+        android:text="@string/plan"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/second_dose_title_text_view"
+        style="@style/HeaderStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/first_dose_text_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginStart="15dp"
-        android:textColor="#303030"
         android:layout_marginTop="60dp"
-        android:textSize="24sp"
-        android:text="@string/second_dose"/>
+        android:text="@string/second_dose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_dose_text_view" />
 
     <TextView
         android:id="@+id/second_hour_text_view"
+        style="@style/SettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/second_dose_title_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
-        android:textSize="24sp"
-        android:textColor="#303030"
-        android:text="@string/hour"/>
+        android:text="@string/hour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_dose_title_text_view" />
 
     <EditText
         android:id="@+id/second_time_picker_text_view"
+        style="@style/PickerSettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/second_hour_text_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginEnd="15dp"
-        android:textSize="24sp"
         android:enabled="false"
-        android:textColor="#303030"
-        android:text="20:00"/>
+        app:layout_constraintBaseline_toBaselineOf="@id/second_hour_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:hint="20:00" />
 
     <TextView
         android:id="@+id/second_dose_text_view"
+        style="@style/SettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/second_hour_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
-        android:textColor="#303030"
-        android:text="@string/dose"/>
+        android:text="@string/dose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_hour_text_view" />
 
     <EditText
         android:id="@+id/second_dose_picker_text_view"
+        style="@style/PickerSettingStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/second_time_picker_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/second_dose_text_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginEnd="15dp"
-        android:textSize="24sp"
         android:enabled="false"
-        android:textColor="#303030"
-        android:text="2"/>
+        android:hint="@string/dose_hint"
+        app:layout_constraintBaseline_toBaselineOf="@id/second_dose_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/second_time_picker_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

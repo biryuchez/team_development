@@ -15,4 +15,5 @@
     <string name="plan">Запланировать</string>
     <string name="first_dose">Первая доза</string>
     <string name="second_dose">Вторая доза</string>
+    <string name="dose_hint">2</string>
 </resources>

@@ -11,7 +11,7 @@
         android:id="@+id/pill_card_view"
         android:layout_width="0dp"
         android:layout_height="120dp"
-        app:cardBackgroundColor="#F0F0F0"
+        app:cardBackgroundColor="@color/cards_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -37,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Аспирин"
-                android:textColor="#303030"
+                tools:text="Аспирин"
+                android:textColor="@color/header_dark_grey"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/pill_icon_image_view"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:text="Индивидуальный. Разовая доза - от 250 мг до 1 г, суточная - от 250 мг до 3 г; кратность применения - 2-6 раз/сут."
+                tools:text="Индивидуальный. Разовая доза - от 250 мг до 1 г, суточная - от 250 мг до 3 г; кратность применения - 2-6 раз/сут."
                 android:textSize="16sp"
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
@@ -67,11 +67,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pill_card_view"
-        android:fontFamily="@font/roboto_medium"
         android:layout_marginStart="15dp"
-        android:textColor="#303030"
+        style="@style/HeaderStyle"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
         android:text="@string/planning"/>
 
     <TextView
@@ -92,11 +90,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/frequency_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
+        style="@style/SettingStyle"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
-        android:textColor="#303030"
         android:text="@string/hour"/>
 
     <EditText
@@ -104,13 +100,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/hour_text_view"
-        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintBaseline_toBaselineOf="@id/hour_text_view"
         android:layout_marginEnd="15dp"
-        android:textSize="24sp"
+        style="@style/PickerSettingStyle"
         android:enabled="false"
-        android:textColor="#303030"
-        android:text="08:00"/>
+        android:hint="08:00"/>
 
     <TextView
         android:id="@+id/dose_text_view"
@@ -118,11 +112,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hour_text_view"
-        android:fontFamily="@font/roboto"
         android:layout_marginStart="15dp"
+        style="@style/SettingStyle"
         android:layout_marginTop="40dp"
-        android:textSize="24sp"
-        android:textColor="#303030"
         android:text="@string/dose"/>
 
     <EditText
@@ -131,13 +123,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/time_picker_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dose_text_view"
-        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintBaseline_toBaselineOf="@id/dose_text_view"
         android:layout_marginEnd="15dp"
-        android:textSize="24sp"
+        style="@style/PickerSettingStyle"
         android:enabled="false"
-        android:textColor="#303030"
-        android:text="2"/>
+        android:hint="@string/dose_hint"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/plan_button"
