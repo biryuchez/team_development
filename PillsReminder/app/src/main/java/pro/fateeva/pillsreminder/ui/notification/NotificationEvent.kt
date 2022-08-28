@@ -34,7 +34,7 @@ interface NotificationEvent {
                 context,
                 medicationEvent.id(),
                 eventIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     class Single(

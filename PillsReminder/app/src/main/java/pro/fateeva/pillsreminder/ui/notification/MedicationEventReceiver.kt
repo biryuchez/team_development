@@ -46,7 +46,7 @@ class MedicationEventReceiver : BroadcastReceiver() {
                 context,
                 requestCode,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
