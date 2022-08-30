@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchPillFragment"
-    android:padding="10dp">
+    android:padding="@dimen/main_layout_padding">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
         android:hint="@string/enter_pills_item"
         app:boxBackgroundColor="#F0F0F0"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +29,6 @@
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/here_what_we_find"
