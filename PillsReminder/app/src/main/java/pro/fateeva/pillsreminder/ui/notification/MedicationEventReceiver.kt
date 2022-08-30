@@ -28,9 +28,9 @@ private const val CHANNEL_ID = "Medication_channel"
 class MedicationEventReceiver : BroadcastReceiver() {
 
     companion object {
-        const val EXTRA_KEY_NOTIFICATION_TITLE = "NOTIFICATION_TITLE"
-        const val EXTRA_KEY_NOTIFICATION_MESSAGE = "NOTIFICATION_MESSAGE"
-        const val EXTRA_KEY_NOTIFICATION_REQUEST_CODE = "NOTIFICATION_REQUEST_CODE"
+        const val NOTIFICATION_TITLE_EXTRA_KEY = "NOTIFICATION_TITLE"
+        const val NOTIFICATION_MESSAGE_EXTRA_KEY = "NOTIFICATION_MESSAGE"
+        const val NOTIFICATION_REQUEST_CODE_EXTRA_KEY = "NOTIFICATION_REQUEST_CODE"
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
@@ -38,14 +38,22 @@ class MedicationEventReceiver : BroadcastReceiver() {
         context: Context,
         title: String?,
         message: String?,
-        intent: Intent?,
+        onSuccessIntent: Intent?,
+        onCancelIntent: Intent?,
         requestCode: Int,
     ) {
-        val pendingIntent =
+        val onSuccessPendingIntent =
             PendingIntent.getActivity(
                 context,
                 requestCode,
-                intent,
+                onSuccessIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val onCancelPendingIntent =
+            PendingIntent.getActivity(
+                context,
+                -requestCode,
+                onCancelIntent,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder: NotificationCompat.Builder =
@@ -53,9 +61,11 @@ class MedicationEventReceiver : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setAutoCancel(true)
+                .setOngoing(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
-                .setContentIntent(pendingIntent)
+                .addAction(R.drawable.ic_accept_medication, "ПРИНЯТЬ", onSuccessPendingIntent)
+                .addAction(R.drawable.ic_cancel_medication, "ОТМЕНИТЬ", onCancelPendingIntent)
+                .setAutoCancel(true)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -70,19 +80,29 @@ class MedicationEventReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         val notificationTitle =
-            (intent?.extras?.getString(EXTRA_KEY_NOTIFICATION_TITLE))
+            (intent?.extras?.getString(NOTIFICATION_TITLE_EXTRA_KEY))
                 ?: context.getString(R.string.notification_title_error)
 
-        val drugName = (intent?.extras?.getString(EXTRA_KEY_NOTIFICATION_MESSAGE))
+        val drugName = (intent?.extras?.getString(NOTIFICATION_MESSAGE_EXTRA_KEY))
             ?: context.getString(R.string.drug_name_error)
 
         val requestCode =
-            (intent?.extras?.getInt(EXTRA_KEY_NOTIFICATION_REQUEST_CODE)) ?: DEFAULT_REQUEST_CODE
+            (intent?.extras?.getInt(NOTIFICATION_REQUEST_CODE_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
 
-        val activityIntent = Intent(context, MainActivity::class.java).apply {
+        val onSuccessIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            addCategory(MainActivity.EVENT_INTENT_CATEGORY)
+            addCategory(MainActivity.MEDICATION_EVENT_INTENT_CATEGORY)
+            putExtra(MainActivity.GET_DRUG_ACTION_EXTRA_KEY, "Пользователь подтвердил прием лекарства")
+            putExtra(MainActivity.NOTIFICATION_ID_EXTRA_KEY, requestCode)
+        }
+
+        val onCancelIntent = Intent(context, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            addCategory(MainActivity.MEDICATION_EVENT_INTENT_CATEGORY)
+            putExtra(MainActivity.CANCEL_DRUG_ACTION_EXTRA_KEY, "Пользователь отменил прием лекарства")
+            putExtra(MainActivity.NOTIFICATION_ID_EXTRA_KEY, requestCode)
         }
 
         if (intent != null) {
@@ -90,7 +110,8 @@ class MedicationEventReceiver : BroadcastReceiver() {
                 context,
                 notificationTitle,
                 drugName,
-                activityIntent,
+                onSuccessIntent,
+                onCancelIntent,
                 requestCode)
         } else {
             Toast.makeText(context,
@@ -99,9 +120,9 @@ class MedicationEventReceiver : BroadcastReceiver() {
         }
 
         Toast.makeText(context,
-            "${intent?.extras?.getString(EXTRA_KEY_NOTIFICATION_TITLE)}: " +
-                    "${intent?.extras?.getString(EXTRA_KEY_NOTIFICATION_MESSAGE)}" +
-                    " // REQ_CODE: ${intent?.extras?.getInt(EXTRA_KEY_NOTIFICATION_REQUEST_CODE)}",
+            "${intent?.extras?.getString(NOTIFICATION_TITLE_EXTRA_KEY)}: " +
+                    "${intent?.extras?.getString(NOTIFICATION_MESSAGE_EXTRA_KEY)}" +
+                    " // REQ_CODE: ${intent?.extras?.getInt(NOTIFICATION_REQUEST_CODE_EXTRA_KEY)}",
             Toast.LENGTH_SHORT).show()
     }
 }

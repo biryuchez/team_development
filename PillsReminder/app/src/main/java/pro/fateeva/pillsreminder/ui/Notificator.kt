@@ -9,5 +9,5 @@ import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDo
 interface Notificator {
     val manager: AlarmManager
     fun setNotification(medicineEvent: MedicationEventDomain)
-    fun onNotificationClick()
+    fun onNotificationClick(notificationId: Int, message: String)
 }
