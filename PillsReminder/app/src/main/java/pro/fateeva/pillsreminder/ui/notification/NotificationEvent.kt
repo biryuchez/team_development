@@ -20,11 +20,11 @@ interface NotificationEvent {
         context: Context,
     ) : NotificationEvent {
         private val eventIntent = Intent(context, MedicationEventReceiver::class.java).apply {
-            putExtra(MedicationEventReceiver.NOTIFICATION_TITLE_EXTRA_KEY,
+            putExtra(MedicationNotifier.NOTIFICATION_TITLE_EXTRA_KEY,
                 context.getString(R.string.its_time_to_medication))
-            putExtra(MedicationEventReceiver.NOTIFICATION_MESSAGE_EXTRA_KEY,
+            putExtra(MedicationNotifier.NOTIFICATION_MESSAGE_EXTRA_KEY,
                 medicationEvent.drugName())
-            putExtra(MedicationEventReceiver.NOTIFICATION_REQUEST_CODE_EXTRA_KEY,
+            putExtra(MedicationNotifier.NOTIFICATION_REQUEST_CODE_EXTRA_KEY,
                 medicationEvent.id())
         }
 

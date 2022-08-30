@@ -4,4 +4,6 @@
     <string name="notification_title_error">Ошибка получения заголовка уведомления</string>
     <string name="drug_name_error">Ошибка получения название лекарства</string>
     <string name="intent_error">Intent error</string>
+    <string name="get_drug_notification_button">ПРИНЯТЬ</string>
+    <string name="cancel_drug_notification_button">ОТМЕНИТЬ</string>
 </resources>
