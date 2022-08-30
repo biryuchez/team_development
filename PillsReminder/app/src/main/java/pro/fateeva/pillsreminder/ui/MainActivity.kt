@@ -10,10 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
-import pro.fateeva.pillsreminder.ui.notification.medicationevents.EventFactory
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
-import pro.fateeva.pillsreminder.ui.notification.medicationevents.NotificationEvent
-import pro.fateeva.pillsreminder.ui.notification.medicationevents.NotificationEventFactory
+import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEvent
+import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEventFactory
 
 class MainActivity : AppCompatActivity(), NotificationHandler {
 
@@ -46,13 +45,13 @@ class MainActivity : AppCompatActivity(), NotificationHandler {
     }
 
     override fun setNotification(medicineEvent: MedicationEventDomain) {
-        val notificationEvent: NotificationEvent = NotificationEventFactory()
+        val medicationEvent: NotificationEvent = NotificationEventFactory()
             .generateNotificationEvent(
                 medicationEvent = medicineEvent,
                 eventReminder = alarmManager,
                 context = applicationContext)
 
-        notificationEvent.setEvent()
+        medicationEvent.setEvent()
     }
 
     override fun onGetDrugAction(message: String) {

@@ -1,6 +1,5 @@
-package pro.fateeva.pillsreminder.ui.notification.medicationevents
+package pro.fateeva.pillsreminder.ui.notification.notificationevents
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -10,9 +9,9 @@ import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDo
 import pro.fateeva.pillsreminder.ui.notification.MedicationEventReceiver
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotifier
 
-abstract class BasicNotificationEvent(
+abstract class NotificationEventBasic(
     protected val medicationEvent: MedicationEventDomain,
-    protected val eventReminder: AlarmManager,
+    protected val systemAlarmManager: AlarmManager,
     context: Context,
 ) : NotificationEvent {
     private val eventIntent = Intent(context, MedicationEventReceiver::class.java).apply {
@@ -24,7 +23,6 @@ abstract class BasicNotificationEvent(
             medicationEvent.id())
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     protected val pendingEventIntent: PendingIntent =
         PendingIntent.getBroadcast(
             context,

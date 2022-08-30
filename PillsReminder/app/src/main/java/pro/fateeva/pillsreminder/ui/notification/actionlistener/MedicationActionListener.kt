@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import pro.fateeva.pillsreminder.ui.NotificationHandler
 
+/**
+ * Класс, отвечающий за перехват нажатий на кнопки в уведомлении.
+ */
 class MedicationActionListener : NotificationActionListener {
 
     companion object {

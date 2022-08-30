@@ -1,16 +1,16 @@
-package pro.fateeva.pillsreminder.ui.notification.medicationevents
+package pro.fateeva.pillsreminder.ui.notification.notificationevents
 
 import android.app.AlarmManager
 import android.content.Context
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 
-class SingleMedicationEvent(
+class NotificationEventSingle(
     medicationEvent: MedicationEventDomain,
-    eventReminder: AlarmManager,
+    systemAlarmManager: AlarmManager,
     context: Context,
-) : BasicNotificationEvent(medicationEvent, eventReminder, context) {
+) : NotificationEventBasic(medicationEvent, systemAlarmManager, context) {
     override fun setEvent() {
-        eventReminder.setExact(
+        systemAlarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
             medicationEvent.firstMedicationTime(),
             pendingEventIntent)
