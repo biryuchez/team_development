@@ -12,16 +12,11 @@ import android.widget.Toast
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.EventFactory
+import pro.fateeva.pillsreminder.ui.notification.MedicationActionListener
+import pro.fateeva.pillsreminder.ui.notification.NotificationActionListener
 import pro.fateeva.pillsreminder.ui.notification.NotificationEvent
 
 class MainActivity : AppCompatActivity(), Notificator {
-
-    companion object {
-        const val MEDICATION_EVENT_INTENT_CATEGORY = "MEDICATION_EVENT_INTENT_CATEGORY"
-        const val GET_DRUG_ACTION_EXTRA_KEY = "GET_DRUG_ACTION"
-        const val CANCEL_DRUG_ACTION_EXTRA_KEY = "CANCEL_DRUG_ACTION_EXTRA_KEY"
-        const val NOTIFICATION_ID_EXTRA_KEY = "NOTIFICATION_ID"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,55 +29,49 @@ class MainActivity : AppCompatActivity(), Notificator {
                 ID = 100,
                 drugName = findViewById<EditText>(R.id.edit_text).text.toString(),
                 dosage = "Одна таблетка",
-                firstMedicationTime = System.currentTimeMillis() + 2000
+                firstMedicationTime = System.currentTimeMillis() + 1000
             )
 
             // фейковое событие "Одноразовый прием лекарства" для теста работоспособности AlarmManager.
-            // Выводит напоминание о приеме лекарства спустя 2 секунды после клика по кнопке
+            // Выводит напоминание о приеме лекарства через секунду после клика по кнопке
             setNotification(fakeMedicineEvent)
         }
     }
 
-    override val manager: AlarmManager by lazy {
+    override val alarmManager: AlarmManager by lazy {
         getSystemService(ALARM_SERVICE) as AlarmManager
+    }
+
+    override val actionListener: NotificationActionListener by lazy {
+        MedicationActionListener()
     }
 
     override fun setNotification(medicineEvent: MedicationEventDomain) {
         val notificationEvent: NotificationEvent = EventFactory.NotificationEventFactory()
             .generateNotificationEvent(
                 medicationEvent = medicineEvent,
-                eventReminder = manager,
+                eventReminder = alarmManager,
                 context = applicationContext)
 
         notificationEvent.setEvent()
     }
 
-    // В этом методе можно выполнять действие по клику на пришедшее уведомление
-    override fun onNotificationClick(notificationId: Int, message: String) {
-        val notificationManager =
-            this@MainActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(100)
+    override fun onGetDrugAction(message: String) {
         Toast.makeText(
-            applicationContext,
+            this@MainActivity,
             message,
             Toast.LENGTH_SHORT).show()
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onCancelDrugAction(message: String) {
+        Toast.makeText(
+            this@MainActivity,
+            message,
+            Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        val extras = intent?.extras
-        intent?.categories?.let {
-            if (intent.categories.contains(MEDICATION_EVENT_INTENT_CATEGORY))
-                if (extras != null) {
-                    if (extras.containsKey(GET_DRUG_ACTION_EXTRA_KEY)) {
-                        onNotificationClick(extras.getInt(NOTIFICATION_ID_EXTRA_KEY),
-                            extras.getString(GET_DRUG_ACTION_EXTRA_KEY).toString())
-                    }
-                    if (extras.containsKey(CANCEL_DRUG_ACTION_EXTRA_KEY)) {
-                        onNotificationClick(extras.getInt(NOTIFICATION_ID_EXTRA_KEY),
-                            extras.getString(CANCEL_DRUG_ACTION_EXTRA_KEY).toString())
-                    }
-                }
-        }
+        actionListener.onNotificationAction(this, applicationContext, intent)
     }
 }

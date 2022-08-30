@@ -39,19 +39,19 @@ class MedicationNotifier : MedicationNotification {
         val onGetDrugIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            addCategory(MainActivity.MEDICATION_EVENT_INTENT_CATEGORY)
-            putExtra(MainActivity.GET_DRUG_ACTION_EXTRA_KEY,
+            addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
+            putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
                 "(ТЕСТ) Пользователь подтвердил прием лекарства")
-            putExtra(MainActivity.NOTIFICATION_ID_EXTRA_KEY, requestCode)
+            putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY, requestCode)
         }
 
         val onCancelDrugIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            addCategory(MainActivity.MEDICATION_EVENT_INTENT_CATEGORY)
-            putExtra(MainActivity.CANCEL_DRUG_ACTION_EXTRA_KEY,
+            addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
+            putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
                 "(ТЕСТ) Пользователь отменил прием лекарства")
-            putExtra(MainActivity.NOTIFICATION_ID_EXTRA_KEY, requestCode)
+            putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY, requestCode)
         }
 
         val onSuccessPendingIntent =
