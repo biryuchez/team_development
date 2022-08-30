@@ -12,7 +12,7 @@ import pro.fateeva.pillsreminder.ui.MainActivity
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 
 private const val DEFAULT_REQUEST_CODE = -1
-private const val CHANNEL_ID = "Medication_channel"
+private const val CHANNEL_ID = "Прием лекарств"
 
 class MedicationNotifier : MedicationNotification {
 
@@ -37,37 +37,27 @@ class MedicationNotifier : MedicationNotification {
         val requestCode =
             (intent.extras?.getInt(NOTIFICATION_REQUEST_CODE_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
 
-        val onGetDrugIntent = Intent(context, MainActivity::class.java).apply {
+        val onActionIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
-            putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
-                "(ТЕСТ) Пользователь подтвердил прием лекарства")
             putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY, requestCode)
         }
 
-        val onCancelDrugIntent = Intent(context, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
-            putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
-                "(ТЕСТ) Пользователь отменил прием лекарства")
-            putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY,
-                requestCode)
-        }
-
-        val onSuccessPendingIntent =
+        val onGetDrugPendingIntent =
             PendingIntent.getActivity(
                 context,
                 requestCode,
-                onGetDrugIntent,
+                onActionIntent.putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
+                    "(ТЕСТ) Пользователь подтвердил прием лекарства"),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val onCancelPendingIntent =
+        val onCancelDrugPendingIntent =
             PendingIntent.getActivity(
                 context,
-                -requestCode,
-                onCancelDrugIntent,
+                -requestCode, // requestCode со знаком "-", чтобы в системе могло быть 2 уникальных PendingIntent
+                onActionIntent.putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
+                    "(ТЕСТ) Пользователь отменил прием лекарства"),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder: NotificationCompat.Builder =
@@ -81,10 +71,10 @@ class MedicationNotifier : MedicationNotification {
                     .addLine(context.getString(R.string.notification_dosage_title, dosage)))
                 .addAction(R.drawable.ic_accept_medication,
                     context.getString(R.string.get_drug_notification_button),
-                    onSuccessPendingIntent)
+                    onGetDrugPendingIntent)
                 .addAction(R.drawable.ic_cancel_medication,
                     context.getString(R.string.cancel_drug_notification_button),
-                    onCancelPendingIntent)
+                    onCancelDrugPendingIntent)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
