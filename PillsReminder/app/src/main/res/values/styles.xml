@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HeaderStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/header_dark_grey</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="SettingStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/header_dark_grey</item>
+        <item name="fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="PickerSettingStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+</resources>
