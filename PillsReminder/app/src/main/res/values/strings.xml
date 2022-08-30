@@ -6,4 +6,7 @@
     <string name="intent_error">Intent error</string>
     <string name="get_drug_notification_button">ПРИНЯТЬ</string>
     <string name="cancel_drug_notification_button">ОТМЕНИТЬ</string>
+    <string name="dosage_error">Ошибка получения дозировки</string>
+    <string name="notification_drug_name_title">лекарство: %1$s</string>
+    <string name="notification_dosage_title">дозировка: %1$s</string>
 </resources>

@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import pro.fateeva.pillsreminder.R
@@ -19,7 +18,8 @@ class MedicationNotifier : MedicationNotification {
 
     companion object {
         const val NOTIFICATION_TITLE_EXTRA_KEY = "NOTIFICATION_TITLE"
-        const val NOTIFICATION_MESSAGE_EXTRA_KEY = "NOTIFICATION_MESSAGE"
+        const val NOTIFICATION_DRUG_NAME_EXTRA_KEY = "NOTIFICATION_DRUG_NAME"
+        const val NOTIFICATION_DOSAGE_EXTRA_KEY = "NOTIFICATION_DOSAGE"
         const val NOTIFICATION_REQUEST_CODE_EXTRA_KEY = "NOTIFICATION_REQUEST_CODE"
     }
 
@@ -28,8 +28,11 @@ class MedicationNotifier : MedicationNotification {
             (intent.extras?.getString(NOTIFICATION_TITLE_EXTRA_KEY))
                 ?: context.getString(R.string.notification_title_error)
 
-        val drugName = (intent.extras?.getString(NOTIFICATION_MESSAGE_EXTRA_KEY))
+        val drugName = (intent.extras?.getString(NOTIFICATION_DRUG_NAME_EXTRA_KEY))
             ?: context.getString(R.string.drug_name_error)
+
+        val dosage = (intent.extras?.getString(NOTIFICATION_DOSAGE_EXTRA_KEY))
+            ?: context.getString(R.string.dosage_error)
 
         val requestCode =
             (intent.extras?.getInt(NOTIFICATION_REQUEST_CODE_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
@@ -71,10 +74,11 @@ class MedicationNotifier : MedicationNotification {
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentTitle(notificationTitle)
-                .setContentText(drugName)
                 .setOngoing(true)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+                .setContentTitle(notificationTitle)
+                .setStyle(NotificationCompat.InboxStyle()
+                    .addLine(context.getString(R.string.notification_drug_name_title, drugName))
+                    .addLine(context.getString(R.string.notification_dosage_title, dosage)))
                 .addAction(R.drawable.ic_accept_medication,
                     context.getString(R.string.get_drug_notification_button),
                     onSuccessPendingIntent)

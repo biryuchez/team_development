@@ -17,8 +17,9 @@ abstract class NotificationEventBasic(
     private val eventIntent = Intent(context, MedicationEventReceiver::class.java).apply {
         putExtra(MedicationNotifier.NOTIFICATION_TITLE_EXTRA_KEY,
             context.getString(R.string.its_time_to_medication))
-        putExtra(MedicationNotifier.NOTIFICATION_MESSAGE_EXTRA_KEY,
+        putExtra(MedicationNotifier.NOTIFICATION_DRUG_NAME_EXTRA_KEY,
             medicationEvent.drugName())
+        putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationEvent.dosage())
         putExtra(MedicationNotifier.NOTIFICATION_REQUEST_CODE_EXTRA_KEY,
             medicationEvent.id())
     }

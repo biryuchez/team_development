@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler {
             val fakeMedicineEvent = MedicationEventDomain.Single(
                 ID = 100,
                 drugName = findViewById<EditText>(R.id.edit_text).text.toString(),
-                dosage = "Одна таблетка",
+                dosage = "1 таблетка",
                 firstMedicationTime = System.currentTimeMillis() + 1000
             )
 
