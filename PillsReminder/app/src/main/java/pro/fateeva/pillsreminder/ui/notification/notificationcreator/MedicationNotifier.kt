@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.notification
+package pro.fateeva.pillsreminder.ui.notification.notificationcreator
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,10 +10,8 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.ui.MainActivity
+import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 
-/**
- * Класс, отвечающий за формирование и показ уведомление
- */
 private const val DEFAULT_REQUEST_CODE = -1
 private const val CHANNEL_ID = "Medication_channel"
 
@@ -51,7 +49,8 @@ class MedicationNotifier : MedicationNotification {
             addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
             putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
                 "(ТЕСТ) Пользователь отменил прием лекарства")
-            putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY, requestCode)
+            putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY,
+                requestCode)
         }
 
         val onSuccessPendingIntent =
@@ -82,16 +81,18 @@ class MedicationNotifier : MedicationNotification {
                 .addAction(R.drawable.ic_cancel_medication,
                     context.getString(R.string.cancel_drug_notification_button),
                     onCancelPendingIntent)
-                .setAutoCancel(true)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH))
+                NotificationChannel(CHANNEL_ID,
+                    CHANNEL_ID,
+                    NotificationManager.IMPORTANCE_HIGH))
         }
 
         notificationManager.notify(requestCode, notificationBuilder.build())
     }
 }
+

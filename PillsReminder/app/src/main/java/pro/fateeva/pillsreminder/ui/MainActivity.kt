@@ -1,22 +1,29 @@
 package pro.fateeva.pillsreminder.ui
 
 import android.app.AlarmManager
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
-import pro.fateeva.pillsreminder.ui.notification.EventFactory
-import pro.fateeva.pillsreminder.ui.notification.MedicationActionListener
-import pro.fateeva.pillsreminder.ui.notification.NotificationActionListener
-import pro.fateeva.pillsreminder.ui.notification.NotificationEvent
+import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
+import pro.fateeva.pillsreminder.ui.notification.medicationevents.EventFactory
+import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
+import pro.fateeva.pillsreminder.ui.notification.medicationevents.NotificationEvent
+import pro.fateeva.pillsreminder.ui.notification.medicationevents.NotificationEventFactory
 
-class MainActivity : AppCompatActivity(), Notificator {
+class MainActivity : AppCompatActivity(), NotificationHandler {
+
+    override val alarmManager: AlarmManager by lazy {
+        getSystemService(ALARM_SERVICE) as AlarmManager
+    }
+
+    override val actionListener: NotificationActionListener by lazy {
+        MedicationActionListener()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +45,8 @@ class MainActivity : AppCompatActivity(), Notificator {
         }
     }
 
-    override val alarmManager: AlarmManager by lazy {
-        getSystemService(ALARM_SERVICE) as AlarmManager
-    }
-
-    override val actionListener: NotificationActionListener by lazy {
-        MedicationActionListener()
-    }
-
     override fun setNotification(medicineEvent: MedicationEventDomain) {
-        val notificationEvent: NotificationEvent = EventFactory.NotificationEventFactory()
+        val notificationEvent: NotificationEvent = NotificationEventFactory()
             .generateNotificationEvent(
                 medicationEvent = medicineEvent,
                 eventReminder = alarmManager,
