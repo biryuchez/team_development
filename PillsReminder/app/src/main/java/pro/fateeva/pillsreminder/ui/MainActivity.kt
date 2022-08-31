@@ -3,8 +3,6 @@ package pro.fateeva.pillsreminder.ui
 import android.app.AlarmManager
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
@@ -13,7 +11,6 @@ import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationAction
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
 import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEvent
 import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEventFactory
-import pro.fateeva.pillsreminder.ui.screens.PillsListFragment
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
 
 class MainActivity : AppCompatActivity(), NotificationHandler {
