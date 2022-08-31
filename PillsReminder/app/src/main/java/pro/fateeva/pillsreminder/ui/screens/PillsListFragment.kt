@@ -1,10 +1,10 @@
 package pro.fateeva.pillsreminder.ui.screens
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
 
 // TODO: Rename parameter arguments, choose names that match

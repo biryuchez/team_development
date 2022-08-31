@@ -4,6 +4,6 @@ import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 
 sealed class SearchPillState {
     object Loading: SearchPillState()
-    class Success(dataList: List<DrugDomain>): SearchPillState()
-    class Error(error: String): SearchPillState()
+    class Success(val dataList: List<DrugDomain>): SearchPillState()
+    class Error(val error: String): SearchPillState()
 }

@@ -7,6 +7,6 @@ import pro.fateeva.pillsreminder.domain.entity.DrugDomain
  * по поисковому запросу.
  * Скорректируйте при необходимости
  */
-interface DrugsRepositoryUsecase {
-    suspend fun findDrugs(drugNameQuery: String): List<DrugDomain>
+interface SearchPillsUsecase {
+    suspend fun searchPills(query: String): List<DrugDomain>
 }

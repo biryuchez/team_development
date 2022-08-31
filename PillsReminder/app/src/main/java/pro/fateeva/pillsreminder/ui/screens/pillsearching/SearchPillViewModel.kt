@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pro.fateeva.pillsreminder.domain.usecase.DrugsRepositoryUsecase
-import kotlin.Exception
+import pro.fateeva.pillsreminder.data.PillsRepository
+import pro.fateeva.pillsreminder.domain.usecase.SearchPillsUsecase
 
-class SearchPillViewModel(private val searchPillRepository: DrugsRepositoryUsecase) : ViewModel() {
+class SearchPillViewModel : ViewModel() {
+    private val searchPillRepository: SearchPillsUsecase = PillsRepository()
     private val liveData = MutableLiveData<SearchPillState>()
     private val searchingScope = viewModelScope
 
@@ -19,11 +20,14 @@ class SearchPillViewModel(private val searchPillRepository: DrugsRepositoryUseca
             liveData.postValue(SearchPillState.Loading)
             searchingScope.launch {
                 try {
-                    liveData.postValue(SearchPillState.Success(searchPillRepository.findDrugs(query)))
+                    liveData.postValue(
+                        SearchPillState.Success(searchPillRepository.searchPills(query)))
                 } catch (e: Exception) {
                     liveData.postValue(SearchPillState.Error(e.message.toString()))
                 }
             }
+        } else {
+            liveData.postValue(SearchPillState.Success(listOf()))
         }
     }
 }

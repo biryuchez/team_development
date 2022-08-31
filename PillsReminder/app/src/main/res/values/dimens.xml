@@ -8,4 +8,9 @@
     <dimen name="pill_searching_header_margin_top">24dp</dimen>
     <dimen name="ill_searching_recycler_view_margin_top">8dp</dimen>
     <dimen name="pill_searching_header_size">18sp</dimen>
+    <dimen name="search_pill_item_height">75dp</dimen>
+    <dimen name="search_pill_item_corner_radius">10dp</dimen>
+    <dimen name="list_item_card_layout_margin">8dp</dimen>
+    <dimen name="search_pill_item_pill_title_size">20sp</dimen>
+    <dimen name="list_item_margin">8dp</dimen>
 </resources>
