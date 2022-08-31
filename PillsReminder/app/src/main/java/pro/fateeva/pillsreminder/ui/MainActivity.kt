@@ -13,6 +13,8 @@ import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationAction
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
 import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEvent
 import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEventFactory
+import pro.fateeva.pillsreminder.ui.screens.PillsListFragment
+import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
 
 class MainActivity : AppCompatActivity(), NotificationHandler {
 
@@ -30,17 +32,11 @@ class MainActivity : AppCompatActivity(), NotificationHandler {
 
         onNewIntent(intent)
 
-        findViewById<Button>(R.id.button).setOnClickListener {
-            val fakeMedicineEvent = MedicationEventDomain.Single(
-                ID = 100,
-                drugName = findViewById<EditText>(R.id.edit_text).text.toString(),
-                dosage = "1 таблетка",
-                firstMedicationTime = System.currentTimeMillis() + 1000
-            )
-
-            // фейковое событие "Одноразовый прием лекарства" для теста работоспособности AlarmManager.
-            // Выводит напоминание о приеме лекарства через секунду после клика по кнопке
-            setNotification(fakeMedicineEvent)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, SearchPillFragment())
+                .commit()
         }
     }
 

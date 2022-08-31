@@ -4,4 +4,8 @@
     <dimen name="fab_margin">10dp</dimen>
     <dimen name="margin_start_settings">15dp</dimen>
     <dimen name="margin_end_settings">15dp</dimen>
+    <dimen name="zero_value">0dp</dimen>
+    <dimen name="pill_searching_header_margin_top">24dp</dimen>
+    <dimen name="ill_searching_recycler_view_margin_top">8dp</dimen>
+    <dimen name="pill_searching_header_size">18sp</dimen>
 </resources>
