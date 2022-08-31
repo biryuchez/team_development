@@ -9,7 +9,7 @@ import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDo
 import pro.fateeva.pillsreminder.ui.notification.MedicationEventReceiver
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotifier
 
-abstract class NotificationEventBasic(
+abstract class NotificationEventBase(
     protected val medicationEvent: MedicationEventDomain,
     protected val systemAlarmManager: AlarmManager,
     context: Context,
