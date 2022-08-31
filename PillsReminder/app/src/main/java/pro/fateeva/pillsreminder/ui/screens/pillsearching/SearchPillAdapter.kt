@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import pro.fateeva.pillsreminder.databinding.ItemSearchPillBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 
-class SearchPillAdapter : RecyclerView.Adapter<SearchPillAdapter.SearchPillViewHolder>() {
+class SearchPillAdapter(private val clickListener: SearchItemClickListener) :
+    RecyclerView.Adapter<SearchPillAdapter.SearchPillViewHolder>() {
 
     private var dataList = listOf<DrugDomain>()
 
@@ -30,11 +31,19 @@ class SearchPillAdapter : RecyclerView.Adapter<SearchPillAdapter.SearchPillViewH
 
     override fun getItemCount() = dataList.size
 
-    class SearchPillViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class SearchPillViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(drugDomain: DrugDomain) {
             ItemSearchPillBinding.bind(itemView).apply {
                 searchPillItemPillNameTextView.text = drugDomain.drugName
             }
+
+            itemView.setOnClickListener {
+                clickListener.onSearchItemClick(drugDomain)
+            }
         }
     }
+}
+
+interface SearchItemClickListener {
+    fun onSearchItemClick(drugDomain: DrugDomain)
 }

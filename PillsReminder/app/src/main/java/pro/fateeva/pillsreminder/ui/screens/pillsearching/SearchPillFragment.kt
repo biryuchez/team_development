@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
+import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.BaseFragment
 
 private const val DEFAULT_DEBOUNCE = 500L
@@ -26,7 +27,11 @@ class SearchPillFragment :
     private val pillSearchingViewModel by viewModels<SearchPillViewModel>()
     private val queryFlow = MutableStateFlow(DEFAULT_STATEFLOW_VALUE)
     private val textListener = TextTypeListener()
-    private val searchPillAdapter = SearchPillAdapter()
+    private val searchPillAdapter = SearchPillAdapter(object : SearchItemClickListener {
+        override fun onSearchItemClick(drugDomain: DrugDomain) {
+            onItemClick(drugDomain)
+        }
+    })
 
     @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +58,10 @@ class SearchPillFragment :
                     }
             }
         }
+    }
+
+    private fun onItemClick(drugDomain: DrugDomain) {
+        Snackbar.make(binding.root, drugDomain.drugName, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun renderData(state: SearchPillState) {
