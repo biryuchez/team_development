@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.screens
+package pro.fateeva.pillsreminder.ui.screens.onceperday
 
 import android.os.Bundle
 import android.view.View
@@ -10,6 +10,7 @@ import pro.fateeva.pillsreminder.databinding.FragmentOncePerDaySettingsBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.mainactivity.NotificationHandler
+import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 import java.util.*
 
 private const val DRUG_ARG_KEY = "DRUG"
@@ -57,7 +58,10 @@ class OncePerDaySettingsFragment :
                     }
 
                 }
+
                 firstMedicationTime = calendar.timeInMillis
+                binding.oncePerDayTimePickerTextView.text =
+                    TimeMapper().getTimeFromTimePicker(timePicker.hour, timePicker.minute)
             }
 
             timePicker.show(parentFragmentManager, "timePicker")

@@ -99,7 +99,8 @@
         style="@style/PickerSettingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="выбрать время"
+        android:gravity="end"
+        android:hint="@string/set_time"
         app:layout_constraintBaseline_toBaselineOf="@id/hour_text_view"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -121,6 +122,7 @@
         android:autofillHints=""
         android:hint="@string/dose_hint"
         android:inputType="number"
+        android:gravity="end"
         app:layout_constraintBaseline_toBaselineOf="@id/dose_text_view"
         app:layout_constraintEnd_toEndOf="parent" />
 
