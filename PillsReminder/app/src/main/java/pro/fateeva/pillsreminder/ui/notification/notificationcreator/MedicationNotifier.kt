@@ -37,7 +37,14 @@ class MedicationNotifier : MedicationNotification {
         val requestCode =
             (intent.extras?.getInt(NOTIFICATION_REQUEST_CODE_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
 
-        val onActionIntent = Intent(context, MainActivity::class.java).apply {
+        val onGetDrugActionIntent = Intent(context, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
+            putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY, requestCode)
+        }
+
+        val onCancelDrugActionIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
@@ -48,7 +55,7 @@ class MedicationNotifier : MedicationNotification {
             PendingIntent.getActivity(
                 context,
                 requestCode,
-                onActionIntent.putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
+                onGetDrugActionIntent.putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
                     "(ТЕСТ) Пользователь подтвердил прием лекарства"),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -56,7 +63,7 @@ class MedicationNotifier : MedicationNotification {
             PendingIntent.getActivity(
                 context,
                 -requestCode, // requestCode со знаком "-", чтобы в системе могло быть 2 уникальных PendingIntent
-                onActionIntent.putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
+                onCancelDrugActionIntent.putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
                     "(ТЕСТ) Пользователь отменил прием лекарства"),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
