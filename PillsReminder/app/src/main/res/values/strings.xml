@@ -26,4 +26,5 @@
     <string name="notification_drug_name_title">лекарство: %1$s</string>
     <string name="notification_dosage_title">дозировка: %1$s</string>
     <string name="pill_name_example">Аспирин</string>
+    <string name="add_new_medication_event_fab_description">Добавление нового события \"Прием лекарства\"</string>
 </resources>

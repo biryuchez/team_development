@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui
+package pro.fateeva.pillsreminder.ui.mainactivity
 
 import android.app.AlarmManager
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain

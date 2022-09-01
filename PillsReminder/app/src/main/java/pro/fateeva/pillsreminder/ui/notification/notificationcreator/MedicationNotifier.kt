@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.ui.MainActivity
+import pro.fateeva.pillsreminder.ui.mainactivity.MainActivity
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 
 private const val DEFAULT_REQUEST_CODE = -1

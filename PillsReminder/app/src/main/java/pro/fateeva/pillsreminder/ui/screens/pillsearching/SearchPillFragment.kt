@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
-import pro.fateeva.pillsreminder.ui.BaseFragment
+import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
 private const val DEFAULT_DEBOUNCE = 500L
 private const val DEFAULT_STATEFLOW_VALUE = "-1"
@@ -61,7 +61,7 @@ class SearchPillFragment :
     }
 
     private fun onItemClick(drugDomain: DrugDomain) {
-        Snackbar.make(binding.root, drugDomain.drugName, Snackbar.LENGTH_SHORT).show()
+        navigator.navigateToEventFrequencyScreen(drugDomain.drugName)
     }
 
     private fun renderData(state: SearchPillState) {
