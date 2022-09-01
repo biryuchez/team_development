@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.databinding.FragmentOncePerDaySettingsBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
@@ -86,6 +87,10 @@ class OncePerDaySettingsFragment :
                     )
                 )
             }
+            Snackbar.make(
+                binding.root,
+                getString(R.string.notification_is_setted),
+                Snackbar.LENGTH_SHORT).show()
         }
     }
 }

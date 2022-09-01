@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.ui.hideKeyboard
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
 private const val DEFAULT_DEBOUNCE = 500L
@@ -61,6 +62,7 @@ class SearchPillFragment :
     }
 
     private fun onItemClick(drugDomain: DrugDomain) {
+        binding.root.hideKeyboard()
         navigator.navigateToEventFrequencyScreen(drugDomain)
     }
 
