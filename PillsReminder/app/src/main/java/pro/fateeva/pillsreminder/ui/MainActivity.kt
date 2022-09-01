@@ -2,18 +2,26 @@ package pro.fateeva.pillsreminder.ui
 
 import android.app.AlarmManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
-import pro.fateeva.pillsreminder.ui.notification.EventFactory
-import pro.fateeva.pillsreminder.ui.notification.NotificationEvent
+import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
+import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
+import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEvent
+import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEventFactory
 
-class MainActivity : AppCompatActivity(), Notificator {
+class MainActivity : AppCompatActivity(), NotificationHandler {
 
-    companion object {
-        const val EVENT_INTENT_CATEGORY = "MEDICATION_CATEGORY"
+    override val alarmManager: AlarmManager by lazy {
+        getSystemService(ALARM_SERVICE) as AlarmManager
+    }
+
+    override val actionListener: NotificationActionListener by lazy {
+        MedicationActionListener()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,46 +30,46 @@ class MainActivity : AppCompatActivity(), Notificator {
 
         onNewIntent(intent)
 
-        // фейковое событие "Одноразовый прием лекарства" для теста работоспособности AlarmManager.
-        // Выводит напоминание о приеме лекарства спустя 2 секунды после вызова onCreate()
-        val fakeMedicineEvent = MedicationEventDomain.Single(
-            ID = 100,
-            drugName = "УСЛОВНОЕ ЛЕКАРСТВО",
-            dosage = "Одна таблетка",
-            firstMedicationTime = System.currentTimeMillis() + 2000
-        )
+        findViewById<Button>(R.id.button).setOnClickListener {
+            val fakeMedicineEvent = MedicationEventDomain.Single(
+                ID = 100,
+                drugName = findViewById<EditText>(R.id.edit_text).text.toString(),
+                dosage = "1 таблетка",
+                firstMedicationTime = System.currentTimeMillis() + 1000
+            )
 
-        setNotification(fakeMedicineEvent)
-    }
-
-    override val manager: AlarmManager by lazy {
-        getSystemService(ALARM_SERVICE) as AlarmManager
+            // фейковое событие "Одноразовый прием лекарства" для теста работоспособности AlarmManager.
+            // Выводит напоминание о приеме лекарства через секунду после клика по кнопке
+            setNotification(fakeMedicineEvent)
+        }
     }
 
     override fun setNotification(medicineEvent: MedicationEventDomain) {
-        val notificationEvent: NotificationEvent = EventFactory.NotificationEventFactory()
+        val medicationEvent: NotificationEvent = NotificationEventFactory()
             .generateNotificationEvent(
                 medicationEvent = medicineEvent,
-                eventReminder = manager,
+                eventReminder = alarmManager,
                 context = applicationContext)
 
-        notificationEvent.setEvent()
+        medicationEvent.setEvent()
     }
 
-
-    // В этом методе можно выполнять действие по клику на пришедшее уведомление
-    override fun onNotificationClick() {
+    override fun onGetDrugAction(message: String) {
         Toast.makeText(
-            applicationContext,
-            "Пользователь нажал на уведомление",
+            this@MainActivity,
+            message,
             Toast.LENGTH_SHORT).show()
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onCancelDrugAction(message: String) {
+        Toast.makeText(
+            this@MainActivity,
+            message,
+            Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent?.categories?.let {
-            if (intent.categories.contains(EVENT_INTENT_CATEGORY))
-                onNotificationClick()
-        }
+        actionListener.onNotificationAction(this, applicationContext, intent)
     }
 }
