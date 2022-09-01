@@ -16,4 +16,5 @@
     <dimen name="medication_frequency_header_size">24sp</dimen>
     <dimen name="radio_group_margin_top">20dp</dimen>
     <dimen name="radio_button_text_size">18sp</dimen>
+    <dimen name="arrow_button_size">50dp</dimen>
 </resources>

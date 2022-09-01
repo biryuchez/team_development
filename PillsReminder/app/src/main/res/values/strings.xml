@@ -30,4 +30,8 @@
     <string name="add_new_medication_event_fab_description">Добавление нового события \"Прием лекарства\"</string>
     <string name="next_button_text">Далее</string>
     <string name="arguments_error">Ошибка передачи аргументов</string>
+    <string name="medication_days_header">Cколько дней Вы будете принимать лекарство?</string>
+    <string name="left_arrow_button_description">Кнопка с левой стрелкой</string>
+    <string name="right_arrow_button_description">кнопка с правой стрелкой</string>
+    <string name="days_count_default_value">1</string>
 </resources>
