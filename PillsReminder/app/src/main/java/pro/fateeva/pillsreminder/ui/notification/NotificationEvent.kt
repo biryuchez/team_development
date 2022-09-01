@@ -20,12 +20,22 @@ interface NotificationEvent {
         context: Context,
     ) : NotificationEvent {
         private val eventIntent = Intent(context, MedicationEventReceiver::class.java).apply {
-            putExtra(MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_TITLE,
-                context.getString(R.string.its_time_to_medication))
-            putExtra(MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_MESSAGE,
-                medicationEvent.drugName())
-            putExtra(MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_REQUEST_CODE,
-                medicationEvent.id())
+            putExtra(
+                MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_TITLE,
+                context.getString(R.string.its_time_to_medication)
+            )
+            putExtra(
+                MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_MESSAGE,
+                medicationEvent.drugName()
+            )
+            putExtra(
+                MedicationEventReceiver.EXTRA_KEY_NOTIFICATION_REQUEST_CODE,
+                medicationEvent.id()
+            )
+            putExtra(
+                MedicationEventReceiver.EXTRA_KEY_MEDICATION_EVENT,
+                medicationEvent
+            )
         }
 
         @SuppressLint("UnspecifiedImmutableFlag")
@@ -34,7 +44,8 @@ interface NotificationEvent {
                 context,
                 medicationEvent.id(),
                 eventIntent,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
     }
 
     class Single(
@@ -46,7 +57,8 @@ interface NotificationEvent {
             eventReminder.setExact(
                 AlarmManager.RTC_WAKEUP,
                 medicationEvent.firstMedicationTime(),
-                pendingEventIntent)
+                pendingEventIntent
+            )
         }
     }
 
@@ -56,11 +68,12 @@ interface NotificationEvent {
         context: Context,
     ) : BaseNotificationEvent(medicationEvent, eventReminder, context) {
         override fun setEvent() {
-            TODO("Not yet implemented")
-            // тут будет реализовано повторяющееся напоминание
-            // сейчас не реализовано, т.к. повторяющиеся события надо программно отменять,
-            // иначе они будут повторяться, пока устройство не будет перезагружено.
-            // реализуем, когда появится интерфейс
+            val timeEvent = medicationEvent.firstMedicationTime()
+            eventReminder.setExact(
+                AlarmManager.RTC_WAKEUP,
+                timeEvent,
+                pendingEventIntent
+            )
         }
     }
 }

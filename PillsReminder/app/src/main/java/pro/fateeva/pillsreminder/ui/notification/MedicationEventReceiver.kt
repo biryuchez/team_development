@@ -1,6 +1,7 @@
 package pro.fateeva.pillsreminder.ui.notification
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,8 +11,11 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.MainActivity
 
 private const val DEFAULT_REQUEST_CODE = -1
@@ -31,6 +35,7 @@ class MedicationEventReceiver : BroadcastReceiver() {
         const val EXTRA_KEY_NOTIFICATION_TITLE = "NOTIFICATION_TITLE"
         const val EXTRA_KEY_NOTIFICATION_MESSAGE = "NOTIFICATION_MESSAGE"
         const val EXTRA_KEY_NOTIFICATION_REQUEST_CODE = "NOTIFICATION_REQUEST_CODE"
+        const val EXTRA_KEY_MEDICATION_EVENT = "MEDICATION_EVENT"
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
@@ -103,5 +108,19 @@ class MedicationEventReceiver : BroadcastReceiver() {
                     "${intent?.extras?.getString(EXTRA_KEY_NOTIFICATION_MESSAGE)}" +
                     " // REQ_CODE: ${intent?.extras?.getInt(EXTRA_KEY_NOTIFICATION_REQUEST_CODE)}",
             Toast.LENGTH_SHORT).show()
+
+        val event = (intent?.extras?.getSerializable(EXTRA_KEY_MEDICATION_EVENT) as MedicationEventDomain)
+        if (event is MedicationEventDomain.Repeating){
+            event.setFirstMedicationTime(event.firstMedicationTime() + event.medicationInterval())
+
+                val notificationEvent: NotificationEvent = EventFactory.NotificationEventFactory()
+                    .generateNotificationEvent(
+                        medicationEvent = event,
+                        eventReminder = getSystemService(context, AlarmManager::class.java) as AlarmManager,
+                        context = context
+                    )
+
+                notificationEvent.setEvent()
+        }
     }
 }

@@ -1,14 +1,21 @@
 package pro.fateeva.pillsreminder.ui
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.EventFactory
+import pro.fateeva.pillsreminder.ui.notification.MedicationEventReceiver
 import pro.fateeva.pillsreminder.ui.notification.NotificationEvent
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(), Notificator {
 
@@ -16,21 +23,20 @@ class MainActivity : AppCompatActivity(), Notificator {
         const val EVENT_INTENT_CATEGORY = "MEDICATION_CATEGORY"
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         onNewIntent(intent)
 
-        // фейковое событие "Одноразовый прием лекарства" для теста работоспособности AlarmManager.
-        // Выводит напоминание о приеме лекарства спустя 2 секунды после вызова onCreate()
-        val fakeMedicineEvent = MedicationEventDomain.Single(
+        val fakeMedicineEvent = MedicationEventDomain.Repeating(
             ID = 100,
-            drugName = "УСЛОВНОЕ ЛЕКАРСТВО",
+            pillName = "УСЛОВНОЕ ЛЕКАРСТВО",
             dosage = "Одна таблетка",
-            firstMedicationTime = System.currentTimeMillis() + 2000
+            firstMedicationTime = System.currentTimeMillis() + 2000,
+            medicationInterval = AlarmManager.INTERVAL_DAY
         )
-
         setNotification(fakeMedicineEvent)
     }
 
@@ -43,18 +49,19 @@ class MainActivity : AppCompatActivity(), Notificator {
             .generateNotificationEvent(
                 medicationEvent = medicineEvent,
                 eventReminder = manager,
-                context = applicationContext)
+                context = applicationContext
+            )
 
         notificationEvent.setEvent()
     }
-
 
     // В этом методе можно выполнять действие по клику на пришедшее уведомление
     override fun onNotificationClick() {
         Toast.makeText(
             applicationContext,
             "Пользователь нажал на уведомление",
-            Toast.LENGTH_SHORT).show()
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onNewIntent(intent: Intent?) {
