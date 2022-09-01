@@ -31,7 +31,7 @@ class MedicationNotifier : MedicationNotification {
         val drugName = (intent.extras?.getString(NOTIFICATION_DRUG_NAME_EXTRA_KEY))
             ?: context.getString(R.string.drug_name_error)
 
-        val dosage = (intent.extras?.getString(NOTIFICATION_DOSAGE_EXTRA_KEY))
+        val dosage = (intent.extras?.getInt(NOTIFICATION_DOSAGE_EXTRA_KEY))
             ?: context.getString(R.string.dosage_error)
 
         val requestCode =
