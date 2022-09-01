@@ -8,7 +8,7 @@ class NotificationEventRepeating(
     medicationEvent: MedicationEventDomain,
     systemAlarmManager: AlarmManager,
     context: Context,
-) : NotificationEventBasic(medicationEvent, systemAlarmManager, context) {
+) : NotificationEventBase(medicationEvent, systemAlarmManager, context) {
     override fun setEvent() {
         TODO("Not yet implemented")
         // тут будет реализовано повторяющееся напоминание;

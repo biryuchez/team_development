@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="pro.fateeva.pillsreminder">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,7 +18,8 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ui.notification.MedicationEventReceiver"/>
+        <receiver android:name=".ui.notification.MedicationEventReceiver" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

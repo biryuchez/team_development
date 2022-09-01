@@ -2,45 +2,32 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pill_card_view"
+    android:id="@+id/search_pill_item_card_view"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/search_pill_item_height"
+    android:layout_margin="@dimen/list_item_margin"
     app:cardBackgroundColor="@color/cards_background"
-    android:layout_marginBottom="10dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="@dimen/search_pill_item_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/list_item_card_layout_margin">
 
         <TextView
-            android:id="@+id/title_text_view"
-            android:layout_width="wrap_content"
+            android:id="@+id/search_pill_item_pill_name_text_view"
+            android:layout_width="@dimen/zero_value"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            tools:text="Аспирин"
-            android:textColor="@color/header_dark_grey"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/description_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:layout_marginTop="5dp"
             android:ellipsize="end"
-            android:maxLines="1"
-            tools:text="НПВС. Оказывает противовоспалительное, анальгезирующее и жаропонижающее действие, а также угнетает агрегацию тромбоцитов. Механизм действия связан с угнетением активности ЦОГ - основного фермента метаболизма арахидоновой кислоты, являющейся предшественником простагландинов, которые играют главную роль в патогенезе воспаления, боли и лихорадки. Снижение содержания простагландинов (преимущественно Е1) в центре терморегуляции приводит к снижению температуры тела вследствие расширения сосудов кожи и возрастания потоотделения. Анальгезирующий эффект обусловлен как центральным, так и периферическим действием. Уменьшает агрегацию, адгезию тромбоцитов и тромбообразование за счет подавления синтеза тромбоксана А2 в тромбоцитах."
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/title_text_view"
+            android:fontFamily="@font/roboto_medium"
+            android:maxLines="2"
+            android:textColor="@color/header_dark_grey"
+            android:textSize="@dimen/search_pill_item_pill_title_size"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text_view" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/pill_name_example" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

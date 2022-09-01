@@ -8,7 +8,7 @@ class NotificationEventSingle(
     medicationEvent: MedicationEventDomain,
     systemAlarmManager: AlarmManager,
     context: Context,
-) : NotificationEventBasic(medicationEvent, systemAlarmManager, context) {
+) : NotificationEventBase(medicationEvent, systemAlarmManager, context) {
     override fun setEvent() {
         systemAlarmManager.setExact(
             AlarmManager.RTC_WAKEUP,

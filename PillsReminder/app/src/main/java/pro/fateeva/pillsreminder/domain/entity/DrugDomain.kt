@@ -6,5 +6,4 @@ package pro.fateeva.pillsreminder.domain.entity
 data class DrugDomain(
     val ID: String,
     val drugName: String,
-    val description: String,
 )
