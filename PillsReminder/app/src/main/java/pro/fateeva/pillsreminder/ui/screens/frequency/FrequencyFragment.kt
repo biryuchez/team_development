@@ -1,14 +1,14 @@
 package pro.fateeva.pillsreminder.ui.screens.frequency
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.databinding.FragmentFrequencyBinding
+import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
-private const val DRUG_NAME_ARG_KEY = "DRUG_NAME"
+private const val DRUG_ARG_KEY = "DRUG"
 
 class FrequencyFragment :
     BaseFragment<FragmentFrequencyBinding>(FragmentFrequencyBinding::inflate) {
@@ -16,9 +16,9 @@ class FrequencyFragment :
     private val daysCounter = DaysCounter()
 
     companion object {
-        fun newInstance(drugName: String): FrequencyFragment {
+        fun newInstance(drugDomain: DrugDomain): FrequencyFragment {
             return FrequencyFragment().apply {
-                arguments = bundleOf(DRUG_NAME_ARG_KEY to drugName)
+                arguments = bundleOf(DRUG_ARG_KEY to drugDomain)
             }
         }
     }
@@ -31,11 +31,10 @@ class FrequencyFragment :
         binding.whenNeededRadioButton.isEnabled =
             false // временно отключены все варианты, кроме "Один раз в день"
 
-        val selectedDrugName = arguments?.getString(DRUG_NAME_ARG_KEY)
-            ?: getString(R.string.arguments_error)
+        val selectedDrug = arguments?.getParcelable(DRUG_ARG_KEY) ?: DrugDomain()
 
         binding.frequencyQuestionTextView.text =
-            getString(R.string.medication_frequency_header, selectedDrugName)
+            getString(R.string.medication_frequency_header, selectedDrug.drugName)
 
         binding.medicationDaysDecrementButton.setOnClickListener {
             daysCounter.decrement(binding.frequencyDaysCountTextView)
@@ -48,7 +47,9 @@ class FrequencyFragment :
         binding.frequencyNextScreenButton.setOnClickListener {
             when (binding.frequencyRadioGroup.checkedRadioButtonId) {
                 binding.oncePerDayRadioButton.id -> {
-                    navigator.navigateToOncePerDayScreen(selectedDrugName)
+                    navigator.navigateToOncePerDayScreen(
+                        selectedDrug,
+                        binding.frequencyDaysCountTextView.text.toString().toInt())
                 }
             }
         }

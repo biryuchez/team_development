@@ -18,7 +18,7 @@ class NotificationEventFactory : EventFactory {
         eventReminder: AlarmManager,
         context: Context,
     ): NotificationEvent {
-        return if (!medicationEvent.periodicityStatus()) {
+        return if (medicationEvent.medicationDaysCount() <= 1) {
             NotificationEventSingle(
                 medicationEvent,
                 eventReminder,

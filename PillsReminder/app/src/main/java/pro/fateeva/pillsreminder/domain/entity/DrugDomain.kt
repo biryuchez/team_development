@@ -1,9 +1,13 @@
 package pro.fateeva.pillsreminder.domain.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * Поля класса, возможно, будуд скорректированы в зависимости от роста функционала приложения
  */
+@Parcelize
 data class DrugDomain(
-    val ID: String,
-    val drugName: String,
-)
+    val ID: Int = -1,
+    val drugName: String = "Обычное лекарство",
+): Parcelable

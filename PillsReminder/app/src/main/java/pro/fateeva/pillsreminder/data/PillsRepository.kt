@@ -25,7 +25,7 @@ class PillsRepository : SearchPillsUsecase {
             .await()
             .filter { it.type == PILL_TYPE_IDENTIFIER }
             .map {
-                DrugDomain(it.id.toString(), it.name)
+                DrugDomain(it.id, it.name)
             }
     }
 }

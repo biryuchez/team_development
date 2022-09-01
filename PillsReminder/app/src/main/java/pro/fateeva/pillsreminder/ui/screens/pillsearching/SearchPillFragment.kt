@@ -61,7 +61,7 @@ class SearchPillFragment :
     }
 
     private fun onItemClick(drugDomain: DrugDomain) {
-        navigator.navigateToEventFrequencyScreen(drugDomain.drugName)
+        navigator.navigateToEventFrequencyScreen(drugDomain)
     }
 
     private fun renderData(state: SearchPillState) {

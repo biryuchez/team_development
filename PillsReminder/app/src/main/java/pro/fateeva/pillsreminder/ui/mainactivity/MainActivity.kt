@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
@@ -43,14 +44,14 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         }
     }
 
-    override fun setNotification(medicineEvent: MedicationEventDomain) {
-        val medicationEvent: NotificationEvent = NotificationEventFactory()
+    override fun setNotification(medicationEvent: MedicationEventDomain) {
+        val notificationEvent: NotificationEvent = NotificationEventFactory()
             .generateNotificationEvent(
-                medicationEvent = medicineEvent,
+                medicationEvent = medicationEvent,
                 eventReminder = alarmManager,
                 context = applicationContext)
 
-        medicationEvent.setEvent()
+        notificationEvent.setEvent()
     }
 
     override fun onGetDrugAction(message: String) {
@@ -76,12 +77,12 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         navigateToDestination(SearchPillFragment())
     }
 
-    override fun navigateToEventFrequencyScreen(drugName: String) {
-        navigateToDestination(FrequencyFragment.newInstance(drugName))
+    override fun navigateToEventFrequencyScreen(drugDomain: DrugDomain) {
+        navigateToDestination(FrequencyFragment.newInstance(drugDomain))
     }
 
-    override fun navigateToOncePerDayScreen(drugName: String) {
-        navigateToDestination(OncePerDaySettingsFragment.newInstance(drugName))
+    override fun navigateToOncePerDayScreen(drugDomain: DrugDomain, daysCount: Int) {
+        navigateToDestination(OncePerDaySettingsFragment.newInstance(drugDomain, daysCount))
     }
 
     override fun navigateToDestination(destination: Fragment) {
