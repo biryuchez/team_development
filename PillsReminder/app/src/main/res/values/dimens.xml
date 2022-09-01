@@ -13,4 +13,7 @@
     <dimen name="list_item_card_layout_margin">8dp</dimen>
     <dimen name="search_pill_item_pill_title_size">20sp</dimen>
     <dimen name="list_item_margin">8dp</dimen>
+    <dimen name="medication_frequency_header_size">24sp</dimen>
+    <dimen name="radio_group_margin_top">20dp</dimen>
+    <dimen name="radio_button_text_size">18sp</dimen>
 </resources>
