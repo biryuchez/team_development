@@ -17,6 +17,8 @@ import pro.fateeva.pillsreminder.ui.screens.OncePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.PillsListFragment
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
 
+private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
+
 class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
 
     override val alarmManager: AlarmManager by lazy {
@@ -86,6 +88,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.main_container, destination)
+            .addToBackStack(NAVIGATION_BACKSTACK_NAME)
             .commit()
     }
 }
