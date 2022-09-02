@@ -17,4 +17,11 @@
         <item name="fontFamily">@font/roboto_medium</item>
     </style>
 
+    <style name="arrowButtonStyle">
+        <item name="android:background">?colorPrimary</item>
+        <item name="tint">@color/white</item>
+        <item name="android:layout_width">@dimen/arrow_button_size</item>
+        <item name="android:layout_height">@dimen/arrow_button_size</item>
+    </style>
+
 </resources>

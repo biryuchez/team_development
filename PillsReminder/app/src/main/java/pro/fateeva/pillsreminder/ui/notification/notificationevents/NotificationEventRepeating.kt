@@ -11,7 +11,5 @@ class NotificationEventRepeating(
 ) : NotificationEventBase(medicationEvent, systemAlarmManager, context) {
     override fun setEvent() {
         TODO("Not yet implemented")
-        // тут будет реализовано повторяющееся напоминание;
-        // сейчас не реализовано, т.к. повторяющиеся события надо программно отменять
     }
 }

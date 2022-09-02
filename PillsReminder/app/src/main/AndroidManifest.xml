@@ -17,9 +17,9 @@
         android:theme="@style/Theme.PillsReminder"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.mainactivity.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

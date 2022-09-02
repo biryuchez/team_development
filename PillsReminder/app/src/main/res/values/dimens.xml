@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="main_layout_padding">10dp</dimen>
-    <dimen name="fab_margin">10dp</dimen>
+    <dimen name="main_layout_padding">8dp</dimen>
+    <dimen name="fab_margin">8dp</dimen>
     <dimen name="margin_start_settings">15dp</dimen>
     <dimen name="margin_end_settings">15dp</dimen>
     <dimen name="zero_value">0dp</dimen>
@@ -13,4 +13,8 @@
     <dimen name="list_item_card_layout_margin">8dp</dimen>
     <dimen name="search_pill_item_pill_title_size">20sp</dimen>
     <dimen name="list_item_margin">8dp</dimen>
+    <dimen name="medication_frequency_header_size">24sp</dimen>
+    <dimen name="radio_group_margin_top">20dp</dimen>
+    <dimen name="radio_button_text_size">18sp</dimen>
+    <dimen name="arrow_button_size">50dp</dimen>
 </resources>

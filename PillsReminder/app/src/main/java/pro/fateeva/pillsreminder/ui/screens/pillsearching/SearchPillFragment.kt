@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.FlowPreview
@@ -16,9 +14,10 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
-import pro.fateeva.pillsreminder.ui.BaseFragment
+import pro.fateeva.pillsreminder.ui.hideKeyboard
+import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
-private const val DEFAULT_DEBOUNCE = 500L
+private const val DEFAULT_DEBOUNCE = 400L
 private const val DEFAULT_STATEFLOW_VALUE = "-1"
 
 class SearchPillFragment :
@@ -49,19 +48,18 @@ class SearchPillFragment :
         textListener.onTypeTextListener(binding.searchEditText, queryFlow)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                queryFlow
-                    .filter { it != DEFAULT_STATEFLOW_VALUE }
-                    .debounce(DEFAULT_DEBOUNCE)
-                    .collect {
-                        pillSearchingViewModel.searchPills(it)
-                    }
-            }
+            queryFlow
+                .filter { it != DEFAULT_STATEFLOW_VALUE }
+                .debounce(DEFAULT_DEBOUNCE)
+                .collect {
+                    pillSearchingViewModel.searchPills(it)
+                }
         }
     }
 
     private fun onItemClick(drugDomain: DrugDomain) {
-        Snackbar.make(binding.root, drugDomain.drugName, Snackbar.LENGTH_SHORT).show()
+        binding.root.hideKeyboard()
+        navigator.navigateToEventFrequencyScreen(drugDomain)
     }
 
     private fun renderData(state: SearchPillState) {

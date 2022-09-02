@@ -3,7 +3,7 @@ package pro.fateeva.pillsreminder.ui.notification.actionlistener
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import pro.fateeva.pillsreminder.ui.NotificationHandler
+import pro.fateeva.pillsreminder.ui.mainactivity.NotificationHandler
 
 /**
  * Класс, отвечающий за перехват нажатий на кнопки в уведомлении.
