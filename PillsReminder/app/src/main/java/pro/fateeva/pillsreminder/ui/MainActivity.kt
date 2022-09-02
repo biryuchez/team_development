@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity(), Notificator {
         const val EVENT_INTENT_CATEGORY = "MEDICATION_CATEGORY"
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

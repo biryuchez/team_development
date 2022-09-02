@@ -4,9 +4,6 @@
     package="pro.fateeva.pillsreminder">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
 
     <application
         android:allowBackup="true"
@@ -29,15 +26,8 @@
 
         </activity>
 
-        <receiver android:name=".ui.notification.MedicationEventReceiver"
-            android:exported="true">
+        <receiver android:name=".ui.notification.MedicationEventReceiver"/>
 
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.intent.action.NOTIFY" />
-            </intent-filter>
-
-        </receiver>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
