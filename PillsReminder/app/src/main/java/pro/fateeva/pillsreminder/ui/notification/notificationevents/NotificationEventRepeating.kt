@@ -10,6 +10,11 @@ class NotificationEventRepeating(
     context: Context,
 ) : NotificationEventBase(medicationEvent, systemAlarmManager, context) {
     override fun setEvent() {
-        TODO("Not yet implemented")
+        // временная заглушка - пока не реализован функционал повторяющичся событий,
+        // будет формироваться однократное напоминание
+        systemAlarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            medicationEvent.firstMedicationTime(),
+            pendingEventIntent)
     }
 }
