@@ -3,9 +3,13 @@ package pro.fateeva.pillsreminder.ui
 import android.app.AlarmManager
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.data.AppDataBase
+import pro.fateeva.pillsreminder.data.dao.entity.Fill
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
@@ -23,9 +27,25 @@ class MainActivity : AppCompatActivity(), NotificationHandler {
         MedicationActionListener()
     }
 
+    val database by lazy {
+        Room.databaseBuilder(
+            this,
+            AppDataBase::class.java,
+            "database"
+        ).build()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        database.getPillDao().getAll().forEach { Log.e("ENT", it.toString()) }
+
+        database.getPillDao().add(
+            Fill(
+                name = "Fiil1"
+            )
+        )
 
         onNewIntent(intent)
 
