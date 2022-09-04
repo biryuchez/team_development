@@ -20,7 +20,8 @@ class MedicationNotifier : MedicationNotification {
         const val NOTIFICATION_TITLE_EXTRA_KEY = "NOTIFICATION_TITLE"
         const val NOTIFICATION_DRUG_NAME_EXTRA_KEY = "NOTIFICATION_DRUG_NAME"
         const val NOTIFICATION_DOSAGE_EXTRA_KEY = "NOTIFICATION_DOSAGE"
-        const val NOTIFICATION_REQUEST_CODE_EXTRA_KEY = "NOTIFICATION_REQUEST_CODE"
+        const val NOTIFICATION_ID_EXTRA_KEY = "NOTIFICATION_REQUEST_CODE"
+        const val REMINDER_TIME_EXTRA_KEY = "REMINDER_TIME_EXTRA_KEY"
     }
 
     override fun showNotification(context: Context, intent: Intent) {
@@ -35,7 +36,7 @@ class MedicationNotifier : MedicationNotification {
             ?: context.getString(R.string.dosage_error)
 
         val requestCode =
-            (intent.extras?.getInt(NOTIFICATION_REQUEST_CODE_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
+            (intent.extras?.getInt(NOTIFICATION_ID_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
 
         val onGetDrugActionIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
