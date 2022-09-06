@@ -20,7 +20,7 @@ abstract class NotificationEventBase(
         putExtra(MedicationNotifier.NOTIFICATION_DRUG_NAME_EXTRA_KEY,
             medicationEvent.drugName())
         putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationEvent.dosage())
-        putExtra(MedicationNotifier.NOTIFICATION_REQUEST_CODE_EXTRA_KEY,
+        putExtra(MedicationNotifier.NOTIFICATION_ID_EXTRA_KEY,
             medicationEvent.id())
     }
 
