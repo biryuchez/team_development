@@ -2,7 +2,7 @@ package pro.fateeva.pillsreminder.clean
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import pro.fateeva.pillsreminder.ui.screens.TwicePerDaySettingsViewModel
+import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsViewModel
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewModel
 
 object Di {

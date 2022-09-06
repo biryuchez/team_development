@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.screens
+package pro.fateeva.pillsreminder.ui.screens.twiceperday
 
 import android.os.Bundle
 import android.view.View
@@ -11,6 +11,7 @@ import pro.fateeva.pillsreminder.databinding.FragmentTwicePerDaySettingsBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
+import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 import java.util.*
 
 private const val DRUG_ARG_KEY = "DRUG"

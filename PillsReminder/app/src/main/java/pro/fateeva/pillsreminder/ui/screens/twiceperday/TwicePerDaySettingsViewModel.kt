@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.screens
+package pro.fateeva.pillsreminder.ui.screens.twiceperday
 
 import androidx.lifecycle.ViewModel
 import pro.fateeva.pillsreminder.clean.MedicationInteractor
