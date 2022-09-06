@@ -26,7 +26,6 @@ class FrequencyFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.twicePerDayRadioButton.isEnabled = false // временно отключены все варианты, кроме "Один раз в день"
         binding.whenNeededRadioButton.isEnabled = false // временно отключены все варианты, кроме "Один раз в день"
 
         val selectedDrug = arguments?.getParcelable(DRUG_ARG_KEY) ?: DrugDomain()
@@ -48,6 +47,12 @@ class FrequencyFragment :
                     navigator.navigateToOncePerDayScreen(
                         selectedDrug,
                         binding.frequencyDaysCountTextView.text.toString().toInt())
+                }
+                binding.twicePerDayRadioButton.id ->{
+                    navigator.navigateToTwicePerDayScreen(
+                        selectedDrug,
+                        binding.frequencyDaysCountTextView.text.toString().toInt()
+                    )
                 }
             }
         }

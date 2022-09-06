@@ -2,7 +2,6 @@ package pro.fateeva.pillsreminder.clean
 
 import pro.fateeva.pillsreminder.extensions.copyDateFrom
 import pro.fateeva.pillsreminder.extensions.toCalendar
-import pro.fateeva.pillsreminder.extensions.toCalendarDateOnly
 import java.util.*
 
 class MedicationInteractor(
