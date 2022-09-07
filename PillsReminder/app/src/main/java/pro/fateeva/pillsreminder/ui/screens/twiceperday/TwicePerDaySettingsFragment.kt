@@ -19,7 +19,8 @@ private const val DAYS_COUNT_ARG_KEY = "DAYS_COUNT"
 private const val DEFAULT_DAYS_COUNT_VALUE = 1
 
 class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBinding>(
-    FragmentTwicePerDaySettingsBinding::inflate)  {
+    FragmentTwicePerDaySettingsBinding::inflate
+) {
 
     private val viewModel: TwicePerDaySettingsViewModel by viewModel()
 
@@ -39,43 +40,60 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
         secondMedicationReminderTime.set(Calendar.SECOND, 0)
         secondMedicationReminderTime.set(Calendar.MILLISECOND, 0)
 
-        var remindersTime = mutableListOf<Long>(firstMedicationReminderTime.timeInMillis, secondMedicationReminderTime.timeInMillis)
+        var remindersTime = mutableListOf<Long>(
+            firstMedicationReminderTime.timeInMillis,
+            secondMedicationReminderTime.timeInMillis
+        )
 
         binding.medicationTitleTextView.text = selectedDrug.drugName
 
         binding.firstTimePickerTextView.initTimePicker(
             parentFragmentManager
         ) {
-            remindersTime.set(0, it.timeInMillis)
+            remindersTime[0] = it.timeInMillis
             binding.firstTimePickerTextView.setText(it.formatTime())
         }
 
         binding.secondTimePickerTextView.initTimePicker(
             parentFragmentManager
         ) {
-            remindersTime.set(1, it.timeInMillis)
+            remindersTime[1] = it.timeInMillis
             binding.secondTimePickerTextView.setText(it.formatTime())
         }
 
-        val dosage = binding.firstDosePickerTextView.text.toString().toIntOrNull()
+        binding.planButton.setOnClickListener {
+            if (remindersTime[0] == firstMedicationReminderTime.timeInMillis && remindersTime[1] == secondMedicationReminderTime.timeInMillis) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.set_time_warning),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else if (binding.firstDosePickerTextView.text.isEmpty() && binding.secondDosePickerTextView.text.isEmpty()) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.set_dosage_warning),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                val dosage = binding.firstDosePickerTextView.text.toString().toIntOrNull()
+                val medicationDaysCount = arguments?.getInt(DAYS_COUNT_ARG_KEY)
+                    ?: DEFAULT_DAYS_COUNT_VALUE
 
-        val medicationDaysCount = arguments?.getInt(DAYS_COUNT_ARG_KEY)
-            ?: DEFAULT_DAYS_COUNT_VALUE
+                val medicationReminder = MedicationReminder(
+                    selectedDrug.ID,
+                    selectedDrug.drugName,
+                    dosage ?: 0,
+                    remindersTime
+                )
+                viewModel.setMedicationReminder(medicationDaysCount, medicationReminder)
 
-        val medicationReminder = MedicationReminder(
-            selectedDrug.ID,
-            selectedDrug.drugName,
-            dosage ?: 0,
-            remindersTime
-        )
-
-        viewModel.setMedicationReminder(medicationDaysCount, medicationReminder)
-
-        Snackbar.make(
-            binding.root,
-            getString(R.string.notification_is_setted),
-            Snackbar.LENGTH_SHORT
-        ).show()
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.notification_is_setted),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     companion object {
@@ -83,7 +101,8 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
             return TwicePerDaySettingsFragment().apply {
                 arguments = bundleOf(
                     DRUG_ARG_KEY to drugDomain,
-                    DAYS_COUNT_ARG_KEY to daysCount)
+                    DAYS_COUNT_ARG_KEY to daysCount
+                )
             }
         }
     }
