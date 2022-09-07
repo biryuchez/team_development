@@ -68,10 +68,10 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pill_card_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pill_card_view">
 
         <TextView
             android:id="@+id/planning_text_view"
@@ -80,8 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/planning"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pill_card_view" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/frequency_text_view"
@@ -115,6 +115,17 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
+            android:id="@+id/time_error_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fill_field"
+            android:textColor="#FF0C0C"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/once_per_day_time_picker_text_view" />
+
+        <TextView
             android:id="@+id/dose_text_view"
             style="@style/SettingStyle"
             android:layout_width="wrap_content"
@@ -125,16 +136,27 @@
             app:layout_constraintTop_toBottomOf="@id/hour_text_view" />
 
         <EditText
-            android:id="@+id/dose_picker_text_view"
+            android:id="@+id/dose_picker_edit_text"
             style="@style/PickerSettingStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:gravity="end"
             android:hint="@string/dose_hint"
             android:inputType="number"
-            android:gravity="end"
             app:layout_constraintBaseline_toBaselineOf="@id/dose_text_view"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/dose_error_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fill_field"
+            android:textColor="#FF0C0C"
+            tools:visibility="visible"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dose_picker_edit_text" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/plan_button"

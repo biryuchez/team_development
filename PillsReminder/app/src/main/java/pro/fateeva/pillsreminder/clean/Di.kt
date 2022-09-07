@@ -11,7 +11,7 @@ object Di {
         single<NotificationManager> { NotificationManagerImpl(get()) }
         single<MedicationReminderRepository> { MedicationReminderRepositoryImpl() }
 
-        viewModel{ OncePerDaySettingsViewModel(get()) }
+        viewModel{ OncePerDaySettingsViewModel(get(), get()) }
         viewModel{ TwicePerDaySettingsViewModel(get()) }
     }
 }
