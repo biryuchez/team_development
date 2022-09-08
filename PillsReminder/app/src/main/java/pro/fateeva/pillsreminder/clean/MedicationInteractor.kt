@@ -36,6 +36,10 @@ class MedicationInteractor(
         }
     }
 
+    fun getMedicationReminders() : List<MedicationReminder>{
+        return medicationReminderRepository.getMedicationReminders()
+    }
+
     private fun updateRemindersTime(medicationReminder: MedicationReminder) {
         medicationReminder.remindersTime = medicationReminder.remindersTime.map {
             addDayToMedicationReminder(it)

@@ -65,6 +65,7 @@ class OncePerDaySettingsFragment :
 
         binding.planButton.setOnClickListener {
             viewModel.setMedicationReminder(medicationDaysCount, selectedDrug)
+            navigator.navigateToPillListScreen()
         }
     }
 }

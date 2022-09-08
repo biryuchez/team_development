@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         actionListener.onNotificationAction(this, applicationContext, intent)
     }
 
+    override fun navigateToPillListScreen() {
+        navigateToDestination(PillsListFragment())
+    }
+
     override fun navigateToPillSearchingScreen() {
         navigateToDestination(SearchPillFragment())
     }

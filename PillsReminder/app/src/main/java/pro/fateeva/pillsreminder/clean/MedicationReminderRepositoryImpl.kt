@@ -13,4 +13,8 @@ class MedicationReminderRepositoryImpl : MedicationReminderRepository {
             it.id == id
         }
     }
+
+    override fun getMedicationReminders(): List<MedicationReminder> {
+        return medicationReminders
+    }
 }

@@ -4,6 +4,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsViewModel
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewModel
+import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListViewModel
 
 object Di {
     val mainModule = module {
@@ -12,6 +13,7 @@ object Di {
         single<MedicationReminderRepository> { MedicationReminderRepositoryImpl() }
 
         viewModel{ OncePerDaySettingsViewModel(get(), get()) }
+        viewModel{ PillsListViewModel(get(), get()) }
         viewModel{ TwicePerDaySettingsViewModel(get()) }
     }
 }

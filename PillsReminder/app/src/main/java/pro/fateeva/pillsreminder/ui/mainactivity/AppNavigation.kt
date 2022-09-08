@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 
 interface AppNavigation {
+    fun navigateToPillListScreen()
     fun navigateToPillSearchingScreen()
     fun navigateToEventFrequencyScreen(drugDomain: DrugDomain)
     fun navigateToOncePerDayScreen(drugDomain: DrugDomain, daysCount: Int)
