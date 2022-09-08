@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.clean.MedicationIntake
 import pro.fateeva.pillsreminder.clean.MedicationReminder
 import pro.fateeva.pillsreminder.databinding.FragmentTwicePerDaySettingsBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
@@ -75,16 +76,28 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
                     Snackbar.LENGTH_SHORT
                 ).show()
             } else {
-                val dosage = binding.firstDosePickerTextView.text.toString().toIntOrNull()
+                val firstMedicationIntakeDose =
+                    binding.firstDosePickerTextView.text.toString().toIntOrNull()
+                val secondMedicationIntakeDose =
+                    binding.secondDosePickerTextView.text.toString().toIntOrNull()
                 val medicationDaysCount = arguments?.getInt(DAYS_COUNT_ARG_KEY)
                     ?: DEFAULT_DAYS_COUNT_VALUE
 
                 val medicationReminder = MedicationReminder(
                     selectedDrug.ID,
                     selectedDrug.drugName,
-                    dosage ?: 0,
-                    remindersTime
+                    listOf(
+                        MedicationIntake(
+                            firstMedicationIntakeDose ?: 0,
+                            firstMedicationReminderTime.timeInMillis
+                        ),
+                        MedicationIntake(
+                            secondMedicationIntakeDose ?: 0,
+                            secondMedicationReminderTime.timeInMillis
+                        )
+                    )
                 )
+
                 viewModel.setMedicationReminder(medicationDaysCount, medicationReminder)
 
                 Snackbar.make(

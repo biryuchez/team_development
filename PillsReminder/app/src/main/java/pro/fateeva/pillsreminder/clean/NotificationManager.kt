@@ -1,5 +1,5 @@
 package pro.fateeva.pillsreminder.clean
 
 interface NotificationManager {
-    fun planNotification(medicationReminder: MedicationReminder, notificationTime : Long)
+    fun planNotification(medicationReminder: MedicationReminder, medicationIntakeIndex : Int)
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import pro.fateeva.pillsreminder.clean.MedicationIntake
 import pro.fateeva.pillsreminder.clean.MedicationInteractor
 import pro.fateeva.pillsreminder.clean.MedicationReminder
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
@@ -35,8 +36,7 @@ class OncePerDaySettingsViewModel(
         val medicationReminder = MedicationReminder(
             selectedDrug.ID,
             selectedDrug.drugName,
-            oncePerDaySettingsState.medicationDose,
-            listOf(oncePerDaySettingsState.medicationReminderTime)
+            listOf(MedicationIntake(oncePerDaySettingsState.medicationDose,oncePerDaySettingsState.medicationReminderTime))
         )
 
         if (oncePerDaySettingsState.medicationReminderTime  == 0L) {

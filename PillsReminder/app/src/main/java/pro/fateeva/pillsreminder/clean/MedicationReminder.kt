@@ -3,7 +3,8 @@ package pro.fateeva.pillsreminder.clean
 data class MedicationReminder(
     val id: Int,
     val medicationName: String,
-    val dosage: Int,
-    var remindersTime: List<Long>,
+    var medicationIntakes: List<MedicationIntake>,
     var endDate: Long = -1
+//    val dosage: Int,
+//    var remindersTime: List<Long>,
 )

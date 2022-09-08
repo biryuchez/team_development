@@ -17,7 +17,7 @@ class MedicationInteractor(
 
         notificationManager.planNotification(
             medicationReminder,
-            medicationReminder.remindersTime.first()
+            0
         )
 
         medicationReminderRepository.saveMedicationReminder(medicationReminder)
@@ -25,14 +25,15 @@ class MedicationInteractor(
 
     fun onNotificationShown(medicationReminder: MedicationReminder, previousReminderTime: Long) {
         updateRemindersTime(medicationReminder)
-        val nextIndex = medicationReminder.remindersTime.indexOfFirst { it > previousReminderTime }
+
+        val nextIndex = medicationReminder.medicationIntakes.indexOfFirst { it.time > previousReminderTime }
 
         if (nextIndex == -1) error("Next reminder not found")
 
-        val nextMedicationReminderTime = medicationReminder.remindersTime[nextIndex]
+        val nextMedicationReminderTime = medicationReminder.medicationIntakes[nextIndex].time
 
         if (nextMedicationReminderTime < medicationReminder.endDate) {
-            notificationManager.planNotification(medicationReminder, nextMedicationReminderTime)
+            notificationManager.planNotification(medicationReminder, nextIndex)
         }
     }
 
@@ -41,17 +42,17 @@ class MedicationInteractor(
     }
 
     private fun updateRemindersTime(medicationReminder: MedicationReminder) {
-        medicationReminder.remindersTime = medicationReminder.remindersTime.map {
+        medicationReminder.medicationIntakes = medicationReminder.medicationIntakes.map {
             addDayToMedicationReminder(it)
-        }.sorted()
+        }.sortedBy { it.time }
     }
 
-    private fun addDayToMedicationReminder(time: Long): Long {
-        val calendarReminder = time.toCalendar()
-        if (time < System.currentTimeMillis()) {
+    private fun addDayToMedicationReminder(medicationIntake: MedicationIntake): MedicationIntake {
+        val calendarReminder = medicationIntake.time.toCalendar()
+        if (medicationIntake.time < System.currentTimeMillis()) {
             calendarReminder.copyDateFrom(Calendar.getInstance())
             calendarReminder.add(Calendar.DAY_OF_MONTH, 1)
         }
-        return calendarReminder.timeInMillis
+        return medicationIntake
     }
 }

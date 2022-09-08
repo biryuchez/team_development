@@ -18,7 +18,7 @@ class NotificationManagerImpl(
         context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
     }
 
-    override fun planNotification(medicationReminder: MedicationReminder, notificationTime : Long) {
+    override fun planNotification(medicationReminder: MedicationReminder, medicationIntakeIndex : Int) {
         val medicationReminderIntent = Intent(context, MedicationEventReceiver::class.java).apply {
 
             putExtra(
@@ -31,7 +31,7 @@ class NotificationManagerImpl(
                 medicationReminder.medicationName
             )
 
-            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationReminder.dosage)
+            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationReminder.medicationIntakes[medicationIntakeIndex].dosage)
 
             putExtra(
                 MedicationNotifier.NOTIFICATION_ID_EXTRA_KEY,
@@ -40,7 +40,7 @@ class NotificationManagerImpl(
 
             putExtra(
                 MedicationNotifier.REMINDER_TIME_EXTRA_KEY,
-                notificationTime
+                medicationReminder.medicationIntakes[medicationIntakeIndex].time
             )
         }
 
@@ -54,7 +54,7 @@ class NotificationManagerImpl(
 
             alarmManager.setExact(
                 AlarmManager.RTC_WAKEUP,
-                notificationTime,
+                medicationReminder.medicationIntakes[medicationIntakeIndex].time,
                 pendingEventIntent
             )
     }

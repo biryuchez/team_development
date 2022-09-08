@@ -25,7 +25,7 @@ class PillsListFragment :
     ) { medicationreminder, _ ->
         ItemPillBinding.bind(this).apply {
             medicationTitleTextView.text = medicationreminder.medicationName
-            scheduleTextView.text = medicationreminder.remindersTime.map { it.toCalendar().formatTime() }.joinToString(", ")
+            scheduleTextView.text = medicationreminder.medicationIntakes.map { it.time.toCalendar().formatTime()}.joinToString(", ")
         }
     }
 
