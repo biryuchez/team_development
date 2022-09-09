@@ -1,6 +1,6 @@
 package pro.fateeva.pillsreminder.ui.screens.pillsearching
 
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 
 sealed class SearchPillState {
     object Loading: SearchPillState()

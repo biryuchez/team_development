@@ -1,7 +1,7 @@
 package pro.fateeva.pillsreminder.ui.mainactivity
 
 import androidx.fragment.app.Fragment
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 
 interface AppNavigation {
     fun navigateToPillListScreen()
