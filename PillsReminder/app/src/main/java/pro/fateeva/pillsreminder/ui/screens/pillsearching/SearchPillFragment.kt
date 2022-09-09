@@ -2,10 +2,12 @@ package pro.fateeva.pillsreminder.ui.screens.pillsearching
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AbsListView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +41,14 @@ class SearchPillFragment :
         binding.pillSearchingRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = searchPillAdapter
+            addOnScrollListener(object:  RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                        binding.pillSearchingRecyclerView.hideKeyboard()
+                    }
+                }
+            })
         }
 
         pillSearchingViewModel.getData().observe(viewLifecycleOwner) {
