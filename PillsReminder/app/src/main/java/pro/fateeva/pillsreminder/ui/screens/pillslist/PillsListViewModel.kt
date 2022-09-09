@@ -2,10 +2,9 @@ package pro.fateeva.pillsreminder.ui.screens.pillslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import pro.fateeva.pillsreminder.clean.MedicationInteractor
-import pro.fateeva.pillsreminder.clean.MedicationReminder
+import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 
 class PillsListViewModel(
     private val interactor: MedicationInteractor

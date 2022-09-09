@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.clean
+package pro.fateeva.pillsreminder.ui
 
 enum class SaveState {
     SUCCESS,

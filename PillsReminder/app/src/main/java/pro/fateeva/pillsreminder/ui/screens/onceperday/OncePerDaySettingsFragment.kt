@@ -6,8 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import pro.fateeva.pillsreminder.clean.SaveState
+import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.databinding.FragmentOncePerDaySettingsBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.extensions.formatTime

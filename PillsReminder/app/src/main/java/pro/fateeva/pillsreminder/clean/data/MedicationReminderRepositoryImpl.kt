@@ -1,6 +1,6 @@
-package pro.fateeva.pillsreminder.clean
+package pro.fateeva.pillsreminder.clean.data
 
-import java.util.*
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 
 class MedicationReminderRepositoryImpl : MedicationReminderRepository {
 

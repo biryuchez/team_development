@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.clean
+package pro.fateeva.pillsreminder.clean.domain.entity
 
 data class MedicationReminder(
     val id: Int,

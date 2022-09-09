@@ -5,19 +5,13 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.MedicationIntake
-import pro.fateeva.pillsreminder.clean.MedicationReminder
-import pro.fateeva.pillsreminder.clean.SaveState
+import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.databinding.FragmentTwicePerDaySettingsBinding
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
-import java.util.*
 
 private const val DRUG_ARG_KEY = "DRUG"
 private const val DAYS_COUNT_ARG_KEY = "DAYS_COUNT"
