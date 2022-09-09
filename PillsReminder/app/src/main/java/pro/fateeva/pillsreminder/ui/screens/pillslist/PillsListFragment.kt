@@ -2,6 +2,8 @@ package pro.fateeva.pillsreminder.ui.screens.pillslist
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.MedicationInteractor
@@ -25,7 +27,9 @@ class PillsListFragment :
     ) { medicationreminder, _ ->
         ItemPillBinding.bind(this).apply {
             medicationTitleTextView.text = medicationreminder.medicationName
-            scheduleTextView.text = medicationreminder.medicationIntakes.map { it.time.toCalendar().formatTime()}.joinToString(", ")
+            scheduleTextView.text =
+                medicationreminder.medicationIntakes.map { it.time.toCalendar().formatTime() }
+                    .joinToString(", ")
         }
     }
 
@@ -51,6 +55,7 @@ class PillsListFragment :
     }
 
     private fun renderMedicationReminders(medicationReminders: List<MedicationReminder>) {
+        binding.emptyPillsListLottie.isVisible = medicationReminders.isEmpty()
         adapter.itemList = medicationReminders
     }
 }
