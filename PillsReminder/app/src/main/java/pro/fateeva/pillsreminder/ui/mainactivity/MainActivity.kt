@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.domain.entity.DrugDomain
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
