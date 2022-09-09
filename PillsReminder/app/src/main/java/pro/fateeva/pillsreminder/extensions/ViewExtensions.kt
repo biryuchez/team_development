@@ -11,9 +11,17 @@ private const val DEFAULT_TIME_PICKER_VALUE = 0
 private const val TOMORROW_DATE_OFFSET = 1
 private const val TIME_PICKER_TAG = "TIME_PICKER"
 
-fun View.initTimePicker(fragmentManager: FragmentManager, tag : String? = TIME_PICKER_TAG, onTimeSet: (Calendar) -> Unit) {
+fun View.initTimePicker(
+    fragmentManager: FragmentManager,
+    tag: String? = TIME_PICKER_TAG,
+    onTimeSet: (Calendar) -> Unit,
+) {
     val timePicker = MaterialTimePicker.Builder()
-        .setTimeFormat(TimeFormat.CLOCK_24H)
+        .setTimeFormat(if (android.text.format.DateFormat.is24HourFormat(this.context)) {
+            TimeFormat.CLOCK_24H
+        } else {
+            TimeFormat.CLOCK_12H
+        })
         .setHour(DEFAULT_TIME_PICKER_VALUE)
         .setMinute(DEFAULT_TIME_PICKER_VALUE)
         .setTitleText(context.getString(R.string.time_picker_title))
