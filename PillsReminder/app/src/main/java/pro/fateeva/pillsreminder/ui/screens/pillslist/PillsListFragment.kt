@@ -3,6 +3,7 @@ package pro.fateeva.pillsreminder.ui.screens.pillslist
 import android.os.Bundle
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.MedicationInteractor
 import pro.fateeva.pillsreminder.clean.MedicationReminder
@@ -17,7 +18,7 @@ import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewMod
 class PillsListFragment :
     BaseFragment<FragmentPillsListBinding>(FragmentPillsListBinding::inflate) {
 
-    private val viewModel: PillsListViewModel by stateViewModel()
+    private val viewModel: PillsListViewModel by viewModel()
 
     val adapter = RecyclerAdapter<MedicationReminder>(
         emptyList(),

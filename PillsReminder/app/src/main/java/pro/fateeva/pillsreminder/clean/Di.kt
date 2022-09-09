@@ -13,7 +13,7 @@ object Di {
         single<MedicationReminderRepository> { MedicationReminderRepositoryImpl() }
 
         viewModel{ OncePerDaySettingsViewModel(get(), get()) }
-        viewModel{ PillsListViewModel(get(), get()) }
-        viewModel{ TwicePerDaySettingsViewModel(get()) }
+        viewModel{ PillsListViewModel(get()) }
+        viewModel{ TwicePerDaySettingsViewModel(get(), get()) }
     }
 }

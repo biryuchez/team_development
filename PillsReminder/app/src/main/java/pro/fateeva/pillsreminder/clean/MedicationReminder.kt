@@ -5,6 +5,4 @@ data class MedicationReminder(
     val medicationName: String,
     var medicationIntakes: List<MedicationIntake>,
     var endDate: Long = -1
-//    val dosage: Int,
-//    var remindersTime: List<Long>,
 )

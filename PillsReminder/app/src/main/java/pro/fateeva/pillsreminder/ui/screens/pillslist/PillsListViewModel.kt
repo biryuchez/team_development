@@ -8,16 +8,16 @@ import pro.fateeva.pillsreminder.clean.MedicationInteractor
 import pro.fateeva.pillsreminder.clean.MedicationReminder
 
 class PillsListViewModel(
-    private val handle: SavedStateHandle,
     private val interactor: MedicationInteractor
 ) : ViewModel() {
 
-    private val liveData: MutableLiveData<List<MedicationReminder>> = handle.getLiveData("state")
+    private val liveData: MutableLiveData<List<MedicationReminder>> = MutableLiveData()
 
     val getLiveData: LiveData<List<MedicationReminder>>
         get() = liveData
 
     fun getMedicationReminders(){
         liveData.postValue(interactor.getMedicationReminders())
+        interactor.planMedicationReminders()
     }
 }
