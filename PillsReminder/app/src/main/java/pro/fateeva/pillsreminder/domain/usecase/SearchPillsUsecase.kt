@@ -1,6 +1,6 @@
 package pro.fateeva.pillsreminder.domain.usecase
 
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 
 /**
  * Юзкейс предполагается для репозитория, который будет по API получать список лекарств

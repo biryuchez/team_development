@@ -130,6 +130,17 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
+                android:id="@+id/first_time_error_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fill_field"
+                android:textColor="#FF0C0C"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@id/first_time_picker_text_view"
+                app:layout_constraintTop_toBottomOf="@id/first_time_picker_text_view" />
+
+            <TextView
                 android:id="@+id/first_dose_text_view"
                 style="@style/SettingStyle"
                 android:layout_width="wrap_content"
@@ -150,6 +161,17 @@
                 android:inputType="number"
                 app:layout_constraintBaseline_toBaselineOf="@id/first_dose_text_view"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/first_dose_error_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fill_field"
+                android:textColor="#FF0C0C"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@id/first_dose_picker_text_view"
+                app:layout_constraintTop_toBottomOf="@id/first_dose_picker_text_view" />
 
             <TextView
                 android:id="@+id/second_dose_title_text_view"
@@ -184,6 +206,17 @@
                 android:hint="20:00" />
 
             <TextView
+                android:id="@+id/second_time_error_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fill_field"
+                android:textColor="#FF0C0C"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@id/second_time_picker_text_view"
+                app:layout_constraintTop_toBottomOf="@id/second_time_picker_text_view" />
+
+            <TextView
                 android:id="@+id/second_dose_text_view"
                 style="@style/SettingStyle"
                 android:layout_width="wrap_content"
@@ -204,6 +237,17 @@
                 android:inputType="number"
                 app:layout_constraintBaseline_toBaselineOf="@id/second_dose_text_view"
                 app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/second_dose_error_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fill_field"
+                android:textColor="#FF0C0C"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@id/second_dose_picker_text_view"
+                app:layout_constraintTop_toBottomOf="@id/second_dose_picker_text_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

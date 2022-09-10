@@ -1,12 +1,13 @@
-package pro.fateeva.pillsreminder.clean
+package pro.fateeva.pillsreminder.clean.data
 
 import android.app.AlarmManager
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.ui.notification.MedicationEventReceiver
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotifier
 
@@ -51,6 +52,8 @@ class NotificationManagerImpl(
                 medicationReminderIntent,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
+
+            Log.d("NotificationManager", "Planning notification for ${medicationReminder.medicationIntakes[medicationIntakeIndex].time}")
 
             alarmManager.setExact(
                 AlarmManager.RTC_WAKEUP,

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
 import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment

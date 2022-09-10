@@ -6,9 +6,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.databinding.FragmentOncePerDaySettingsBinding
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
@@ -63,9 +63,14 @@ class OncePerDaySettingsFragment :
             binding.doseErrorTextView.isVisible = it
         }
 
+        viewModel.successErrorSaveState.observe(viewLifecycleOwner){
+            if (it == SaveState.SUCCESS){
+                navigator.navigateToPillListScreen()
+            }
+        }
+
         binding.planButton.setOnClickListener {
             viewModel.setMedicationReminder(medicationDaysCount, selectedDrug)
-            navigator.navigateToPillListScreen()
         }
     }
 }
