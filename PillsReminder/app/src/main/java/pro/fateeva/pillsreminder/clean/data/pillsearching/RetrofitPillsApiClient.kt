@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.data
+package pro.fateeva.pillsreminder.clean.data.pillsearching
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

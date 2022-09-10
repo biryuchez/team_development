@@ -4,16 +4,7 @@ import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 
 class MedicationReminderRepositoryImpl : MedicationReminderRepository {
 
-    private val medicationReminders = mutableListOf<MedicationReminder>(
-//        MedicationReminder(
-//            0,
-//            "Test",
-//            listOf(
-//                MedicationIntake(2, 1662757200000), MedicationIntake(3, 1662760800000)
-//            ),
-//            endDate = Calendar.getInstance().apply { add(Calendar.DAY_OF_MONTH, 1) }.timeInMillis
-//        )
-    )
+    private val medicationReminders = mutableListOf<MedicationReminder>()
 
     override fun saveMedicationReminder(medicationReminder: MedicationReminder) {
         medicationReminders.removeIf { it.id == medicationReminder.id }

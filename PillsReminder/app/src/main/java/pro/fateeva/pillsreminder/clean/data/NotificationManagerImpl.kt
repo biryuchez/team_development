@@ -12,14 +12,17 @@ import pro.fateeva.pillsreminder.ui.notification.MedicationEventReceiver
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotifier
 
 class NotificationManagerImpl(
-    private val context: Context
+    private val context: Context,
 ) : NotificationManager {
 
-    val alarmManager: AlarmManager by lazy {
+    private val alarmManager: AlarmManager by lazy {
         context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
     }
 
-    override fun planNotification(medicationReminder: MedicationReminder, medicationIntakeIndex : Int) {
+    override fun planNotification(
+        medicationReminder: MedicationReminder,
+        medicationIntakeIndex: Int,
+    ) {
         val medicationReminderIntent = Intent(context, MedicationEventReceiver::class.java).apply {
 
             putExtra(
@@ -32,7 +35,8 @@ class NotificationManagerImpl(
                 medicationReminder.medicationName
             )
 
-            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationReminder.medicationIntakes[medicationIntakeIndex].dosage)
+            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY,
+                medicationReminder.medicationIntakes[medicationIntakeIndex].dosage)
 
             putExtra(
                 MedicationNotifier.NOTIFICATION_ID_EXTRA_KEY,
@@ -53,12 +57,13 @@ class NotificationManagerImpl(
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            Log.d("NotificationManager", "Planning notification for ${medicationReminder.medicationIntakes[medicationIntakeIndex].time}")
+        Log.d("NotificationManager",
+            "Planning notification for ${medicationReminder.medicationIntakes[medicationIntakeIndex].time}")
 
-            alarmManager.setExact(
-                AlarmManager.RTC_WAKEUP,
-                medicationReminder.medicationIntakes[medicationIntakeIndex].time,
-                pendingEventIntent
-            )
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            medicationReminder.medicationIntakes[medicationIntakeIndex].time,
+            pendingEventIntent
+        )
     }
 }

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.databinding.FragmentFrequencyBinding
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.databinding.FragmentFrequencyBinding
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
 private const val DRUG_ARG_KEY = "DRUG"

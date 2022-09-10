@@ -2,9 +2,7 @@ package pro.fateeva.pillsreminder.ui.screens.pillslist
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
