@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.MedicationReminder
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.databinding.FragmentPillsListBinding
 import pro.fateeva.pillsreminder.databinding.ItemPillBinding
 import pro.fateeva.pillsreminder.extensions.formatTime
