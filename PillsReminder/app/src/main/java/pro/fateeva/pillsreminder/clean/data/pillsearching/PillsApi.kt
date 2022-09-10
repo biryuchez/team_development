@@ -1,7 +1,7 @@
-package pro.fateeva.pillsreminder.data
+package pro.fateeva.pillsreminder.clean.data.pillsearching
 
 import kotlinx.coroutines.Deferred
-import pro.fateeva.pillsreminder.data.dto.PillSearchResultDto
+import pro.fateeva.pillsreminder.clean.data.pillsearching.dto.PillSearchResultDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -2,6 +2,7 @@ package pro.fateeva.pillsreminder.ui.screens.pillslist
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
@@ -49,6 +50,7 @@ class PillsListFragment :
     }
 
     private fun renderMedicationReminders(medicationReminders: List<MedicationReminder>) {
+        binding.emptyPillsListLottie.isVisible = medicationReminders.isEmpty()
         adapter.itemList = medicationReminders
     }
 }

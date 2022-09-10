@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake
 import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.ui.SaveState
-import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 
 private const val FIRST_MEDICATION_INTAKE_INDEX = 0
 private const val SECOND_MEDICATION_INTAKE_INDEX = 1

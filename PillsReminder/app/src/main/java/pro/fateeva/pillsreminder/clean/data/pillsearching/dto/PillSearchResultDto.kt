@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.data.dto
+package pro.fateeva.pillsreminder.clean.data.pillsearching.dto
 
 import com.google.gson.annotations.SerializedName
 

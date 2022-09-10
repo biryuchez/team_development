@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.domain.usecase
+package pro.fateeva.pillsreminder.clean.domain.usecase
 
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 
