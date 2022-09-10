@@ -1,12 +1,13 @@
-package pro.fateeva.pillsreminder.clean
+package pro.fateeva.pillsreminder.clean.data
 
 import android.app.AlarmManager
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.ui.notification.MedicationEventReceiver
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotifier
 
@@ -18,7 +19,7 @@ class NotificationManagerImpl(
         context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
     }
 
-    override fun planNotification(medicationReminder: MedicationReminder, notificationTime : Long) {
+    override fun planNotification(medicationReminder: MedicationReminder, medicationIntakeIndex : Int) {
         val medicationReminderIntent = Intent(context, MedicationEventReceiver::class.java).apply {
 
             putExtra(
@@ -31,7 +32,7 @@ class NotificationManagerImpl(
                 medicationReminder.medicationName
             )
 
-            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationReminder.dosage)
+            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY, medicationReminder.medicationIntakes[medicationIntakeIndex].dosage)
 
             putExtra(
                 MedicationNotifier.NOTIFICATION_ID_EXTRA_KEY,
@@ -40,7 +41,7 @@ class NotificationManagerImpl(
 
             putExtra(
                 MedicationNotifier.REMINDER_TIME_EXTRA_KEY,
-                notificationTime
+                medicationReminder.medicationIntakes[medicationIntakeIndex].time
             )
         }
 
@@ -52,9 +53,11 @@ class NotificationManagerImpl(
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
+            Log.d("NotificationManager", "Planning notification for ${medicationReminder.medicationIntakes[medicationIntakeIndex].time}")
+
             alarmManager.setExact(
                 AlarmManager.RTC_WAKEUP,
-                notificationTime,
+                medicationReminder.medicationIntakes[medicationIntakeIndex].time,
                 pendingEventIntent
             )
     }

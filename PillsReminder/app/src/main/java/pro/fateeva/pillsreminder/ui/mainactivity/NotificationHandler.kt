@@ -1,7 +1,6 @@
 package pro.fateeva.pillsreminder.ui.mainactivity
 
 import android.app.AlarmManager
-import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
 
 /**
@@ -10,7 +9,6 @@ import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActi
 interface NotificationHandler {
     val alarmManager: AlarmManager
     val actionListener: NotificationActionListener
-    fun setNotification(medicationEvent: MedicationEventDomain)
     fun onGetDrugAction(message: String)
     fun onCancelDrugAction(message: String)
 }

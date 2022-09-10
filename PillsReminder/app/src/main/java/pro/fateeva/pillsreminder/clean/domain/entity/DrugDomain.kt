@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.domain.entity
+package pro.fateeva.pillsreminder.clean.domain.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

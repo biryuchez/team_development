@@ -1,5 +1,8 @@
 package pro.fateeva.pillsreminder.extensions
 
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 fun Long.toCalendar(): Calendar = Calendar.getInstance().apply { timeInMillis = this@toCalendar }
@@ -24,4 +27,8 @@ fun Long.toCalendarDateOnly(): Calendar {
     calendar.set(Calendar.SECOND, 0)
     calendar.set(Calendar.MILLISECOND, 0)
     return calendar
+}
+
+fun Calendar.formatTime() : String {
+    return SimpleDateFormat("HH:mm", Locale.getDefault()).format(time)
 }

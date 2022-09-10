@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.clean
+package pro.fateeva.pillsreminder.koin
 
 import android.app.Application
 import android.content.Context
@@ -14,8 +14,3 @@ class App : Application() {
         }
     }
 }
-
-val Context.app: App
-    get() {
-        return applicationContext as App
-    }

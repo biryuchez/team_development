@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.databinding.FragmentFrequencyBinding
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
 private const val DRUG_ARG_KEY = "DRUG"
@@ -26,7 +26,6 @@ class FrequencyFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.twicePerDayRadioButton.isEnabled = false // временно отключены все варианты, кроме "Один раз в день"
         binding.whenNeededRadioButton.isEnabled = false // временно отключены все варианты, кроме "Один раз в день"
 
         val selectedDrug = arguments?.getParcelable(DRUG_ARG_KEY) ?: DrugDomain()
@@ -48,6 +47,12 @@ class FrequencyFragment :
                     navigator.navigateToOncePerDayScreen(
                         selectedDrug,
                         binding.frequencyDaysCountTextView.text.toString().toInt())
+                }
+                binding.twicePerDayRadioButton.id ->{
+                    navigator.navigateToTwicePerDayScreen(
+                        selectedDrug,
+                        binding.frequencyDaysCountTextView.text.toString().toInt()
+                    )
                 }
             }
         }

@@ -40,4 +40,5 @@
     <string name="set_time_warning">Установите время</string>
     <string name="set_dosage_warning">Введите дозировку</string>
     <string name="time_picker_title">Время приема лекарства</string>
+    <string name="fill_field">Заполните поле</string>
 </resources>

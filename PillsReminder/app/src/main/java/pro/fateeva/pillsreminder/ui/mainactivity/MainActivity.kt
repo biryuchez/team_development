@@ -6,27 +6,19 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import org.koin.android.ext.android.inject
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.MedicationInteractor
-import pro.fateeva.pillsreminder.clean.MedicationReminder
-import pro.fateeva.pillsreminder.domain.entity.DrugDomain
-import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
+import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
-import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEvent
-import pro.fateeva.pillsreminder.ui.notification.notificationevents.NotificationEventFactory
-import pro.fateeva.pillsreminder.ui.screens.PillsListFragment
+import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
+import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
-import java.util.*
 
 private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
 
 class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
-
-    private val medicationInteractor: MedicationInteractor by inject()
 
     override val alarmManager: AlarmManager by lazy {
         getSystemService(ALARM_SERVICE) as AlarmManager
@@ -40,23 +32,6 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 14)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND,0)
-
-        val medicationReminder = MedicationReminder(
-            id = 1,
-            medicationName = "Аспирин",
-            dosage = 1,
-            remindersTime = listOf(calendar.timeInMillis, calendar.timeInMillis + 60000*30)
-        )
-
-        medicationInteractor.setMedicationReminder(
-            quantityOfDays = 3,
-            medicationReminder = medicationReminder
-        )
-
         onNewIntent(intent)
 
         if (savedInstanceState == null) {
@@ -65,16 +40,6 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
                 .replace(R.id.main_container, PillsListFragment())
                 .commit()
         }
-    }
-
-    override fun setNotification(medicationEvent: MedicationEventDomain) {
-        val notificationEvent: NotificationEvent = NotificationEventFactory()
-            .generateNotificationEvent(
-                medicationEvent = medicationEvent,
-                eventReminder = alarmManager,
-                context = applicationContext)
-
-        notificationEvent.setEvent()
     }
 
     override fun onGetDrugAction(message: String) {
@@ -96,6 +61,10 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         actionListener.onNotificationAction(this, applicationContext, intent)
     }
 
+    override fun navigateToPillListScreen() {
+        navigateToDestination(PillsListFragment())
+    }
+
     override fun navigateToPillSearchingScreen() {
         navigateToDestination(SearchPillFragment())
     }
@@ -106,6 +75,10 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
 
     override fun navigateToOncePerDayScreen(drugDomain: DrugDomain, daysCount: Int) {
         navigateToDestination(OncePerDaySettingsFragment.newInstance(drugDomain, daysCount))
+    }
+
+    override fun navigateToTwicePerDayScreen(drugDomain: DrugDomain, daysCount: Int) {
+        navigateToDestination(TwicePerDaySettingsFragment.newInstance(drugDomain, daysCount))
     }
 
     override fun navigateToDestination(destination: Fragment) {
