@@ -70,7 +70,7 @@ class MedicationNotifier : MedicationNotification {
 
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_medical_services)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOngoing(true)
                 .setContentTitle(notificationTitle)
