@@ -103,7 +103,7 @@ class TwicePerDaySettingsViewModel(
         }
 
         if (isEveryFieldValid()) {
-            interactor.setMedicationReminder(quantityOfDays, medicationReminder)
+            interactor.saveMedicationReminder(quantityOfDays, medicationReminder)
             successErrorSaveLiveData.value = SaveState.SUCCESS
         }
     }

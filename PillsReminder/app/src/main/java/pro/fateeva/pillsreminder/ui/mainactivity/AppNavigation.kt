@@ -8,6 +8,7 @@ interface AppNavigation {
     fun navigateToPillSearchingScreen()
     fun navigateToEventFrequencyScreen(drugDomain: DrugDomain)
     fun navigateToOncePerDayScreen(drugDomain: DrugDomain, daysCount: Int)
+    fun navigateToOncePerDayScreen(id: Int)
     fun navigateToTwicePerDayScreen(drugDomain: DrugDomain, daysCount: Int)
     fun navigateToDestination(destination: Fragment)
 }

@@ -23,6 +23,9 @@ class OncePerDaySettingsViewModel(
     private val oncePerDaySettingsState: OncePerDaySettingsState
         get() = liveData.value ?: OncePerDaySettingsState()
 
+    val state: LiveData<OncePerDaySettingsState>
+        get() = liveData
+
     val hasMedicationTimeError: LiveData<Boolean>
         get() = medicationTimeError
 
@@ -39,7 +42,7 @@ class OncePerDaySettingsViewModel(
     val successErrorSaveState: LiveData<SaveState>
         get() = successErrorSaveLiveData
 
-    fun setMedicationReminder(quantityOfDays: Int, selectedDrug: DrugDomain) {
+    fun onCreateMedicationReminder(quantityOfDays: Int, selectedDrug: DrugDomain) {
         val medicationReminder = MedicationReminder(
             selectedDrug.ID,
             selectedDrug.drugName,
@@ -60,9 +63,27 @@ class OncePerDaySettingsViewModel(
         }
 
         if (isEveryFieldValid()) {
-            interactor.setMedicationReminder(quantityOfDays, medicationReminder)
+            interactor.saveMedicationReminder(quantityOfDays, medicationReminder)
             successErrorSaveLiveData.value = SaveState.SUCCESS
         }
+    }
+
+    fun onEditMedicationReminder(id : Int) {
+        val medicationReminder = interactor.getMedicationReminder(id)
+        val newMedicationReminder = MedicationReminder(
+            medicationReminder.id,
+            medicationReminder.medicationName,
+            listOf(
+                MedicationIntake(
+                    oncePerDaySettingsState.medicationDose,
+                    oncePerDaySettingsState.medicationReminderTime
+                )
+            ),
+            medicationReminder.endDate
+        )
+
+        interactor.editMedicationReminder(newMedicationReminder)
+        successErrorSaveLiveData.value = SaveState.SUCCESS
     }
 
     fun setMedicationReminderTime(time: Long) {
@@ -73,5 +94,16 @@ class OncePerDaySettingsViewModel(
     fun setDose(dose: Int) {
         oncePerDaySettingsState.medicationDose = dose
         medicationDoseError.value = false
+    }
+
+    fun onViewCreated(medicationReminderId: Int) {
+        val medicationReminder = interactor.getMedicationReminder(medicationReminderId)
+        setMedicationReminderTime(medicationReminder.medicationIntakes[0].time)
+        setDose(medicationReminder.medicationIntakes[0].dosage)
+        oncePerDaySettingsState.medicationName = medicationReminder.medicationName
+    }
+
+    fun onViewCreated(name: String) {
+        oncePerDaySettingsState.medicationName = name
     }
 }

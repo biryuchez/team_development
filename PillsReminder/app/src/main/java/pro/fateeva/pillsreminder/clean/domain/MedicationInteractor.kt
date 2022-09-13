@@ -13,11 +13,22 @@ class MedicationInteractor(
     private val notificationManager: NotificationManager,
     private val medicationReminderRepository: MedicationReminderRepository
 ) {
-    fun setMedicationReminder(quantityOfDays: Int, medicationReminder: MedicationReminder) {
+    fun saveMedicationReminder(quantityOfDays: Int, medicationReminder: MedicationReminder) {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, quantityOfDays)
         medicationReminder.endDate = calendar.timeInMillis
 
+        updateRemindersTime(medicationReminder)
+
+        notificationManager.planNotification(
+            medicationReminder,
+            0
+        )
+
+        medicationReminderRepository.saveMedicationReminder(medicationReminder)
+    }
+
+    fun editMedicationReminder(medicationReminder: MedicationReminder) {
         updateRemindersTime(medicationReminder)
 
         notificationManager.planNotification(
@@ -34,7 +45,7 @@ class MedicationInteractor(
         }
     }
 
-    fun planReminder(medicationReminder: MedicationReminder){
+    private fun planReminder(medicationReminder: MedicationReminder){
         updateRemindersTime(medicationReminder)
         val now = System.currentTimeMillis()
         val nextIndex = medicationReminder.medicationIntakes.indexOfFirst { it.time >= now }
@@ -59,6 +70,10 @@ class MedicationInteractor(
         return medicationReminderRepository.getMedicationReminders()
     }
 
+    fun getMedicationReminder(id: Int) : MedicationReminder{
+        return medicationReminderRepository.getMedicationReminder(id)
+    }
+
     private fun updateRemindersTime(medicationReminder: MedicationReminder) {
         medicationReminder.medicationIntakes = medicationReminder.medicationIntakes.map {
             it.copy(time = addDayToMedicationReminder(it.time))
@@ -72,6 +87,10 @@ class MedicationInteractor(
             calendarReminder.add(Calendar.DAY_OF_MONTH, 1)
         }
         return calendarReminder.timeInMillis
+    }
+
+    fun deleteMedicationReminder(id: Int){
+        medicationReminderRepository.deleteMedicationReminder(id)
     }
 
     companion object {
