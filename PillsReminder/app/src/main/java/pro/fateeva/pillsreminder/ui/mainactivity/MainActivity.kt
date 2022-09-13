@@ -12,6 +12,7 @@ import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
+import pro.fateeva.pillsreminder.ui.screens.HistoryCalendarFragment
 import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
 import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, PillsListFragment())
+                .replace(R.id.main_container, HistoryCalendarFragment())
                 .commit()
         }
     }

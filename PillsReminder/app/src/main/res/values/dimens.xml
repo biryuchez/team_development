@@ -17,4 +17,6 @@
     <dimen name="radio_group_margin_top">20dp</dimen>
     <dimen name="radio_button_text_size">18sp</dimen>
     <dimen name="arrow_button_size">50dp</dimen>
+    <dimen name="default_layout_padding">8dp</dimen>
+    <dimen name="calendar_card_item_corner_radius">2dp</dimen>
 </resources>

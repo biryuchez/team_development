@@ -24,4 +24,13 @@
         <item name="android:layout_height">@dimen/arrow_button_size</item>
     </style>
 
+    <style name="calendarCardItemStyle">
+        <item name="android:layout_width">@dimen/zero_value</item>
+        <item name="android:layout_height">@dimen/zero_value</item>
+        <item name="android:clickable">true</item>
+        <item name="cardBackgroundColor">@color/app_primary</item>
+        <item name="layout_constraintDimensionRatio">H, 1:1</item>
+        <item name="cardCornerRadius">@dimen/calendar_card_item_corner_radius</item>
+    </style>
+
 </resources>
