@@ -19,4 +19,5 @@
     <dimen name="arrow_button_size">50dp</dimen>
     <dimen name="default_layout_padding">8dp</dimen>
     <dimen name="calendar_card_item_corner_radius">2dp</dimen>
+    <dimen name="calendar_grid_margin">1dp</dimen>
 </resources>

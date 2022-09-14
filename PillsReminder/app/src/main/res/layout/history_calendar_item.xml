@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/zero_value"
+    android:layout_height="@dimen/zero_value"
+    android:background="@color/black"
+    android:padding="1dp"
+    tools:layout_width="100dp"
+    tools:layout_height="100dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/history_calendar_item_card"
+        style="@style/calendarCardItemStyle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/history_calendar_item_card_mm_yy_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="09.2022"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/history_calendar_item_card_day_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="14"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/history_calendar_item_card_event_marker_view"
+                app:layout_constraintTop_toBottomOf="@id/history_calendar_item_card_mm_yy_text_view"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:id="@+id/history_calendar_item_card_event_marker_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@android:color/holo_red_light"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

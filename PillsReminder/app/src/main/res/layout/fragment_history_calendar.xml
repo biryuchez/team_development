@@ -7,118 +7,129 @@
     android:focusable="true"
     android:padding="@dimen/default_layout_padding">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_7_before_card_view"
-        style="@style/calendarCardItemStyle"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toStartOf="@id/day_6_before_card_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_6_before_card_view"
-        style="@style/calendarCardItemStyle"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toStartOf="@id/day_5_before_card_view"
-        app:layout_constraintStart_toEndOf="@id/day_7_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_7_before_card_view" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_5_before_card_view"
-        style="@style/calendarCardItemStyle"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toStartOf="@id/day_4_before_card_view"
-        app:layout_constraintStart_toEndOf="@id/day_6_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_6_before_card_view" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_4_before_card_view"
-        style="@style/calendarCardItemStyle"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toStartOf="@id/day_3_before_card_view"
-        app:layout_constraintStart_toEndOf="@id/day_5_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_5_before_card_view" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_3_before_card_view"
-        style="@style/calendarCardItemStyle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/calendar_container"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="@dimen/zero_value"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/day_4_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_4_before_card_view" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_2_before_card_view"
-        style="@style/calendarCardItemStyle"
-        android:layout_marginTop="1dp"
-        app:layout_constraintEnd_toEndOf="@id/day_7_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_7_before_card_view"
-        app:layout_constraintTop_toBottomOf="@id/day_7_before_card_view" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_1_before_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_6_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_6_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_2_before_card_view"
-        app:layout_constraintBottom_toBottomOf="@id/day_2_before_card_view"/>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_7_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        android:layout_marginEnd="@dimen/calendar_grid_margin"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/day_6_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/current_day_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_5_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_5_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_1_before_card_view"
-        app:layout_constraintBottom_toBottomOf="@id/day_1_before_card_view"/>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_6_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        android:layout_marginEnd="@dimen/calendar_grid_margin"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/day_5_before_card_view"-->
+<!--        app:layout_constraintStart_toEndOf="@id/day_7_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_7_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_1_after_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_4_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_4_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/current_day_card_view"
-        app:layout_constraintBottom_toBottomOf="@id/current_day_card_view"/>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_5_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        android:layout_marginEnd="@dimen/calendar_grid_margin"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/day_4_before_card_view"-->
+<!--        app:layout_constraintStart_toEndOf="@id/day_6_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_6_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_2_after_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_3_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_3_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_1_after_card_view"
-        app:layout_constraintBottom_toBottomOf="@id/day_1_after_card_view"/>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_4_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        android:layout_marginEnd="@dimen/calendar_grid_margin"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/day_3_before_card_view"-->
+<!--        app:layout_constraintStart_toEndOf="@id/day_5_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_5_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_3_after_card_view"
-        style="@style/calendarCardItemStyle"
-        android:layout_marginTop="1dp"
-        app:layout_constraintEnd_toEndOf="@id/day_2_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_2_before_card_view"
-        app:layout_constraintTop_toBottomOf="@id/day_2_before_card_view" />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_3_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/day_4_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_4_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_4_after_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_1_before_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_1_before_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_3_after_card_view" />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_2_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        android:layout_marginTop="@dimen/calendar_grid_margin"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_7_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_7_before_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/day_7_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_5_after_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/current_day_card_view"
-        app:layout_constraintStart_toStartOf="@id/current_day_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_4_after_card_view" />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_1_before_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/day_2_before_card_view"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_6_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_6_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_2_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_6_after_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_1_after_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_1_after_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_5_after_card_view" />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/current_day_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/day_1_before_card_view"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_5_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_5_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_1_before_card_view" />-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/day_7_after_card_view"
-        style="@style/calendarCardItemStyle"
-        app:layout_constraintEnd_toEndOf="@id/day_2_after_card_view"
-        app:layout_constraintStart_toStartOf="@id/day_2_after_card_view"
-        app:layout_constraintTop_toTopOf="@id/day_6_after_card_view" />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_1_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/current_day_card_view"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_4_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_4_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/current_day_card_view" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_2_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/day_1_after_card_view"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_3_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_3_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_1_after_card_view" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_3_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        android:layout_marginTop="@dimen/calendar_grid_margin"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_2_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_2_before_card_view"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/day_2_before_card_view" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_4_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_1_before_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_1_before_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_3_after_card_view" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_5_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/current_day_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/current_day_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_4_after_card_view" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_6_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_1_after_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_1_after_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_5_after_card_view" />-->
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/day_7_after_card_view"-->
+<!--        style="@style/calendarCardItemStyle"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/day_2_after_card_view"-->
+<!--        app:layout_constraintStart_toStartOf="@id/day_2_after_card_view"-->
+<!--        app:layout_constraintTop_toTopOf="@id/day_6_after_card_view" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
