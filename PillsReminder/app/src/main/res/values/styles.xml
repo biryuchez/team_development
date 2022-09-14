@@ -28,7 +28,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:clickable">true</item>
-        <item name="cardBackgroundColor">@color/app_primary</item>
+        <item name="cardBackgroundColor">@color/calendar_item</item>
         <item name="cardCornerRadius">@dimen/calendar_card_item_corner_radius</item>
     </style>
 
