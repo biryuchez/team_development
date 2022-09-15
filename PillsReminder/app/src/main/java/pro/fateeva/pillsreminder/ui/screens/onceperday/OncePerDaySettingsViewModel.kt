@@ -104,6 +104,7 @@ class OncePerDaySettingsViewModel(
     fun setDose(dose: String) {
         if (dose == "" || dose.toInt() == 0){
             medicationDoseError.value = true
+            oncePerDaySettingsState.medicationDose = 0
         } else {
             medicationDoseError.value = false
             oncePerDaySettingsState.medicationDose = dose.toInt()

@@ -1,8 +1,6 @@
 package pro.fateeva.pillsreminder.ui.screens.onceperday
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
