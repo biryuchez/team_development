@@ -41,4 +41,6 @@
     <string name="set_dosage_warning">Введите дозировку</string>
     <string name="time_picker_title">Время приема лекарства</string>
     <string name="fill_field">Заполните поле</string>
+    <string name="medication_failure_message">пропущено</string>
+    <string name="medication_success_message">принято в %1s</string>
 </resources>

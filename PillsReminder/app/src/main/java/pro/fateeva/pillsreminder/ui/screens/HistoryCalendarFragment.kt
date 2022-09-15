@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
@@ -12,8 +13,10 @@ import com.google.android.material.card.MaterialCardView
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.databinding.FragmentHistoryCalendarBinding
 import pro.fateeva.pillsreminder.databinding.ItemHistoryCalendarBinding
+import pro.fateeva.pillsreminder.databinding.ItemHistoryEntityBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random.Default.nextBoolean
 
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val DEFAULT_COLUMNS_COUNT = 7
@@ -26,16 +29,15 @@ private const val DATE_DELIMITER = '.'
 class HistoryCalendarFragment :
     BaseFragment<FragmentHistoryCalendarBinding>(FragmentHistoryCalendarBinding::inflate) {
 
+    private val dateFormat = SimpleDateFormat(DATE_FORMAT_PATTERN)
+    private val todayDate = dateFormat.format(Calendar.getInstance().time)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val medicationEventList = mutableListOf<FakeMedicationHistoryEntity>()
 
         val dateList = mutableListOf<Long>()
-
-        val dateFormat = SimpleDateFormat(DATE_FORMAT_PATTERN)
-
-        val todayDate = dateFormat.format(Calendar.getInstance().time)
 
         for (i in -DEFAULT_DATES_COUNT / 2..(-DEFAULT_DATES_COUNT / 2) + DEFAULT_DATES_COUNT) {
             val calendar = Calendar.getInstance()
@@ -47,14 +49,31 @@ class HistoryCalendarFragment :
             dateList.add(calendar.timeInMillis)
             calendar.set(Calendar.HOUR_OF_DAY, 10)
             calendar.set(Calendar.MINUTE, 0)
+
             if (calendar.get(Calendar.DAY_OF_WEEK) != 1) {
                 medicationEventList.add(FakeMedicationHistoryEntity(
                     medicationTime = calendar.timeInMillis,
-                    isMedicationSuccess = i % 3 != 0))
+                    medicationSuccessTime = if (nextBoolean()) {
+                        calendar.timeInMillis + (60000L..600000L).random()
+                    } else {
+                        -1L
+                    }))
+                if (nextBoolean()) {
+                    medicationEventList.add(FakeMedicationHistoryEntity(
+                        medicationTime = calendar.timeInMillis,
+                        pillName = "Но-шпа",
+                        medicationSuccessTime = if (nextBoolean()) {
+                            calendar.timeInMillis + (60000L..600000L).random()
+                        } else {
+                            -1L
+                        }))
+                }
+
                 calendar.set(Calendar.HOUR_OF_DAY, 20)
+
                 medicationEventList.add(FakeMedicationHistoryEntity(
                     medicationTime = calendar.timeInMillis,
-                    isMedicationSuccess = true))
+                    medicationSuccessTime = calendar.timeInMillis + (60000L..600000L).random()))
             }
         }
 
@@ -94,17 +113,20 @@ class HistoryCalendarFragment :
                                     .forEachRemaining { parentView ->
                                         if (parentView.id !in 1..offset) {
                                             parentView
-                                                .findViewById<MaterialCardView>(R.id.history_calendar_item_card)
-                                                .setCardBackgroundColor(requireContext()
-                                                    .getColor(R.color.calendar_item))
+                                                .findViewById<MaterialCardView>(
+                                                    R.id.history_calendar_item_card
+                                                )
+                                                .setCardBackgroundColor(
+                                                    requireContext()
+                                                        .getColor(R.color.calendar_item)
+                                                )
                                         }
                                     }
                                 historyCalendarItemCard.setCardBackgroundColor(
                                     requireContext().getColor(R.color.selected_date)
                                 )
 
-                                showHistoryEvents(medicationEventList
-                                    .filter { dateFormat.format(it.medicationTime) == currentDate })
+                                showHistoryEvents(medicationEventList, currentDate)
                             }
 
                             historyCalendarItemCardMmYyTextView.text =
@@ -116,10 +138,10 @@ class HistoryCalendarFragment :
                                 var isMedicationSuccess = true
                                 medicationEventList
                                     .filter { dateFormat.format(it.medicationTime) == currentDate }
-                                    .map {
+                                    .forEach {
                                         historyCalendarItemCardEventMarkerView.isVisible = true
                                         if (date.before(dateFormat.parse(todayDate))) {
-                                            if (!it.isMedicationSuccess) {
+                                            if (it.medicationSuccessTime == -1L) {
                                                 isMedicationSuccess = false
                                             }
                                             historyCalendarItemCardEventMarkerView.apply {
@@ -138,6 +160,7 @@ class HistoryCalendarFragment :
                                 historyCalendarItemCard.setCardBackgroundColor(
                                     requireContext().getColor(R.color.selected_date)
                                 )
+                                showHistoryEvents(medicationEventList, currentDate)
                             }
                         }
                     }
@@ -177,21 +200,100 @@ class HistoryCalendarFragment :
         }
     }
 
-    private fun showHistoryEvents(medicationHistoryList: List<FakeMedicationHistoryEntity>) {
-        binding.historyEventsContainer.removeAllViews()
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy 'в' HH:mm:ss")
-        if (medicationHistoryList.isNotEmpty()) {
-            medicationHistoryList.map {
-                val dateView = TextView(requireContext()).apply {
-                    text = dateFormat.format(it.medicationTime)
-                }
+    private fun showHistoryEvents(
+        medicationHistoryList: List<FakeMedicationHistoryEntity>,
+        currentDate: String,
+    ) {
+        binding.historyEventsContainer.apply {
+            animate()
+                .alpha(0f)
+                .withEndAction {
+                    binding.historyEventsContainer.removeAllViews()
 
-                val isMedicationSuccessView = TextView(requireContext()).apply {
-                    text = it.isMedicationSuccess.toString()
+                    val currentDatePillsSet = mutableSetOf<String>()
+
+                    medicationHistoryList
+                        .filter { dateFormat.format(it.medicationTime) == currentDate }
+                        .sortedBy { it.pillName }
+                        .forEach {
+                            currentDatePillsSet.add(it.pillName)
+                        }
+
+                    currentDatePillsSet.forEach { pillName ->
+                        binding.historyEventsContainer.addView(TextView(requireContext()).apply {
+                            text = pillName
+                        })
+                        medicationHistoryList
+                            .filter { dateFormat.format(it.medicationTime) == currentDate }
+                            .filter { it.pillName == pillName }
+                            .sortedBy { it.medicationTime }
+                            .forEach {
+                                val historyItemViewBinding = ItemHistoryEntityBinding.inflate(
+                                    LayoutInflater.from(requireContext())
+                                )
+
+                                val historyItemView = historyItemViewBinding.root
+
+                                val timeFormat = SimpleDateFormat("HH:mm")
+
+                                val params =
+                                    LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT
+                                    )
+
+                                historyItemView.layoutParams = params
+
+                                params.setMargins(4, 4, 4, 4)
+
+                                historyItemViewBinding.historyEntityTimeTextView.text =
+                                    timeFormat.format(it.medicationTime)
+
+                                this@HistoryCalendarFragment.dateFormat.parse(currentDate)
+                                    ?.let { date ->
+                                        if (date.before(
+                                                this@HistoryCalendarFragment.dateFormat
+                                                    .parse(todayDate)
+                                            )
+                                        ) {
+                                            historyItemViewBinding
+                                                .historyEntityMedicationMarkerView
+                                                .setBackgroundColor(
+                                                    requireContext().getColor(
+                                                        if (it.medicationSuccessTime != -1L) {
+                                                            R.color.success_medication
+                                                        } else {
+                                                            R.color.failure_medication
+                                                        }
+                                                    ))
+                                            historyItemViewBinding
+                                                .historyEntitySuccessFlagTextView.apply {
+                                                    text = if (it.medicationSuccessTime != -1L) {
+                                                        context.getString(
+                                                            R.string.medication_success_message,
+                                                            timeFormat.format(
+                                                                it.medicationSuccessTime
+                                                            )
+                                                        )
+                                                    } else {
+                                                        context.getString(
+                                                            R.string.medication_failure_message
+                                                        )
+                                                    }
+                                                }
+                                        } else {
+                                            historyItemViewBinding
+                                                .historyEntitySuccessFlagTextView.isVisible = false
+                                        }
+                                    }
+                                binding.historyEventsContainer.addView(historyItemView)
+                            }
+                    }
+                    binding.historyEventsContainer.animate()
+                        .alpha(1f)
+                        .duration = 100
                 }
-                binding.historyEventsContainer.addView(dateView)
-                binding.historyEventsContainer.addView(isMedicationSuccessView)
-            }
+                .duration = 100
         }
     }
 }
@@ -200,5 +302,5 @@ data class FakeMedicationHistoryEntity(
     val id: Int = -1,
     val medicationTime: Long,
     val pillName: String = "Анальгин",
-    val isMedicationSuccess: Boolean,
+    val medicationSuccessTime: Long = -1,
 )
