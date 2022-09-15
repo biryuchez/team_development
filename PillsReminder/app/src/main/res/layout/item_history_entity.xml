@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white_90"
         android:gravity="end"
+        android:text="@string/medication_failure_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/history_entity_time_text_view"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="lorem" />
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@ import kotlin.random.Random.Default.nextBoolean
 
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val DEFAULT_COLUMNS_COUNT = 7
-private const val DEFAULT_DATES_COUNT = 21
+private const val DEFAULT_DATES_COUNT = 30
 private const val LAYOUT_DIMENSION_RATIO = "W,1:1"
 private const val DATE_FORMAT_PATTERN = "dd.MM.yyyy"
 private const val DATE_DELIMITER = '.'
@@ -249,8 +249,8 @@ class HistoryCalendarFragment :
                                 historyItemViewBinding.historyEntityTimeTextView.text =
                                     timeFormat.format(it.medicationTime)
 
-                                this@HistoryCalendarFragment.dateFormat.parse(currentDate)
-                                    ?.let { date ->
+                                this@HistoryCalendarFragment.dateFormat
+                                    .parse(currentDate)?.let { date ->
                                         if (date.before(
                                                 this@HistoryCalendarFragment.dateFormat
                                                     .parse(todayDate)
@@ -266,24 +266,16 @@ class HistoryCalendarFragment :
                                                             R.color.failure_medication
                                                         }
                                                     ))
-                                            historyItemViewBinding
-                                                .historyEntitySuccessFlagTextView.apply {
-                                                    text = if (it.medicationSuccessTime != -1L) {
-                                                        context.getString(
-                                                            R.string.medication_success_message,
-                                                            timeFormat.format(
-                                                                it.medicationSuccessTime
-                                                            )
+                                            if (it.medicationSuccessTime != -1L) {
+                                                historyItemViewBinding
+                                                    .historyEntitySuccessFlagTextView.text =
+                                                    context.getString(
+                                                        R.string.medication_success_message,
+                                                        timeFormat.format(
+                                                            it.medicationSuccessTime
                                                         )
-                                                    } else {
-                                                        context.getString(
-                                                            R.string.medication_failure_message
-                                                        )
-                                                    }
-                                                }
-                                        } else {
-                                            historyItemViewBinding
-                                                .historyEntitySuccessFlagTextView.isVisible = false
+                                                    )
+                                            }
                                         }
                                     }
                                 binding.historyEventsContainer.addView(historyItemView)
