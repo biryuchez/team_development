@@ -57,7 +57,6 @@ class OncePerDaySettingsFragment :
             viewModel.onViewCreated(selectedDrug.drugName)
 
             binding.planButton.setOnClickListener {
-                viewModel.setDose(binding.dosePickerEditText.text.toString())
                 viewModel.onCreateMedicationReminder(medicationDaysCount, selectedDrug)
             }
         } else {
@@ -69,11 +68,11 @@ class OncePerDaySettingsFragment :
         }
 
         binding.oncePerDayTimePickerTextView.initTimePicker(
-            Calendar.getInstance().apply{
+            Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, 8)
                 set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND,0)
-                set(Calendar.MILLISECOND,0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
             }.timeInMillis,
             parentFragmentManager,
             TIME_PICKER_TAG
@@ -84,10 +83,6 @@ class OncePerDaySettingsFragment :
 
         binding.dosePickerEditText.doAfterTextChanged {
             viewModel.setDose(it.toString())
-        }
-
-        viewModel.hasMedicationTimeError.observe(viewLifecycleOwner) {
-            binding.timeErrorTextView.isVisible = it
         }
 
         viewModel.hasMedicationDoseError.observe(viewLifecycleOwner) {

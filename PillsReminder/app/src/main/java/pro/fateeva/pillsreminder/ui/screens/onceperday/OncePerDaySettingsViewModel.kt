@@ -17,7 +17,6 @@ class OncePerDaySettingsViewModel(
 
     private val liveData: MutableLiveData<OncePerDaySettingsState> =
         handle.getLiveData("state", OncePerDaySettingsState())
-    private val medicationTimeError = MutableLiveData(false)
     private val medicationDoseError = MutableLiveData(false)
 
     private val oncePerDaySettingsState: OncePerDaySettingsState
@@ -25,9 +24,6 @@ class OncePerDaySettingsViewModel(
 
     val state: LiveData<OncePerDaySettingsState>
         get() = liveData
-
-    val hasMedicationTimeError: LiveData<Boolean>
-        get() = medicationTimeError
 
     val hasMedicationDoseError: LiveData<Boolean>
         get() = medicationDoseError
@@ -54,11 +50,7 @@ class OncePerDaySettingsViewModel(
             )
         )
 
-        if (oncePerDaySettingsState.medicationReminderTime == 0L) {
-            medicationTimeError.value = true
-        }
-
-        if (oncePerDaySettingsState.medicationDose == 0) {
+        if (oncePerDaySettingsState.medicationDose == 0 || oncePerDaySettingsState.medicationDose.toString() == "") {
             medicationDoseError.value = true
         }
 
@@ -82,10 +74,6 @@ class OncePerDaySettingsViewModel(
             medicationReminder.endDate
         )
 
-        if (oncePerDaySettingsState.medicationReminderTime == 0L) {
-            medicationTimeError.value = true
-        }
-
         if (oncePerDaySettingsState.medicationDose == 0 || oncePerDaySettingsState.medicationDose.toString() == "") {
             medicationDoseError.value = true
         }
@@ -98,7 +86,6 @@ class OncePerDaySettingsViewModel(
 
     fun setMedicationReminderTime(time: Long) {
         oncePerDaySettingsState.medicationReminderTime = time
-        medicationTimeError.value = false
     }
 
     fun setDose(dose: String) {

@@ -89,6 +89,10 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         navigateToDestination(TwicePerDaySettingsFragment.newInstance(drugDomain, daysCount))
     }
 
+    override fun navigateToTwicePerDayScreen(id: Int) {
+        navigateToDestination(TwicePerDaySettingsFragment.newInstance(id))
+    }
+
     override fun navigateToDestination(destination: Fragment) {
         supportFragmentManager
             .beginTransaction()

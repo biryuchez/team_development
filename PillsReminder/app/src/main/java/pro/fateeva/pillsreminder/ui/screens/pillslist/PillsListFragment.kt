@@ -32,7 +32,7 @@ class PillsListFragment :
                 if(size == 1){
                     navigator.navigateToOncePerDayScreen(medicationreminder.id)
                 } else if (size == 2){
-                    //TODO
+                    navigator.navigateToTwicePerDayScreen(medicationreminder.id)
                 }
             }
         }
