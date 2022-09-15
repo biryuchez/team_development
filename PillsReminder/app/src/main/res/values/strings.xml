@@ -43,4 +43,14 @@
     <string name="fill_field">Заполните поле</string>
     <string name="medication_failure_message">не принято</string>
     <string name="medication_success_message">принято в %1s</string>
+    <string name="calendar_legend_planned_text">Запланирован прием лекарств</string>
+    <string name="calendar_legend_failure_text">Хотя бы одно лекарство не принято</string>
+    <string name="calendar_legend_success_text">Все лекарства приняты</string>
+    <string name="header_monday">ПН</string>
+    <string name="header_tuesday">ВТ</string>
+    <string name="header_wednesday">СР</string>
+    <string name="header_thursday">ЧТ</string>
+    <string name="header_friday">ПТ</string>
+    <string name="header_saturday">СБ</string>
+    <string name="header_sunday">ВС</string>
 </resources>

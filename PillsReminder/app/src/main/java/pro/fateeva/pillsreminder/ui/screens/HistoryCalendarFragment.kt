@@ -219,9 +219,19 @@ class HistoryCalendarFragment :
                             currentDatePillsSet.add(it.pillName)
                         }
 
+                    val params =
+                        LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        )
+
+                    params.setMargins(4, 4, 4, 4)
+
                     currentDatePillsSet.forEach { pillName ->
                         binding.historyEventsContainer.addView(TextView(requireContext()).apply {
+                            textSize = 20f
                             text = pillName
+                            layoutParams = params
                         })
                         medicationHistoryList
                             .filter { dateFormat.format(it.medicationTime) == currentDate }
@@ -236,15 +246,15 @@ class HistoryCalendarFragment :
 
                                 val timeFormat = SimpleDateFormat("HH:mm")
 
-                                val params =
-                                    LinearLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.WRAP_CONTENT
-                                    )
+//                                val params =
+//                                    LinearLayout.LayoutParams(
+//                                        LinearLayout.LayoutParams.MATCH_PARENT,
+//                                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                                    )
 
                                 historyItemView.layoutParams = params
 
-                                params.setMargins(4, 4, 4, 4)
+//                                params.setMargins(4, 4, 4, 4)
 
                                 historyItemViewBinding.historyEntityTimeTextView.text =
                                     timeFormat.format(it.medicationTime)
