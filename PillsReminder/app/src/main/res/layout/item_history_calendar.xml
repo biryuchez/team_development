@@ -22,8 +22,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="09.2022"
-                android:textSize="11sp"
-                android:textColor="@color/white_80"
+                android:textSize="10sp"
+                android:textColor="@color/white_90"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -34,8 +34,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="14"
-                android:textColor="@color/white_80"
-                android:textSize="25sp"
+                android:textColor="@color/white_90"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/history_calendar_item_card_event_marker_view"
@@ -43,7 +43,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
+                android:layout_height="2dp"
                 android:id="@+id/history_calendar_item_card_event_marker_view"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
