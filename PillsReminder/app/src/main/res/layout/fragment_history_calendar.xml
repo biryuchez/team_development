@@ -7,12 +7,89 @@
     android:focusable="true"
     android:padding="@dimen/default_layout_padding">
 
+    <TextView
+        android:id="@+id/day_1st"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ПН"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/day_2nd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_2nd"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ВТ"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/day_3rd"
+        app:layout_constraintStart_toEndOf="@id/day_1st"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_3rd"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="СР"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/day_4th"
+        app:layout_constraintStart_toEndOf="@id/day_2nd"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_4th"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ЧТ"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/day_5th"
+        app:layout_constraintStart_toEndOf="@id/day_3rd"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_5th"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ПТ"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/day_6th"
+        app:layout_constraintStart_toEndOf="@id/day_4th"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_6th"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="СБ"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/day_7th"
+        app:layout_constraintStart_toEndOf="@id/day_5th"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_7th"
+        android:layout_width="@dimen/zero_value"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ВС"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/day_6th"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/calendar_container"
         android:layout_width="@dimen/zero_value"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal" />
+        app:layout_constraintTop_toBottomOf="@id/day_1st" />
 </androidx.constraintlayout.widget.ConstraintLayout>

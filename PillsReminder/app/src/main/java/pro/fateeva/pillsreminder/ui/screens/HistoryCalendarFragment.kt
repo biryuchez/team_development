@@ -2,7 +2,6 @@ package pro.fateeva.pillsreminder.ui.screens
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +15,7 @@ import java.util.*
 
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val DEFAULT_COLUMNS_COUNT = 7
-private const val DEFAULT_DATES_COUNT = 31
+private const val DEFAULT_DATES_COUNT = 30
 private const val LAYOUT_DIMENSION_RATIO = "W,1:1"
 private const val DATE_FORMAT_PATTERN = "dd.MM.yyyy"
 private const val DATE_DELIMITER = '.'
@@ -54,86 +53,110 @@ class HistoryCalendarFragment :
                 isMedicationSuccess = i % 2 == 0))
         }
 
-        repeat(DEFAULT_DATES_COUNT) { index ->
-            val currentDate = dateFormat.format(dateList[index])
+        Calendar.FRIDAY
+
+        val firstDateInList = Calendar.getInstance().apply {
+            timeInMillis = dateList[0]
+        }
+
+        val offset = if(firstDateInList.get(Calendar.DAY_OF_WEEK) == 1) {
+            firstDateInList.get(Calendar.DAY_OF_WEEK) + 6
+        } else {
+            firstDateInList.get(Calendar.DAY_OF_WEEK) - 2
+        }
+
+        repeat(DEFAULT_DATES_COUNT + offset) { index ->
+            var historyCalendarItemView : View
+
             val historyCalendarItemBinding =
                 ItemHistoryCalendarBinding.inflate(LayoutInflater.from(requireContext()))
 
-            val historyCalendarItemView = historyCalendarItemBinding.root.apply {
-                id = index + 1
-            }
+            val params =
+                ConstraintLayout.LayoutParams(DEFAULT_LAYOUT_SIZE, DEFAULT_LAYOUT_SIZE)
+            params.dimensionRatio = LAYOUT_DIMENSION_RATIO
 
             with(binding) {
                 with(historyCalendarItemBinding) {
-                    historyCalendarItemCard.setOnClickListener {
-                        calendarContainer.children.iterator().forEachRemaining { parentView ->
-                            parentView
-                                .findViewById<MaterialCardView>(R.id.history_calendar_item_card)
-                                .setCardBackgroundColor(requireContext()
-                                    .getColor(R.color.calendar_item))
-                        }
-                        historyCalendarItemCard.setCardBackgroundColor(
-                            requireContext().getColor(R.color.selected_date)
-                        )
-                    }
-
-                    val params =
-                        ConstraintLayout.LayoutParams(DEFAULT_LAYOUT_SIZE, DEFAULT_LAYOUT_SIZE)
-                    params.dimensionRatio = LAYOUT_DIMENSION_RATIO
-                    historyCalendarItemView.layoutParams = params
-
-                    historyCalendarItemCardMmYyTextView.text =
-                        currentDate.substringAfter(DATE_DELIMITER)
-                    historyCalendarItemCardDayTextView.text =
-                        currentDate.substringBefore(DATE_DELIMITER)
-
-                    dateFormat.parse(currentDate)?.let { date ->
-                        if (date.before(dateFormat.parse(todayDate))) {
-                            medicationEventList
-                                .filter { dateFormat.format(it.medicationTime) == currentDate }
-                                .map {
-                                    historyCalendarItemCardEventMarkerView.setBackgroundColor(
-                                        requireContext().getColor(
-                                            R.color.success_medication))
-                                    if (!it.isMedicationSuccess) {
-                                        historyCalendarItemCardEventMarkerView.setBackgroundColor(
-                                            requireContext().getColor(
-                                                R.color.failure_medication))
-                                    }
-                                }
-                        }
-                    }
-
-
-                    if (dateFormat.parse(currentDate) == dateFormat.parse(todayDate)) {
-                        historyCalendarItemCard.setCardBackgroundColor(
-                            requireContext().getColor(R.color.selected_date)
-                        )
-                    }
-
-                    when (index) {
-                        0 -> {
-                            params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-                            params.endToStart = historyCalendarItemView.id + 1
-                            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-                        }
-                        in 1 until DEFAULT_COLUMNS_COUNT - 1 -> {
-                            params.startToEnd = historyCalendarItemView.id - 1
-                            params.endToStart = historyCalendarItemView.id + 1
-                            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-                        }
-                        DEFAULT_COLUMNS_COUNT - 1 -> {
-                            params.startToEnd = historyCalendarItemView.id - 1
-                            params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-                            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                    when(index) {
+                        in 0 until offset -> {
+                            historyCalendarItemView = View(requireContext())
                         }
                         else -> {
-                            params.startToStart = historyCalendarItemView.id - DEFAULT_COLUMNS_COUNT
-                            params.endToEnd = historyCalendarItemView.id - DEFAULT_COLUMNS_COUNT
-                            params.topToBottom = historyCalendarItemView.id - DEFAULT_COLUMNS_COUNT
+                            historyCalendarItemView = historyCalendarItemBinding.root
+                            val currentDate = dateFormat.format(dateList[index - offset])
+                            historyCalendarItemCard.setOnClickListener {
+                                calendarContainer.children.iterator().forEachRemaining { parentView ->
+                                    if (parentView.id !in 1..offset) {
+                                        parentView
+                                            .findViewById<MaterialCardView>(R.id.history_calendar_item_card)
+                                            .setCardBackgroundColor(requireContext()
+                                                .getColor(R.color.calendar_item))
+                                    }
+                                }
+                                historyCalendarItemCard.setCardBackgroundColor(
+                                    requireContext().getColor(R.color.selected_date)
+                                )
+                            }
+
+                            historyCalendarItemCardMmYyTextView.text =
+                                currentDate.substringAfter(DATE_DELIMITER)
+                            historyCalendarItemCardDayTextView.text =
+                                currentDate.substringBefore(DATE_DELIMITER)
+
+                            dateFormat.parse(currentDate)?.let { date ->
+                                if (date.before(dateFormat.parse(todayDate))) {
+                                    medicationEventList
+                                        .filter { dateFormat.format(it.medicationTime) == currentDate }
+                                        .map {
+                                            historyCalendarItemCardEventMarkerView.setBackgroundColor(
+                                                requireContext().getColor(
+                                                    R.color.success_medication))
+                                            if (!it.isMedicationSuccess) {
+                                                historyCalendarItemCardEventMarkerView.setBackgroundColor(
+                                                    requireContext().getColor(
+                                                        R.color.failure_medication))
+                                            }
+                                        }
+                                }
+                            }
+
+                            if (dateFormat.parse(currentDate) == dateFormat.parse(todayDate)) {
+                                historyCalendarItemCard.setCardBackgroundColor(
+                                    requireContext().getColor(R.color.selected_date)
+                                )
+                            }
                         }
                     }
                 }
+
+                historyCalendarItemView.apply {
+                    id = index + 1
+                    layoutParams = params
+                }
+
+                when (index) {
+                    0 -> {
+                        params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                        params.endToStart = historyCalendarItemView.id + 1
+                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                    }
+                    in 1 until DEFAULT_COLUMNS_COUNT - 1 -> {
+                        params.startToEnd = historyCalendarItemView.id - 1
+                        params.endToStart = historyCalendarItemView.id + 1
+                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                    }
+                    DEFAULT_COLUMNS_COUNT - 1 -> {
+                        params.startToEnd = historyCalendarItemView.id - 1
+                        params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                    }
+                    else -> {
+                        params.startToStart = historyCalendarItemView.id - DEFAULT_COLUMNS_COUNT
+                        params.endToEnd = historyCalendarItemView.id - DEFAULT_COLUMNS_COUNT
+                        params.topToBottom = historyCalendarItemView.id - DEFAULT_COLUMNS_COUNT
+                    }
+                }
+
 
                 calendarContainer.addView(historyCalendarItemView)
             }
