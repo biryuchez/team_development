@@ -20,7 +20,7 @@ import kotlin.random.Random.Default.nextBoolean
 
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val DEFAULT_COLUMNS_COUNT = 7
-private const val DEFAULT_DATES_COUNT = 30
+private const val DEFAULT_DATES_COUNT = 21
 private const val LAYOUT_DIMENSION_RATIO = "W,1:1"
 private const val DATE_FORMAT_PATTERN = "dd.MM.yyyy"
 private const val DATE_DELIMITER = '.'
@@ -84,7 +84,7 @@ class HistoryCalendarFragment :
         }
 
         val offset = if (firstDateInList.get(Calendar.DAY_OF_WEEK) == 1) {
-            firstDateInList.get(Calendar.DAY_OF_WEEK) + 6
+            firstDateInList.get(Calendar.DAY_OF_WEEK) + 5
         } else {
             firstDateInList.get(Calendar.DAY_OF_WEEK) - 2
         }
