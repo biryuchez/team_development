@@ -1,6 +1,8 @@
 package pro.fateeva.pillsreminder.ui.screens.onceperday
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -12,6 +14,7 @@ import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
 import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
+import java.util.*
 
 private const val TIME_PICKER_TAG = "TIME_PICKER"
 private const val DRUG_ARG_KEY = "DRUG"
@@ -56,6 +59,7 @@ class OncePerDaySettingsFragment :
             viewModel.onViewCreated(selectedDrug.drugName)
 
             binding.planButton.setOnClickListener {
+                viewModel.setDose(binding.dosePickerEditText.text.toString())
                 viewModel.onCreateMedicationReminder(medicationDaysCount, selectedDrug)
             }
         } else {
@@ -67,6 +71,12 @@ class OncePerDaySettingsFragment :
         }
 
         binding.oncePerDayTimePickerTextView.initTimePicker(
+            Calendar.getInstance().apply{
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND,0)
+                set(Calendar.MILLISECOND,0)
+            }.timeInMillis,
             parentFragmentManager,
             TIME_PICKER_TAG
         ) {
@@ -75,7 +85,7 @@ class OncePerDaySettingsFragment :
         }
 
         binding.dosePickerEditText.doAfterTextChanged {
-            viewModel.setDose(it.toString().toInt())
+            viewModel.setDose(it.toString())
         }
 
         viewModel.hasMedicationTimeError.observe(viewLifecycleOwner) {
@@ -92,10 +102,21 @@ class OncePerDaySettingsFragment :
             }
         }
 
-        viewModel.state.observe(viewLifecycleOwner){
+        viewModel.state.observe(viewLifecycleOwner) {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = it.medicationReminderTime
             binding.medicationTitleTextView.text = it.medicationName
-            binding.oncePerDayTimePickerTextView.text = it.medicationReminderTime.toString()
+            binding.oncePerDayTimePickerTextView.text = calendar.formatTime()
             binding.dosePickerEditText.setText(it.medicationDose.toString())
+
+            binding.oncePerDayTimePickerTextView.initTimePicker(
+                it.medicationReminderTime,
+                parentFragmentManager,
+                TIME_PICKER_TAG
+            ) {
+                viewModel.setMedicationReminderTime(it.timeInMillis)
+                binding.oncePerDayTimePickerTextView.text = it.formatTime()
+            }
         }
     }
 }

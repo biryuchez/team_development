@@ -12,6 +12,7 @@ import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
 import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
+import java.util.*
 
 private const val DRUG_ARG_KEY = "DRUG"
 private const val DAYS_COUNT_ARG_KEY = "DAYS_COUNT"
@@ -56,6 +57,12 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
         binding.medicationTitleTextView.text = selectedDrug.drugName
 
         binding.firstTimePickerTextView.initTimePicker(
+            Calendar.getInstance().apply{
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND,0)
+                set(Calendar.MILLISECOND,0)
+            }.timeInMillis,
             parentFragmentManager
         ) {
             viewModel.setMedicationReminderTime(it.timeInMillis, FIRST_MEDICATION_INTAKE_INDEX)
@@ -67,6 +74,12 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
         }
 
         binding.secondTimePickerTextView.initTimePicker(
+            Calendar.getInstance().apply{
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND,0)
+                set(Calendar.MILLISECOND,0)
+            }.timeInMillis,
             parentFragmentManager
         ) {
             viewModel.setMedicationReminderTime(it.timeInMillis, SECOND_MEDICATION_INTAKE_INDEX)

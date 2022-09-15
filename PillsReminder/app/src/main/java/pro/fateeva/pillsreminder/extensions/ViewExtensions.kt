@@ -12,18 +12,21 @@ private const val TOMORROW_DATE_OFFSET = 1
 private const val TIME_PICKER_TAG = "TIME_PICKER"
 
 fun View.initTimePicker(
+    time: Long,
     fragmentManager: FragmentManager,
     tag: String? = TIME_PICKER_TAG,
     onTimeSet: (Calendar) -> Unit,
 ) {
+    val calendar = time.toCalendar()
+
     val timePicker = MaterialTimePicker.Builder()
         .setTimeFormat(if (android.text.format.DateFormat.is24HourFormat(this.context)) {
             TimeFormat.CLOCK_24H
         } else {
             TimeFormat.CLOCK_12H
         })
-        .setHour(DEFAULT_TIME_PICKER_VALUE)
-        .setMinute(DEFAULT_TIME_PICKER_VALUE)
+        .setHour(calendar.get(Calendar.HOUR_OF_DAY))
+        .setMinute(calendar.get(Calendar.MINUTE))
         .setTitleText(context.getString(R.string.time_picker_title))
         .build()
 
