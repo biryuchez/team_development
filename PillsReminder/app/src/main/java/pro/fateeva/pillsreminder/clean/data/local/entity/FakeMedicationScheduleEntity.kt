@@ -1,6 +1,6 @@
-package pro.fateeva.pillsreminder.ui.screens.calendar
+package pro.fateeva.pillsreminder.clean.data.local.entity
 
-data class FakeMedicationHistoryEntity(
+data class FakeMedicationScheduleEntity(
     val id: Int = -1,
     val medicationTime: Long,
     val pillName: String = "Анальгин",

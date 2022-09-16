@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pro.fateeva.pillsreminder.databinding.ItemSearchPillBinding
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.databinding.ItemSearchPillBinding
 
 class SearchPillAdapter(private val clickListener: SearchItemClickListener) :
     RecyclerView.Adapter<SearchPillAdapter.SearchPillViewHolder>() {

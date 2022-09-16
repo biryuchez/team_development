@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.screens.calendar
+package pro.fateeva.pillsreminder.ui.screens.calendar.builder
 
 import java.util.*
 

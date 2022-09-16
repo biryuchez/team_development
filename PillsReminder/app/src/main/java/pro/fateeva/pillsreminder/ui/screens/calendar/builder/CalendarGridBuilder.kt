@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.screens.calendar
+package pro.fateeva.pillsreminder.ui.screens.calendar.builder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,8 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.databinding.ItemHistoryCalendarBinding
+import pro.fateeva.pillsreminder.clean.data.local.entity.FakeMedicationScheduleEntity
+import pro.fateeva.pillsreminder.databinding.ItemScheduleCalendarBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,12 +28,10 @@ import java.util.*
  * @COLUMNS_COUNT - количество ячеек в одной строке календарной сетки
  */
 
-// основные параметры календарной сетки
-private const val DATES_COUNT = 7 // не рекомендуется выставлять меньше 7 (т.к. 7 дней недели)
+private const val DATES_COUNT = 30 // не рекомендуется выставлять меньше 7 (т.к. 7 дней недели)
 private const val COLUMNS_COUNT = 7 // не менять, если IS_OFFSET_REQUIRED = true
 private const val IS_OFFSET_REQUIRED = true // если DATES_COUNT < 7, то выставить false
 
-// константы
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val LAYOUT_DIMENSION_RATIO = "W,1:1"
 private const val DATE_DELIMITER = '.'
@@ -47,18 +46,20 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
         timeInMillis = dateList[0]
     }
 
-    private lateinit var historyCalendarItemView: View
+    private lateinit var scheduleCalendarItemView: View
 
-    private var medicationEventList = listOf<FakeMedicationHistoryEntity>()
+    private var medicationEventList = listOf<FakeMedicationScheduleEntity>()
 
     private val offset = initOffset()
 
     fun buildCalendarGrid(
         calendarContainer: ConstraintLayout,
         calendarHeader: ConstraintLayout,
-        medicationEventList: List<FakeMedicationHistoryEntity>,
+        medicationEventList: List<FakeMedicationScheduleEntity>,
         block: (currentDate: String) -> Unit,
     ) {
+        calendarContainer.removeAllViews()
+
         val context = calendarContainer.context
 
         this.medicationEventList = medicationEventList
@@ -67,22 +68,22 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
 
         repeat(DATES_COUNT + offset) { index ->
 
-            val historyCalendarItemBinding = ItemHistoryCalendarBinding
+            val scheduleCalendarItemBinding = ItemScheduleCalendarBinding
                 .inflate(LayoutInflater.from(context))
 
             val params = ConstraintLayout.LayoutParams(DEFAULT_LAYOUT_SIZE, DEFAULT_LAYOUT_SIZE)
             params.dimensionRatio = LAYOUT_DIMENSION_RATIO
 
-            initHistoryCalendarItemView(
-                binding = historyCalendarItemBinding,
+            initScheduleCalendarItemView(
+                binding = scheduleCalendarItemBinding,
                 calendarContainer = calendarContainer,
                 index = index,
                 params = params,
                 block = block)
 
-            setParams(historyCalendarItemView, params, index)
+            setParams(scheduleCalendarItemView, params, index)
 
-            calendarContainer.addView(historyCalendarItemView)
+            calendarContainer.addView(scheduleCalendarItemView)
         }
     }
 
@@ -98,8 +99,8 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
         }
     }
 
-    private fun initHistoryCalendarItemView(
-        binding: ItemHistoryCalendarBinding,
+    private fun initScheduleCalendarItemView(
+        binding: ItemScheduleCalendarBinding,
         calendarContainer: ConstraintLayout,
         index: Int,
         params: ConstraintLayout.LayoutParams,
@@ -108,24 +109,24 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
         with(binding) {
             when (index) {
                 in 0 until offset -> {
-                    historyCalendarItemView = View(binding.root.context)
+                    scheduleCalendarItemView = View(binding.root.context)
                 }
                 else -> {
                     val currentDate = dateFormat.format(dateList[index - offset])
 
-                    historyCalendarItemView = binding.root.apply {
+                    scheduleCalendarItemView = binding.root.apply {
                         initCalendarItemCard(calendarContainer,
-                            historyCalendarItemCard, currentDate, block)
+                            scheduleCalendarItemCard, currentDate, block)
                     }
 
-                    setCalendarItemText(historyCalendarItemCardMmYyTextView,
-                        historyCalendarItemCardDayTextView, currentDate)
+                    setCalendarItemText(scheduleCalendarItemCardMmYyTextView,
+                        scheduleCalendarItemCardDayTextView, currentDate)
 
-                    initHistoryItemMarker(historyCalendarItemCardEventMarkerView,
+                    initScheduleItemMarker(scheduleCalendarItemCardEventMarkerView,
                         medicationEventList, currentDate)
 
                     if (dateFormat.parse(currentDate) == dateFormat.parse(todayDate)) {
-                        historyCalendarItemCard.setCardBackgroundColor(
+                        scheduleCalendarItemCard.setCardBackgroundColor(
                             binding.root.context.getColor(R.color.selected_date))
 
                         block.invoke(currentDate)
@@ -134,7 +135,7 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
             }
         }
 
-        historyCalendarItemView.apply {
+        scheduleCalendarItemView.apply {
             id = index + 1
             layoutParams = params
         }
@@ -150,7 +151,7 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
             with(itemCardView.context) {
                 calendarContainer.children.forEach { childrenView ->
                     if (childrenView.id !in 1..offset) {
-                        childrenView.findViewById<MaterialCardView>(R.id.history_calendar_item_card)
+                        childrenView.findViewById<MaterialCardView>(R.id.schedule_calendar_item_card)
                             .setCardBackgroundColor(getColor(R.color.calendar_item))
                     }
                 }
@@ -161,9 +162,9 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
         }
     }
 
-    private fun initHistoryItemMarker(
+    private fun initScheduleItemMarker(
         markerView: View,
-        medicationEventList: List<FakeMedicationHistoryEntity>,
+        medicationEventList: List<FakeMedicationScheduleEntity>,
         currentDate: String,
     ) {
         dateFormat.parse(currentDate)?.let { date ->
@@ -176,13 +177,13 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
                         if (it.medicationSuccessTime == -1L) {
                             isMedicationSuccess = false
                         }
-                        setHistoryItemMarkerColor(markerView, isMedicationSuccess)
+                        setScheduleItemMarkerColor(markerView, isMedicationSuccess)
                     }
                 }
         }
     }
 
-    private fun setHistoryItemMarkerColor(markerView: View, isMedicationSuccess: Boolean) {
+    private fun setScheduleItemMarkerColor(markerView: View, isMedicationSuccess: Boolean) {
         markerView.apply {
             setBackgroundColor(context.getColor(if (isMedicationSuccess) {
                 R.color.success_medication

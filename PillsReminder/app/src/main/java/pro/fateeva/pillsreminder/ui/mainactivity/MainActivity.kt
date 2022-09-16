@@ -12,12 +12,12 @@ import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
-import pro.fateeva.pillsreminder.ui.screens.calendar.HistoryCalendarFragment
-import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
-import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
+import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarFragment
 import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
+import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
+import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 
 private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, HistoryCalendarFragment())
+                .replace(R.id.main_container, ScheduleCalendarFragment())
                 .commit()
         }
     }

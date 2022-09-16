@@ -8,7 +8,7 @@
     tools:layout_height="@dimen/history_calendar_item_example_size">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/history_calendar_item_card"
+        android:id="@+id/schedule_calendar_item_card"
         style="@style/calendarCardItemStyle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/history_calendar_item_card_mm_yy_text_view"
+                android:id="@+id/schedule_calendar_item_card_mm_yy_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -30,7 +30,7 @@
                 tools:text="@tools:sample/lorem"/>
 
             <TextView
-                android:id="@+id/history_calendar_item_card_day_text_view"
+                android:id="@+id/schedule_calendar_item_card_day_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -38,15 +38,15 @@
                 android:textSize="@dimen/calendar_item_day_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/history_calendar_item_card_event_marker_view"
-                app:layout_constraintTop_toBottomOf="@id/history_calendar_item_card_mm_yy_text_view"
+                app:layout_constraintBottom_toTopOf="@id/schedule_calendar_item_card_event_marker_view"
+                app:layout_constraintTop_toBottomOf="@id/schedule_calendar_item_card_mm_yy_text_view"
                 tools:text="@tools:sample/lorem"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/calendar_item_marker_size"
                 android:visibility="gone"
-                android:id="@+id/history_calendar_item_card_event_marker_view"
+                android:id="@+id/schedule_calendar_item_card_event_marker_view"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:background="@color/planned_medication"

@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
 import pro.fateeva.pillsreminder.ui.hideKeyboard
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 

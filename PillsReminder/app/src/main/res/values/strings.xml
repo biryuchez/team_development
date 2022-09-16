@@ -36,7 +36,7 @@
     <string name="days_count_default_value">1</string>
     <string name="time_picker_text_view">%1s:%2s</string>
     <string name="set_time">выбрать время</string>
-    <string name="notification_is_setted">Напоминание установлено</string>
+    <string name="notification_is_set">Напоминание установлено</string>
     <string name="set_time_warning">Установите время</string>
     <string name="set_dosage_warning">Введите дозировку</string>
     <string name="time_picker_title">Время приема лекарства</string>
