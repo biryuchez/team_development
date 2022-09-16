@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui.mainactivity
+package pro.fateeva.pillsreminder.ui.navigation
 
 import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
@@ -10,4 +10,5 @@ interface AppNavigation {
     fun navigateToOncePerDayScreen(drugDomain: DrugDomain, daysCount: Int)
     fun navigateToTwicePerDayScreen(drugDomain: DrugDomain, daysCount: Int)
     fun navigateToDestination(destination: Fragment)
+    fun navigateToMenuItem(destination: Fragment, clickedItemId: Int = -1)
 }

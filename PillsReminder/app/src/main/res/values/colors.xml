@@ -17,4 +17,5 @@
     <color name="planned_medication">#FFC107</color>
     <color name="failure_medication">#CCF44336</color>
     <color name="white_90">#E6FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
 </resources>

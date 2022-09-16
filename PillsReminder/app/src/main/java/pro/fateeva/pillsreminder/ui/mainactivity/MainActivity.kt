@@ -7,21 +7,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.ui.navigation.AppNavigation
+import pro.fateeva.pillsreminder.ui.navigation.NavigationFragment
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
-import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarFragment
-import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
-import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsFragment
-import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
-import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
-import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 
-private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
+private const val NAVIGATION_FRAGMENT_TAG = "NAVIGATION_FRAGMENT_TAG"
 
-class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
+class MainActivity : AppCompatActivity(), NotificationHandler, NavigatorProvider {
 
     override val alarmManager: AlarmManager by lazy {
         getSystemService(ALARM_SERVICE) as AlarmManager
@@ -42,7 +36,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, ScheduleCalendarFragment())
+                .replace(R.id.main_container, NavigationFragment(), NAVIGATION_FRAGMENT_TAG)
                 .commit()
         }
     }
@@ -66,31 +60,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         actionListener.onNotificationAction(this, applicationContext, intent)
     }
 
-    override fun navigateToPillListScreen() {
-        navigateToDestination(PillsListFragment())
-    }
-
-    override fun navigateToPillSearchingScreen() {
-        navigateToDestination(SearchPillFragment())
-    }
-
-    override fun navigateToEventFrequencyScreen(drugDomain: DrugDomain) {
-        navigateToDestination(FrequencyFragment.newInstance(drugDomain))
-    }
-
-    override fun navigateToOncePerDayScreen(drugDomain: DrugDomain, daysCount: Int) {
-        navigateToDestination(OncePerDaySettingsFragment.newInstance(drugDomain, daysCount))
-    }
-
-    override fun navigateToTwicePerDayScreen(drugDomain: DrugDomain, daysCount: Int) {
-        navigateToDestination(TwicePerDaySettingsFragment.newInstance(drugDomain, daysCount))
-    }
-
-    override fun navigateToDestination(destination: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.main_container, destination)
-            .addToBackStack(NAVIGATION_BACKSTACK_NAME)
-            .commit()
+    override fun getAppNavigator(): AppNavigation {
+        return supportFragmentManager.findFragmentByTag(NAVIGATION_FRAGMENT_TAG) as AppNavigation
     }
 }

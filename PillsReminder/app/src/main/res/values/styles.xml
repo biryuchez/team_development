@@ -54,4 +54,10 @@
         <item name="android:textSize">@dimen/calendar_days_header_text_size</item>
     </style>
 
+    <style name="pillsBottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/app_primary</item>
+        <item name="itemIconTint">@color/bottom_navigation_item_colors</item>
+        <item name="itemTextColor">@color/bottom_navigation_item_colors</item>
+    </style>
+
 </resources>

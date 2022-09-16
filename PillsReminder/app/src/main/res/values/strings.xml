@@ -53,4 +53,6 @@
     <string name="header_friday">ПТ</string>
     <string name="header_saturday">СБ</string>
     <string name="header_sunday">ВС</string>
+    <string name="pills_list_title">Список напоминаний</string>
+    <string name="schedule_calendar_title">Календарь</string>
 </resources>

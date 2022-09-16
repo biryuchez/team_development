@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import pro.fateeva.pillsreminder.ui.mainactivity.AppNavigation
+import pro.fateeva.pillsreminder.ui.navigation.AppNavigation
+import pro.fateeva.pillsreminder.ui.mainactivity.NavigatorProvider
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val inflateBinding: (
@@ -32,7 +33,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navigator = requireActivity() as AppNavigation
+        navigator = (requireActivity() as NavigatorProvider).getAppNavigator()
     }
 
     override fun onDestroy() {
