@@ -10,7 +10,12 @@ import pro.fateeva.pillsreminder.databinding.ItemHistoryEntityBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-private const val ANIMATION_DURATION = 75L
+/**
+ * Класс, отвечающий за отображение событий "прием лекарства" по клику на ячейку
+ * календарной сетки
+ */
+
+private const val ANIMATION_DURATION = 150L
 private const val ALPHA_VISIBLE = 1f
 private const val ALPHA_INVISIBLE = 0f
 private const val LAYOUT_MARGIN = 4

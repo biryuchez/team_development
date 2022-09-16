@@ -27,6 +27,7 @@ class HistoryCalendarFragment :
     private fun renderCalendarGrid(medicationHistoryList: List<FakeMedicationHistoryEntity>) {
         CalendarGridBuilder(dateFormat).buildCalendarGrid(
             binding.calendarContainer,
+            binding.calendarDaysHeader.root,
             medicationHistoryList
         ) { currentDate -> renderMedicationHistory(medicationHistoryList, currentDate) }
     }

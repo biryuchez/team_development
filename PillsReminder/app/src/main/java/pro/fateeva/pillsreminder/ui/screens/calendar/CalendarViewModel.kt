@@ -9,8 +9,9 @@ class CalendarViewModel(
 ) : ViewModel() {
     private val liveData = MutableLiveData<List<FakeMedicationHistoryEntity>>()
 
-    fun getData(): LiveData<List<FakeMedicationHistoryEntity>> {
+    fun getData(): LiveData<List<FakeMedicationHistoryEntity>> = liveData
+
+    fun getMedicationHistoryList() {
         liveData.postValue(medicationHistoryRepository.getMedicationHistory())
-        return liveData
     }
 }
