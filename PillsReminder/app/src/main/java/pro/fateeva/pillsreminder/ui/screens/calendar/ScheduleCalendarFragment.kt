@@ -3,6 +3,7 @@ package pro.fateeva.pillsreminder.ui.screens.calendar
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.clean.data.local.entity.FakeMedicationScheduleEntity
 import pro.fateeva.pillsreminder.databinding.FragmentScheduleCalendarBinding
@@ -21,8 +22,15 @@ class ScheduleCalendarFragment :
 
     private val viewModel: ScheduleCalendarViewModel by viewModel()
 
+    private lateinit var onBuildEndAction: () -> Unit
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onBuildEndAction = {
+            binding.calendarProgressBar.isVisible = false
+            binding.calendarScrollView.isVisible = true
+        }
 
         viewModel.getMedicationScheduleList().observe(viewLifecycleOwner) {
             renderCalendarGrid(it)
@@ -33,7 +41,8 @@ class ScheduleCalendarFragment :
         CalendarGridBuilder(dateFormat).buildCalendarGrid(
             binding.calendarContainer,
             binding.calendarDaysHeader.root,
-            medicationScheduleList
+            medicationScheduleList,
+            onBuildEndAction
         ) { currentDate -> renderMedicationSchedule(medicationScheduleList, currentDate) }
     }
 

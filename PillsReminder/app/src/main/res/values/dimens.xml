@@ -25,7 +25,7 @@
     <dimen name="calendar_item_date_text_size">10sp</dimen>
     <dimen name="padding_4dp">4dp</dimen>
     <dimen name="calendar_item_day_text_size">20sp</dimen>
-    <dimen name="calendar_item_marker_size">2dp</dimen>
+    <dimen name="calendar_item_marker_size">3dp</dimen>
     <dimen name="calendar_legend_view_size">8dp</dimen>
     <dimen name="calendar_legend_text_size">10sp</dimen>
     <dimen name="calendar_legend_text_margin">8dp</dimen>

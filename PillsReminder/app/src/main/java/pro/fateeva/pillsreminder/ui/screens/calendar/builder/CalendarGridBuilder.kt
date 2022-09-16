@@ -56,6 +56,7 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
         calendarContainer: ConstraintLayout,
         calendarHeader: ConstraintLayout,
         medicationEventList: List<FakeMedicationScheduleEntity>,
+        onBuildEndAction: () -> Unit,
         block: (currentDate: String) -> Unit,
     ) {
         calendarContainer.removeAllViews()
@@ -85,6 +86,7 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
 
             calendarContainer.addView(scheduleCalendarItemView)
         }
+        onBuildEndAction.invoke()
     }
 
     private fun initOffset(): Int {

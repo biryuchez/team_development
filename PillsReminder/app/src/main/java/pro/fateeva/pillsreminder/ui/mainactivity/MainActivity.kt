@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, NavigatorProvider
         actionListener.onNotificationAction(this, applicationContext, intent)
     }
 
-    override fun getAppNavigator(): AppNavigation {
+    override fun provideAppNavigator(): AppNavigation {
         return supportFragmentManager.findFragmentByTag(NAVIGATION_FRAGMENT_TAG) as AppNavigation
     }
 }

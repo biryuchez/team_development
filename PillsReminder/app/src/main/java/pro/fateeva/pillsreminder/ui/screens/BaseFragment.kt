@@ -33,7 +33,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navigator = (requireActivity() as NavigatorProvider).getAppNavigator()
+        navigator = (requireActivity() as NavigatorProvider).provideAppNavigator()
     }
 
     override fun onDestroy() {
