@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import pro.fateeva.pillsreminder.clean.data.local.entity.FakeMedicationScheduleEntity
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 import pro.fateeva.pillsreminder.databinding.FragmentScheduleCalendarBinding
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 import pro.fateeva.pillsreminder.ui.screens.calendar.builder.CalendarGridBuilder
@@ -37,7 +37,7 @@ class ScheduleCalendarFragment :
         }
     }
 
-    private fun renderCalendarGrid(medicationScheduleList: List<FakeMedicationScheduleEntity>) {
+    private fun renderCalendarGrid(medicationScheduleList: List<MedicationScheduleItemDomain>) {
         CalendarGridBuilder(dateFormat).buildCalendarGrid(
             binding.calendarContainer,
             binding.calendarDaysHeader.root,
@@ -47,7 +47,7 @@ class ScheduleCalendarFragment :
     }
 
     private fun renderMedicationSchedule(
-        medicationScheduleList: List<FakeMedicationScheduleEntity>,
+        medicationScheduleList: List<MedicationScheduleItemDomain>,
         currentDate: String,
     ) {
         ScheduleEventsItemsBuilder(dateFormat).showScheduleEvents(

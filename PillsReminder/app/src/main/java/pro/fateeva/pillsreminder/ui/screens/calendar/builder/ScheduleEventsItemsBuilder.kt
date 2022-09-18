@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.data.local.entity.FakeMedicationScheduleEntity
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 import pro.fateeva.pillsreminder.databinding.ItemScheduleEntityBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +29,7 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
 
     fun showScheduleEvents(
         scheduleEventsContainer: LinearLayout,
-        medicationScheduleList: List<FakeMedicationScheduleEntity>,
+        medicationScheduleList: List<MedicationScheduleItemDomain>,
         currentDate: String,
     ) {
         scheduleEventsContainer.apply {
@@ -44,7 +44,7 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
 
     private fun onAnimationEndAction(
         scheduleEventsContainer: LinearLayout,
-        medicationScheduleList: List<FakeMedicationScheduleEntity>,
+        medicationScheduleList: List<MedicationScheduleItemDomain>,
         currentDate: String,
     ) {
         scheduleEventsContainer.removeAllViews()
@@ -74,7 +74,7 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
     }
 
     private fun initCurrentDatePillsSet(
-        medicationScheduleList: List<FakeMedicationScheduleEntity>,
+        medicationScheduleList: List<MedicationScheduleItemDomain>,
         currentDate: String,
     ): Set<String> {
         return mutableSetOf<String>().apply {
@@ -100,7 +100,7 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
     private fun addScheduleView(
         scheduleEventsContainer: LinearLayout,
         params: LinearLayout.LayoutParams,
-        fakeMedicationScheduleEntity: FakeMedicationScheduleEntity,
+        fakeMedicationScheduleEntity: MedicationScheduleItemDomain,
         currentDate: String,
     ) {
         with(scheduleEventsContainer.context) {

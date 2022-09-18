@@ -8,7 +8,8 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.data.local.entity.FakeMedicationScheduleEntity
+import pro.fateeva.pillsreminder.clean.domain.DateListFactory
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 import pro.fateeva.pillsreminder.databinding.ItemScheduleCalendarBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,7 +31,7 @@ import java.util.*
 
 private const val DATES_COUNT = 30 // не рекомендуется выставлять меньше 7 (т.к. 7 дней недели)
 private const val COLUMNS_COUNT = 7 // не менять, если IS_OFFSET_REQUIRED = true
-private const val IS_OFFSET_REQUIRED = true // если DATES_COUNT < 7, то выставить false
+private const val IS_OFFSET_REQUIRED = false // если DATES_COUNT < 7, то выставить false
 
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val LAYOUT_DIMENSION_RATIO = "W,1:1"
@@ -48,14 +49,14 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
 
     private lateinit var scheduleCalendarItemView: View
 
-    private var medicationEventList = listOf<FakeMedicationScheduleEntity>()
+    private var medicationEventList = listOf<MedicationScheduleItemDomain>()
 
     private val offset = initOffset()
 
     fun buildCalendarGrid(
         calendarContainer: ConstraintLayout,
         calendarHeader: ConstraintLayout,
-        medicationEventList: List<FakeMedicationScheduleEntity>,
+        medicationEventList: List<MedicationScheduleItemDomain>,
         onBuildEndAction: () -> Unit,
         block: (currentDate: String) -> Unit,
     ) {
@@ -166,7 +167,7 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
 
     private fun initScheduleItemMarker(
         markerView: View,
-        medicationEventList: List<FakeMedicationScheduleEntity>,
+        medicationEventList: List<MedicationScheduleItemDomain>,
         currentDate: String,
     ) {
         dateFormat.parse(currentDate)?.let { date ->
