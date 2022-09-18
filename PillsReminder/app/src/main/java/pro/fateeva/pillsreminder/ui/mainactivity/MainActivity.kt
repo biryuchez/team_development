@@ -10,8 +10,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
+import pro.fateeva.pillsreminder.ui.navigation.NavigationFragment
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
+import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarFragment
 import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
 import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, PillsListFragment())
+                .replace(R.id.main_container, NavigationFragment())
                 .commit()
         }
     }
@@ -65,8 +67,8 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         actionListener.onNotificationAction(this, applicationContext, intent)
     }
 
-    override fun navigateToPillListScreen() {
-        navigateToDestination(PillsListFragment())
+    override fun navigateToPillListScreen(isNavigationBottomAction: Boolean) {
+        navigateToDestination(PillsListFragment(), isNavigationBottomAction)
     }
 
     override fun navigateToPillSearchingScreen() {
@@ -93,11 +95,22 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         navigateToDestination(TwicePerDaySettingsFragment.newInstance(id))
     }
 
-    override fun navigateToDestination(destination: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.main_container, destination)
-            .addToBackStack(NAVIGATION_BACKSTACK_NAME)
-            .commit()
+    override fun navigateToScheduleCalendarScreen(isNavigationBottomAction: Boolean) {
+        navigateToDestination(ScheduleCalendarFragment(), isNavigationBottomAction)
+    }
+
+    override fun navigateToDestination(destination: Fragment, isNavigationBottomAction: Boolean) {
+        if (isNavigationBottomAction) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.navigation_container, destination)
+                .commit()
+        } else {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.navigation_container, destination)
+                .addToBackStack(NAVIGATION_BACKSTACK_NAME)
+                .commit()
+        }
     }
 }

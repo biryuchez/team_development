@@ -17,4 +17,23 @@
     <dimen name="radio_group_margin_top">20dp</dimen>
     <dimen name="radio_button_text_size">18sp</dimen>
     <dimen name="arrow_button_size">50dp</dimen>
+    <dimen name="default_layout_padding">4dp</dimen>
+    <dimen name="calendar_card_item_corner_radius">2dp</dimen>
+    <dimen name="calendar_grid_margin">1dp</dimen>
+    <dimen name="history_calendar_item_padding">1dp</dimen>
+    <dimen name="history_calendar_item_example_size">100dp</dimen>
+    <dimen name="calendar_item_date_text_size">10sp</dimen>
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="calendar_item_day_text_size">20sp</dimen>
+    <dimen name="calendar_item_marker_size">3dp</dimen>
+    <dimen name="calendar_legend_view_size">8dp</dimen>
+    <dimen name="calendar_legend_text_size">10sp</dimen>
+    <dimen name="calendar_legend_text_margin">8dp</dimen>
+    <dimen name="calendar_days_header_text_size">12sp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="item_history_margin">2dp</dimen>
+    <dimen name="item_history_padding">8dp</dimen>
+    <dimen name="item_history_marker_width">4dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="item_history_text_size">20sp</dimen>
 </resources>

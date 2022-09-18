@@ -36,9 +36,24 @@
     <string name="days_count_default_value">1</string>
     <string name="time_picker_text_view">%1s:%2s</string>
     <string name="set_time">выбрать время</string>
-    <string name="notification_is_setted">Напоминание установлено</string>
+    <string name="notification_is_set">Напоминание установлено</string>
     <string name="set_time_warning">Установите время</string>
     <string name="set_dosage_warning">Введите дозировку</string>
     <string name="time_picker_title">Время приема лекарства</string>
     <string name="fill_field">Заполните поле</string>
+    <string name="medication_failure_message">не принято</string>
+    <string name="medication_success_message">принято в %1s</string>
+    <string name="calendar_legend_planned_text">Запланирован прием лекарств</string>
+    <string name="calendar_legend_failure_text">Хотя бы одно лекарство не принято</string>
+    <string name="calendar_legend_success_text">Все лекарства приняты</string>
+    <string name="header_monday">ПН</string>
+    <string name="header_tuesday">ВТ</string>
+    <string name="header_wednesday">СР</string>
+    <string name="header_thursday">ЧТ</string>
+    <string name="header_friday">ПТ</string>
+    <string name="header_saturday">СБ</string>
+    <string name="header_sunday">ВС</string>
+    <string name="pills_list_title">Список напоминаний</string>
+    <string name="schedule_calendar_title">Календарь</string>
+    <string name="pill_name_error">Ошибка получения названия лекарства</string>
 </resources>

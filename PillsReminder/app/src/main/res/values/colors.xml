@@ -12,4 +12,11 @@
     <color name="settings_picker">#595959</color>
     <color name="light_grey">#F0F0F0</color>
     <color name="app_primary">#4C74B8</color>
+    <color name="calendar_item">#E6212F49</color>
+    <color name="selected_date">#009688</color>
+    <color name="success_medication">#4CAF50</color>
+    <color name="planned_medication">#FFC107</color>
+    <color name="failure_medication">#CCF44336</color>
+    <color name="white_90">#E6FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
 </resources>

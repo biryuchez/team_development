@@ -106,9 +106,9 @@ class OncePerDaySettingsFragment :
                 it.medicationReminderTime,
                 parentFragmentManager,
                 TIME_PICKER_TAG
-            ) {
-                viewModel.setMedicationReminderTime(it.timeInMillis)
-                binding.oncePerDayTimePickerTextView.text = it.formatTime()
+            ) { calendar ->
+                viewModel.setMedicationReminderTime(calendar.timeInMillis)
+                binding.oncePerDayTimePickerTextView.text = calendar.formatTime()
             }
         }
     }

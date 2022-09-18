@@ -6,19 +6,24 @@ import pro.fateeva.pillsreminder.clean.data.MedicationReminderRepository
 import pro.fateeva.pillsreminder.clean.data.MedicationReminderRepositoryImpl
 import pro.fateeva.pillsreminder.clean.data.NotificationManager
 import pro.fateeva.pillsreminder.clean.data.NotificationManagerImpl
+import pro.fateeva.pillsreminder.clean.data.local.FakeFakeLocalRepositoryImpl
+import pro.fateeva.pillsreminder.clean.data.local.FakeLocalRepository
 import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
-import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsViewModel
+import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarViewModel
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewModel
 import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListViewModel
+import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsViewModel
 
 object Di {
     val mainModule = module {
         single<MedicationInteractor> { MedicationInteractor(get(), get()) }
         single<NotificationManager> { NotificationManagerImpl(get()) }
         single<MedicationReminderRepository> { MedicationReminderRepositoryImpl() }
+        single<FakeLocalRepository> { FakeFakeLocalRepositoryImpl() }
 
-        viewModel{ OncePerDaySettingsViewModel(get(), get()) }
-        viewModel{ PillsListViewModel(get()) }
-        viewModel{ TwicePerDaySettingsViewModel(get(), get()) }
+        viewModel { OncePerDaySettingsViewModel(get(), get()) }
+        viewModel { PillsListViewModel(get()) }
+        viewModel { TwicePerDaySettingsViewModel(get(), get()) }
+        viewModel { ScheduleCalendarViewModel(fakeLocalRepository = get()) }
     }
 }

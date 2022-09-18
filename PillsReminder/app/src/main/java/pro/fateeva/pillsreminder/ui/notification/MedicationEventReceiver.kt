@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
 import pro.fateeva.pillsreminder.clean.data.MedicationReminderRepository
+import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotification
 import pro.fateeva.pillsreminder.ui.notification.notificationcreator.MedicationNotifier
 
