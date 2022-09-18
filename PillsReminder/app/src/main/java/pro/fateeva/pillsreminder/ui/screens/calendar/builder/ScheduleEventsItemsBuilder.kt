@@ -51,12 +51,12 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
 
         val params = initLayoutParams()
 
-        initCurrentDatePillsSet(medicationScheduleList, currentDate).forEach { pillName ->
-            addPillNameView(scheduleEventsContainer, pillName, params)
+        initCurrentDatePillsSet(medicationScheduleList, currentDate).forEach { pillId ->
+            addPillNameView(scheduleEventsContainer, medicationScheduleList, pillId, params)
 
             medicationScheduleList
                 .filter { dateFormat.format(it.medicationTime) == currentDate }
-                .filter { it.pillName == pillName }
+                .filter { it.pillId == pillId }
                 .sortedBy { it.medicationTime }
                 .forEach { addScheduleView(scheduleEventsContainer, params, it, currentDate) }
         }
@@ -76,23 +76,25 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
     private fun initCurrentDatePillsSet(
         medicationScheduleList: List<MedicationScheduleItemDomain>,
         currentDate: String,
-    ): Set<String> {
-        return mutableSetOf<String>().apply {
+    ): Set<Int> {
+        return mutableSetOf<Int>().apply {
             medicationScheduleList
                 .filter { dateFormat.format(it.medicationTime) == currentDate }
                 .sortedBy { it.pillName }
-                .forEach { this.add(it.pillName) }
+                .forEach { this.add(it.pillId) }
         }
     }
 
     private fun addPillNameView(
         scheduleEventsContainer: LinearLayout,
-        pillName: String,
+        medicationScheduleList: List<MedicationScheduleItemDomain>,
+        pillId: Int,
         params: LinearLayout.LayoutParams,
     ) {
         scheduleEventsContainer.addView(TextView(scheduleEventsContainer.context).apply {
             textSize = PILL_NAME_TEXT_SIZE
-            text = pillName
+            text = (medicationScheduleList.find { it.pillId == pillId })?.pillName
+                ?: context.getString(R.string.pill_name_error)
             layoutParams = params
         })
     }

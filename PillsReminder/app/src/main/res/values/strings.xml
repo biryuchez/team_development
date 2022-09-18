@@ -55,4 +55,5 @@
     <string name="header_sunday">ВС</string>
     <string name="pills_list_title">Список напоминаний</string>
     <string name="schedule_calendar_title">Календарь</string>
+    <string name="pill_name_error">Ошибка получения названия лекарства</string>
 </resources>
