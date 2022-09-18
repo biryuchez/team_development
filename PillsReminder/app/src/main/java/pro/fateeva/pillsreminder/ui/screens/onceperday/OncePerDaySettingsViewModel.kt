@@ -17,14 +17,13 @@ class OncePerDaySettingsViewModel(
 
     private val liveData: MutableLiveData<OncePerDaySettingsState> =
         handle.getLiveData("state", OncePerDaySettingsState())
-    private val medicationTimeError = MutableLiveData(false)
     private val medicationDoseError = MutableLiveData(false)
 
     private val oncePerDaySettingsState: OncePerDaySettingsState
         get() = liveData.value ?: OncePerDaySettingsState()
 
-    val hasMedicationTimeError: LiveData<Boolean>
-        get() = medicationTimeError
+    val state: LiveData<OncePerDaySettingsState>
+        get() = liveData
 
     val hasMedicationDoseError: LiveData<Boolean>
         get() = medicationDoseError
@@ -39,7 +38,7 @@ class OncePerDaySettingsViewModel(
     val successErrorSaveState: LiveData<SaveState>
         get() = successErrorSaveLiveData
 
-    fun setMedicationReminder(quantityOfDays: Int, selectedDrug: DrugDomain) {
+    fun onCreateMedicationReminder(quantityOfDays: Int, selectedDrug: DrugDomain) {
         val medicationReminder = MedicationReminder(
             selectedDrug.ID,
             selectedDrug.drugName,
@@ -51,27 +50,62 @@ class OncePerDaySettingsViewModel(
             )
         )
 
-        if (oncePerDaySettingsState.medicationReminderTime == 0L) {
-            medicationTimeError.value = true
-        }
-
-        if (oncePerDaySettingsState.medicationDose == 0) {
+        if (oncePerDaySettingsState.medicationDose == 0 || oncePerDaySettingsState.medicationDose.toString() == "") {
             medicationDoseError.value = true
         }
 
         if (isEveryFieldValid()) {
-            interactor.setMedicationReminder(quantityOfDays, medicationReminder)
+            interactor.saveMedicationReminder(quantityOfDays, medicationReminder)
+            successErrorSaveLiveData.value = SaveState.SUCCESS
+        }
+    }
+
+    fun onEditMedicationReminder(id : Int) {
+        val medicationReminder = interactor.getMedicationReminder(id)
+        val newMedicationReminder = MedicationReminder(
+            medicationReminder.id,
+            medicationReminder.medicationName,
+            listOf(
+                MedicationIntake(
+                    oncePerDaySettingsState.medicationDose,
+                    oncePerDaySettingsState.medicationReminderTime
+                )
+            ),
+            medicationReminder.endDate
+        )
+
+        if (oncePerDaySettingsState.medicationDose == 0 || oncePerDaySettingsState.medicationDose.toString() == "") {
+            medicationDoseError.value = true
+        }
+
+        if (isEveryFieldValid()) {
+            interactor.editMedicationReminder(newMedicationReminder)
             successErrorSaveLiveData.value = SaveState.SUCCESS
         }
     }
 
     fun setMedicationReminderTime(time: Long) {
         oncePerDaySettingsState.medicationReminderTime = time
-        medicationTimeError.value = false
     }
 
-    fun setDose(dose: Int) {
-        oncePerDaySettingsState.medicationDose = dose
-        medicationDoseError.value = false
+    fun setDose(dose: String) {
+        if (dose == "" || dose.toInt() == 0){
+            medicationDoseError.value = true
+            oncePerDaySettingsState.medicationDose = 0
+        } else {
+            medicationDoseError.value = false
+            oncePerDaySettingsState.medicationDose = dose.toInt()
+        }
+    }
+
+    fun onViewCreated(medicationReminderId: Int) {
+        val medicationReminder = interactor.getMedicationReminder(medicationReminderId)
+        setMedicationReminderTime(medicationReminder.medicationIntakes[0].time)
+        setDose(medicationReminder.medicationIntakes[0].dosage.toString())
+        oncePerDaySettingsState.medicationName = medicationReminder.medicationName
+    }
+
+    fun onViewCreated(name: String) {
+        oncePerDaySettingsState.medicationName = name
     }
 }

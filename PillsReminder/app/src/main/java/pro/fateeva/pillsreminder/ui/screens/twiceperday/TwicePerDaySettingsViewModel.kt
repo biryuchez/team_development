@@ -9,6 +9,7 @@ import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.ui.SaveState
+import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsState
 
 private const val FIRST_MEDICATION_INTAKE_INDEX = 0
 private const val SECOND_MEDICATION_INTAKE_INDEX = 1
@@ -20,22 +21,17 @@ class TwicePerDaySettingsViewModel(
 
     private val liveData: MutableLiveData<TwicePerDaySettingsState> =
         handle.getLiveData("state", TwicePerDaySettingsState())
-    private val firstMedicationTimeError = MutableLiveData(false)
     private val firstMedicationDoseError = MutableLiveData(false)
-    private val secondMedicationTimeError = MutableLiveData(false)
     private val secondMedicationDoseError = MutableLiveData(false)
 
     private val twicePerDaySettingsState: TwicePerDaySettingsState
         get() = liveData.value ?: TwicePerDaySettingsState()
 
-    val hasFirstMedicationTimeError: LiveData<Boolean>
-        get() = firstMedicationTimeError
+    val state: LiveData<TwicePerDaySettingsState>
+        get() = liveData
 
     val hasFirstMedicationDoseError: LiveData<Boolean>
         get() = firstMedicationDoseError
-
-    val hasSecondMedicationTimeError: LiveData<Boolean>
-        get() = secondMedicationTimeError
 
     val hasSecondMedicationDoseError: LiveData<Boolean>
         get() = secondMedicationDoseError
@@ -50,27 +46,26 @@ class TwicePerDaySettingsViewModel(
     val successErrorSaveState: LiveData<SaveState>
         get() = successErrorSaveLiveData
 
-    fun setMedicationReminderTime(time: Long, medicationIntakeIndex : Int) {
-        if (medicationIntakeIndex == FIRST_MEDICATION_INTAKE_INDEX){
+    fun setMedicationReminderTime(time: Long, medicationIntakeIndex: Int) {
+        if (medicationIntakeIndex == FIRST_MEDICATION_INTAKE_INDEX) {
             twicePerDaySettingsState.firstMedicationReminderTime = time
-            firstMedicationTimeError.value = false
-        } else if (medicationIntakeIndex == SECOND_MEDICATION_INTAKE_INDEX){
+        } else if (medicationIntakeIndex == SECOND_MEDICATION_INTAKE_INDEX) {
             twicePerDaySettingsState.secondMedicationReminderTime = time
-            secondMedicationTimeError.value = false
         }
     }
 
-    fun setDose(dose: Int, medicationIntakeIndex : Int){
-        if (medicationIntakeIndex == FIRST_MEDICATION_INTAKE_INDEX){
-            twicePerDaySettingsState.firstMedicationDose = dose
-            firstMedicationDoseError.value = false
-        } else if (medicationIntakeIndex == SECOND_MEDICATION_INTAKE_INDEX){
-            twicePerDaySettingsState.secondMedicationDose = dose
-            secondMedicationDoseError.value = false
+    fun setDose(dose: String, medicationIntakeIndex: Int) {
+        val isError = dose == "" || dose.toInt() == 0
+        if (medicationIntakeIndex == FIRST_MEDICATION_INTAKE_INDEX) {
+            twicePerDaySettingsState.firstMedicationDose = dose.toIntOrNull() ?: 0
+            firstMedicationDoseError.value = isError
+        } else if (medicationIntakeIndex == SECOND_MEDICATION_INTAKE_INDEX) {
+            twicePerDaySettingsState.secondMedicationDose = dose.toIntOrNull() ?: 0
+            secondMedicationDoseError.value = isError
         }
     }
 
-    fun setMedicationReminder(quantityOfDays: Int, selectedDrug: DrugDomain) {
+    fun onCreateMedicationReminder(quantityOfDays: Int, selectedDrug: DrugDomain) {
         val medicationReminder = MedicationReminder(
             selectedDrug.ID,
             selectedDrug.drugName,
@@ -86,25 +81,62 @@ class TwicePerDaySettingsViewModel(
             )
         )
 
-        if (twicePerDaySettingsState.firstMedicationReminderTime  == 0L) {
-            firstMedicationTimeError.value = true
-        }
-
-        if (twicePerDaySettingsState.firstMedicationDose  == 0) {
+        if (twicePerDaySettingsState.firstMedicationDose == 0 || twicePerDaySettingsState.firstMedicationDose.toString() == "") {
             firstMedicationDoseError.value = true
         }
 
-        if (twicePerDaySettingsState.secondMedicationReminderTime  == 0L) {
-            secondMedicationTimeError.value = true
-        }
-
-        if (twicePerDaySettingsState.secondMedicationDose  == 0) {
+        if (twicePerDaySettingsState.secondMedicationDose == 0 || twicePerDaySettingsState.secondMedicationDose.toString() == "") {
             secondMedicationDoseError.value = true
         }
 
         if (isEveryFieldValid()) {
-            interactor.setMedicationReminder(quantityOfDays, medicationReminder)
+            interactor.saveMedicationReminder(quantityOfDays, medicationReminder)
             successErrorSaveLiveData.value = SaveState.SUCCESS
         }
+    }
+
+    fun onEditMedicationReminder(id: Int) {
+        val medicationReminder = interactor.getMedicationReminder(id)
+        val newMedicationReminder = MedicationReminder(
+            medicationReminder.id,
+            medicationReminder.medicationName,
+            listOf(
+                MedicationIntake(
+                    twicePerDaySettingsState.firstMedicationDose,
+                    twicePerDaySettingsState.firstMedicationReminderTime
+                ),
+                MedicationIntake(
+                    twicePerDaySettingsState.secondMedicationDose,
+                    twicePerDaySettingsState.secondMedicationReminderTime
+                )
+            ),
+            medicationReminder.endDate
+        )
+
+        if (twicePerDaySettingsState.firstMedicationDose == 0 || twicePerDaySettingsState.firstMedicationDose.toString() == "") {
+            firstMedicationDoseError.value = true
+        }
+
+        if (twicePerDaySettingsState.secondMedicationDose == 0 || twicePerDaySettingsState.secondMedicationDose.toString() == "") {
+            secondMedicationDoseError.value = true
+        }
+
+        if (isEveryFieldValid()) {
+            interactor.editMedicationReminder(newMedicationReminder)
+            successErrorSaveLiveData.value = SaveState.SUCCESS
+        }
+    }
+
+    fun onViewCreated(medicationReminderId: Int) {
+        val medicationReminder = interactor.getMedicationReminder(medicationReminderId)
+        setMedicationReminderTime(medicationReminder.medicationIntakes[0].time, 0)
+        setMedicationReminderTime(medicationReminder.medicationIntakes[1].time, 1)
+        setDose(medicationReminder.medicationIntakes[0].dosage.toString(), 0)
+        setDose(medicationReminder.medicationIntakes[1].dosage.toString(), 1)
+        twicePerDaySettingsState.medicationName = medicationReminder.medicationName
+    }
+
+    fun onViewCreated(name: String) {
+        twicePerDaySettingsState.medicationName = name
     }
 }

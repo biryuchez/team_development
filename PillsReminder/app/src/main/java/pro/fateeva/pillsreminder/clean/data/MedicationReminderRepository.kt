@@ -6,4 +6,5 @@ interface MedicationReminderRepository {
     fun saveMedicationReminder(medicationReminder: MedicationReminder)
     fun getMedicationReminder(id: Int) : MedicationReminder
     fun getMedicationReminders(): List<MedicationReminder>
+    fun deleteMedicationReminder(id: Int)
 }
