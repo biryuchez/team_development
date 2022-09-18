@@ -31,7 +31,7 @@ import java.util.*
 
 private const val DATES_COUNT = 30 // не рекомендуется выставлять меньше 7 (т.к. 7 дней недели)
 private const val COLUMNS_COUNT = 7 // не менять, если IS_OFFSET_REQUIRED = true
-private const val IS_OFFSET_REQUIRED = false // если DATES_COUNT < 7, то выставить false
+private const val IS_OFFSET_REQUIRED = true // если DATES_COUNT < 7, то выставить false
 
 private const val DEFAULT_LAYOUT_SIZE = 0
 private const val LAYOUT_DIMENSION_RATIO = "W,1:1"
