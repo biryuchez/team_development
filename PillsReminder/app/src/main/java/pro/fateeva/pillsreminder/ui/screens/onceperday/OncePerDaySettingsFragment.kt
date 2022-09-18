@@ -12,11 +12,13 @@ import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
 import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
+import java.util.*
 
 private const val TIME_PICKER_TAG = "TIME_PICKER"
 private const val DRUG_ARG_KEY = "DRUG"
 private const val DAYS_COUNT_ARG_KEY = "DAYS_COUNT"
 private const val DEFAULT_DAYS_COUNT_VALUE = 1
+private const val MEDICATION_REMINDER_ID_ARG_KEY = "MEDICATION_REMINDER_ID_ARG_KEY"
 
 class OncePerDaySettingsFragment :
     BaseFragment<FragmentOncePerDaySettingsBinding>(FragmentOncePerDaySettingsBinding::inflate) {
@@ -32,18 +34,46 @@ class OncePerDaySettingsFragment :
                 )
             }
         }
+
+        fun newInstance(id: Int): OncePerDaySettingsFragment {
+            return OncePerDaySettingsFragment().apply {
+                arguments = bundleOf(
+                    MEDICATION_REMINDER_ID_ARG_KEY to id
+                )
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val medicationReminderId = arguments?.getInt(MEDICATION_REMINDER_ID_ARG_KEY) ?: 0
+
         val selectedDrug = arguments?.getParcelable(DRUG_ARG_KEY) ?: DrugDomain()
         val medicationDaysCount = arguments?.getInt(DAYS_COUNT_ARG_KEY)
             ?: DEFAULT_DAYS_COUNT_VALUE
 
-        binding.medicationTitleTextView.text = selectedDrug.drugName
+        if (medicationReminderId == 0) {
+            viewModel.onViewCreated(selectedDrug.drugName)
+
+            binding.planButton.setOnClickListener {
+                viewModel.onCreateMedicationReminder(medicationDaysCount, selectedDrug)
+            }
+        } else {
+            viewModel.onViewCreated(medicationReminderId)
+
+            binding.planButton.setOnClickListener {
+                viewModel.onEditMedicationReminder(medicationReminderId)
+            }
+        }
 
         binding.oncePerDayTimePickerTextView.initTimePicker(
+            Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.timeInMillis,
             parentFragmentManager,
             TIME_PICKER_TAG
         ) {
@@ -52,25 +82,34 @@ class OncePerDaySettingsFragment :
         }
 
         binding.dosePickerEditText.doAfterTextChanged {
-            viewModel.setDose(it.toString().toInt())
-        }
-
-        viewModel.hasMedicationTimeError.observe(viewLifecycleOwner) {
-            binding.timeErrorTextView.isVisible = it
+            viewModel.setDose(it.toString())
         }
 
         viewModel.hasMedicationDoseError.observe(viewLifecycleOwner) {
             binding.doseErrorTextView.isVisible = it
         }
 
-        viewModel.successErrorSaveState.observe(viewLifecycleOwner){
-            if (it == SaveState.SUCCESS){
+        viewModel.successErrorSaveState.observe(viewLifecycleOwner) {
+            if (it == SaveState.SUCCESS) {
                 navigator.navigateToPillListScreen()
             }
         }
 
-        binding.planButton.setOnClickListener {
-            viewModel.setMedicationReminder(medicationDaysCount, selectedDrug)
+        viewModel.state.observe(viewLifecycleOwner) {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = it.medicationReminderTime
+            binding.medicationTitleTextView.text = it.medicationName
+            binding.oncePerDayTimePickerTextView.text = calendar.formatTime()
+            binding.dosePickerEditText.setText(it.medicationDose.toString())
+
+            binding.oncePerDayTimePickerTextView.initTimePicker(
+                it.medicationReminderTime,
+                parentFragmentManager,
+                TIME_PICKER_TAG
+            ) {
+                viewModel.setMedicationReminderTime(it.timeInMillis)
+                binding.oncePerDayTimePickerTextView.text = it.formatTime()
+            }
         }
     }
 }

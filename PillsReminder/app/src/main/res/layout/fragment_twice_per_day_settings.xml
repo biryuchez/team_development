@@ -125,7 +125,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_end_settings"
-                android:hint="08:00"
                 app:layout_constraintBaseline_toBaselineOf="@id/first_hour_text_view"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -152,12 +151,13 @@
                 app:layout_constraintTop_toBottomOf="@id/first_hour_text_view" />
 
             <EditText
-                android:id="@+id/first_dose_picker_text_view"
+                android:id="@+id/first_dose_picker_edit_text"
                 style="@style/PickerSettingStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_end_settings"
                 android:hint="@string/dose_hint"
+                android:selectAllOnFocus="true"
                 android:inputType="number"
                 app:layout_constraintBaseline_toBaselineOf="@id/first_dose_text_view"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -170,8 +170,8 @@
                 android:textColor="#FF0C0C"
                 android:visibility="invisible"
                 tools:visibility="visible"
-                app:layout_constraintEnd_toEndOf="@id/first_dose_picker_text_view"
-                app:layout_constraintTop_toBottomOf="@id/first_dose_picker_text_view" />
+                app:layout_constraintEnd_toEndOf="@id/first_dose_picker_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/first_dose_picker_edit_text" />
 
             <TextView
                 android:id="@+id/second_dose_title_text_view"
@@ -202,8 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_end_settings"
                 app:layout_constraintBaseline_toBaselineOf="@id/second_hour_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:hint="20:00" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/second_time_error_text_view"
@@ -228,10 +227,11 @@
                 app:layout_constraintTop_toBottomOf="@id/second_hour_text_view" />
 
             <EditText
-                android:id="@+id/second_dose_picker_text_view"
+                android:id="@+id/second_dose_picker_edit_text"
                 style="@style/PickerSettingStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:selectAllOnFocus="true"
                 android:layout_marginEnd="@dimen/margin_end_settings"
                 android:hint="@string/dose_hint"
                 android:inputType="number"
@@ -246,8 +246,8 @@
                 android:textColor="#FF0C0C"
                 android:visibility="invisible"
                 tools:visibility="visible"
-                app:layout_constraintEnd_toEndOf="@id/second_dose_picker_text_view"
-                app:layout_constraintTop_toBottomOf="@id/second_dose_picker_text_view" />
+                app:layout_constraintEnd_toEndOf="@id/second_dose_picker_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/second_dose_picker_edit_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

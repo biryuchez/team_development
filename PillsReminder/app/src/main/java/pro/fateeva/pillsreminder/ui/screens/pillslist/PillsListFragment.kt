@@ -24,7 +24,17 @@ class PillsListFragment :
     ) { medicationreminder, _ ->
         ItemPillBinding.bind(this).apply {
             medicationTitleTextView.text = medicationreminder.medicationName
-            scheduleTextView.text = medicationreminder.medicationIntakes.map { it.time.toCalendar().formatTime()}.joinToString(", ")
+            scheduleTextView.text =
+                medicationreminder.medicationIntakes.map { it.time.toCalendar().formatTime() }
+                    .joinToString(", ")
+            pillCardView.setOnClickListener {
+                val size = medicationreminder.medicationIntakes.size
+                if(size == 1){
+                    navigator.navigateToOncePerDayScreen(medicationreminder.id)
+                } else if (size == 2){
+                    navigator.navigateToTwicePerDayScreen(medicationreminder.id)
+                }
+            }
         }
     }
 

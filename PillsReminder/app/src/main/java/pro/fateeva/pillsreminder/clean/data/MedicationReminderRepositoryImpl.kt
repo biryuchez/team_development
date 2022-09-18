@@ -20,4 +20,8 @@ class MedicationReminderRepositoryImpl : MedicationReminderRepository {
     override fun getMedicationReminders(): List<MedicationReminder> {
         return medicationReminders
     }
+
+    override fun deleteMedicationReminder(id: Int) {
+        medicationReminders.remove(getMedicationReminder(id))
+    }
 }

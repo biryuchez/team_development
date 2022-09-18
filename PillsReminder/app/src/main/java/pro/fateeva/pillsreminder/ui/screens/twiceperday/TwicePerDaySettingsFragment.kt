@@ -12,12 +12,15 @@ import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
 import pro.fateeva.pillsreminder.ui.SaveState
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
+import java.util.*
 
 private const val DRUG_ARG_KEY = "DRUG"
 private const val DAYS_COUNT_ARG_KEY = "DAYS_COUNT"
 private const val DEFAULT_DAYS_COUNT_VALUE = 1
 private const val FIRST_MEDICATION_INTAKE_INDEX = 0
 private const val SECOND_MEDICATION_INTAKE_INDEX = 1
+private const val MEDICATION_REMINDER_ID_ARG_KEY = "MEDICATION_REMINDER_ID_ARG_KEY"
+private const val TIME_PICKER_TAG = "TIME_PICKER"
 
 class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBinding>(
     FragmentTwicePerDaySettingsBinding::inflate
@@ -27,16 +30,8 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.hasFirstMedicationTimeError.observe(viewLifecycleOwner) {
-            binding.firstTimeErrorTextView.isVisible = it
-        }
-
         viewModel.hasFirstMedicationDoseError.observe(viewLifecycleOwner) {
             binding.firstDoseErrorTextView.isVisible = it
-        }
-
-        viewModel.hasSecondMedicationTimeError.observe(viewLifecycleOwner) {
-            binding.secondTimeErrorTextView.isVisible = it
         }
 
         viewModel.hasSecondMedicationDoseError.observe(viewLifecycleOwner) {
@@ -49,36 +44,89 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
             }
         }
 
+        val medicationReminderId = arguments?.getInt(MEDICATION_REMINDER_ID_ARG_KEY) ?: 0
+
         val selectedDrug = arguments?.getParcelable(DRUG_ARG_KEY) ?: DrugDomain()
         val medicationDaysCount = arguments?.getInt(DAYS_COUNT_ARG_KEY)
             ?: DEFAULT_DAYS_COUNT_VALUE
 
-        binding.medicationTitleTextView.text = selectedDrug.drugName
+        if (medicationReminderId == 0) {
+            viewModel.onViewCreated(selectedDrug.drugName)
+
+            binding.planButton.setOnClickListener {
+                viewModel.onCreateMedicationReminder(medicationDaysCount, selectedDrug)
+            }
+        } else {
+            viewModel.onViewCreated(medicationReminderId)
+
+            binding.planButton.setOnClickListener {
+                viewModel.onEditMedicationReminder(medicationReminderId)
+            }
+        }
 
         binding.firstTimePickerTextView.initTimePicker(
+            Calendar.getInstance().apply{
+                set(Calendar.HOUR_OF_DAY, 8)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND,0)
+                set(Calendar.MILLISECOND,0)
+            }.timeInMillis,
             parentFragmentManager
         ) {
             viewModel.setMedicationReminderTime(it.timeInMillis, FIRST_MEDICATION_INTAKE_INDEX)
             binding.firstTimePickerTextView.setText(it.formatTime())
         }
 
-        binding.firstDosePickerTextView.doAfterTextChanged {
-            viewModel.setDose(it.toString().toInt(), FIRST_MEDICATION_INTAKE_INDEX)
+        binding.firstDosePickerEditText.doAfterTextChanged {
+            viewModel.setDose(it.toString(), FIRST_MEDICATION_INTAKE_INDEX)
         }
 
         binding.secondTimePickerTextView.initTimePicker(
+            Calendar.getInstance().apply{
+                set(Calendar.HOUR_OF_DAY, 20)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND,0)
+                set(Calendar.MILLISECOND,0)
+            }.timeInMillis,
             parentFragmentManager
         ) {
             viewModel.setMedicationReminderTime(it.timeInMillis, SECOND_MEDICATION_INTAKE_INDEX)
             binding.secondTimePickerTextView.setText(it.formatTime())
         }
 
-        binding.secondDosePickerTextView.doAfterTextChanged {
-            viewModel.setDose(it.toString().toInt(), SECOND_MEDICATION_INTAKE_INDEX)
+        binding.secondDosePickerEditText.doAfterTextChanged {
+            viewModel.setDose(it.toString(), SECOND_MEDICATION_INTAKE_INDEX)
         }
 
-        binding.planButton.setOnClickListener {
-            viewModel.setMedicationReminder(medicationDaysCount, selectedDrug)
+        viewModel.state.observe(viewLifecycleOwner) {
+            binding.medicationTitleTextView.text = it.medicationName
+
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = it.firstMedicationReminderTime
+            binding.firstTimePickerTextView.text = calendar.formatTime()
+            binding.firstDosePickerEditText.setText(it.firstMedicationDose.toString())
+
+            calendar.timeInMillis = it.secondMedicationReminderTime
+            binding.secondTimePickerTextView.text = calendar.formatTime()
+            binding.secondDosePickerEditText.setText(it.secondMedicationDose.toString())
+
+            binding.firstTimePickerTextView.initTimePicker(
+                it.firstMedicationReminderTime,
+                parentFragmentManager,
+                TIME_PICKER_TAG
+            ) {
+                viewModel.setMedicationReminderTime(it.timeInMillis, 0)
+                binding.firstTimePickerTextView.text = it.formatTime()
+            }
+
+            binding.secondTimePickerTextView.initTimePicker(
+                it.secondMedicationReminderTime,
+                parentFragmentManager,
+                TIME_PICKER_TAG
+            ) {
+                viewModel.setMedicationReminderTime(it.timeInMillis, 1)
+                binding.secondTimePickerTextView.text = it.formatTime()
+            }
         }
     }
 
@@ -88,6 +136,14 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
                 arguments = bundleOf(
                     DRUG_ARG_KEY to drugDomain,
                     DAYS_COUNT_ARG_KEY to daysCount
+                )
+            }
+        }
+
+        fun newInstance(id: Int): TwicePerDaySettingsFragment {
+            return TwicePerDaySettingsFragment().apply {
+                arguments = bundleOf(
+                    MEDICATION_REMINDER_ID_ARG_KEY to id
                 )
             }
         }
