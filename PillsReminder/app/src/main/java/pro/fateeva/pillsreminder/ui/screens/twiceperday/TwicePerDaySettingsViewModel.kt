@@ -8,8 +8,7 @@ import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
-import pro.fateeva.pillsreminder.ui.SaveState
-import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsState
+import pro.fateeva.pillsreminder.ui.OperationState
 
 private const val FIRST_MEDICATION_INTAKE_INDEX = 0
 private const val SECOND_MEDICATION_INTAKE_INDEX = 1
@@ -40,10 +39,10 @@ class TwicePerDaySettingsViewModel(
         it.firstMedicationDose > 0 && it.firstMedicationReminderTime > 0 && it.secondMedicationDose > 0 && it.secondMedicationReminderTime > 0
     }
 
-    private val successErrorSaveLiveData: MutableLiveData<SaveState> =
+    private val successErrorSaveLiveData: MutableLiveData<OperationState> =
         handle.getLiveData("saveState")
 
-    val successErrorSaveState: LiveData<SaveState>
+    val successErrorSaveState: LiveData<OperationState>
         get() = successErrorSaveLiveData
 
     fun setMedicationReminderTime(time: Long, medicationIntakeIndex: Int) {
@@ -91,7 +90,7 @@ class TwicePerDaySettingsViewModel(
 
         if (isEveryFieldValid()) {
             interactor.saveMedicationReminder(quantityOfDays, medicationReminder)
-            successErrorSaveLiveData.value = SaveState.SUCCESS
+            successErrorSaveLiveData.value = OperationState.SUCCESS
         }
     }
 
@@ -123,7 +122,7 @@ class TwicePerDaySettingsViewModel(
 
         if (isEveryFieldValid()) {
             interactor.editMedicationReminder(newMedicationReminder)
-            successErrorSaveLiveData.value = SaveState.SUCCESS
+            successErrorSaveLiveData.value = OperationState.SUCCESS
         }
     }
 

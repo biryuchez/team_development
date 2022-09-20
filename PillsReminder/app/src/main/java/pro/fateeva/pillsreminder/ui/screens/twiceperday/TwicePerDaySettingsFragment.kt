@@ -10,7 +10,7 @@ import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.databinding.FragmentTwicePerDaySettingsBinding
 import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
-import pro.fateeva.pillsreminder.ui.SaveState
+import pro.fateeva.pillsreminder.ui.OperationState
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 import java.util.*
 
@@ -39,7 +39,7 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
         }
 
         viewModel.successErrorSaveState.observe(viewLifecycleOwner){
-            if (it == SaveState.SUCCESS){
+            if (it == OperationState.SUCCESS) {
                 navigator.navigateToPillListScreen()
             }
         }

@@ -90,6 +90,7 @@ class MedicationInteractor(
     }
 
     fun deleteMedicationReminder(id: Int){
+        notificationManager.deleteNotification(getMedicationReminder(id))
         medicationReminderRepository.deleteMedicationReminder(id)
     }
 
