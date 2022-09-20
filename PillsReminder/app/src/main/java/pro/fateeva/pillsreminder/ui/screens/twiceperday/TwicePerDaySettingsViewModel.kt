@@ -45,6 +45,15 @@ class TwicePerDaySettingsViewModel(
     val successErrorSaveState: LiveData<OperationState>
         get() = successErrorSaveLiveData
 
+    private val deleteStateLiveData: MutableLiveData<OperationState> =
+        handle.getLiveData("saveState")
+    val deleteState: LiveData<OperationState>
+        get() = deleteStateLiveData
+
+    private val canDeleteLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    val canDelete: LiveData<Boolean>
+        get() = canDeleteLiveData
+
     fun setMedicationReminderTime(time: Long, medicationIntakeIndex: Int) {
         if (medicationIntakeIndex == FIRST_MEDICATION_INTAKE_INDEX) {
             twicePerDaySettingsState.firstMedicationReminderTime = time
@@ -127,6 +136,7 @@ class TwicePerDaySettingsViewModel(
     }
 
     fun onViewCreated(medicationReminderId: Int) {
+        canDeleteLiveData.value = true
         val medicationReminder = interactor.getMedicationReminder(medicationReminderId)
         setMedicationReminderTime(medicationReminder.medicationIntakes[0].time, 0)
         setMedicationReminderTime(medicationReminder.medicationIntakes[1].time, 1)
@@ -137,5 +147,10 @@ class TwicePerDaySettingsViewModel(
 
     fun onViewCreated(name: String) {
         twicePerDaySettingsState.medicationName = name
+    }
+
+    fun deleteReminder(id: Int) {
+        interactor.deleteMedicationReminder(id)
+        deleteStateLiveData.value = OperationState.SUCCESS
     }
 }
