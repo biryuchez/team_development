@@ -3,12 +3,11 @@ package pro.fateeva.pillsreminder.ui
 import android.app.AlarmManager
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
+import androidx.lifecycle.ViewModelProvider
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.data.AppDataBase
+import pro.fateeva.pillsreminder.data.dao.PillsViewModel
 import pro.fateeva.pillsreminder.data.dao.entity.Fill
 import pro.fateeva.pillsreminder.domain.entity.medicationevent.MedicationEventDomain
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
@@ -18,6 +17,7 @@ import pro.fateeva.pillsreminder.ui.notification.notificationevents.Notification
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
 
 class MainActivity : AppCompatActivity(), NotificationHandler {
+    lateinit var pillViewModel: PillsViewModel
 
     override val alarmManager: AlarmManager by lazy {
         getSystemService(ALARM_SERVICE) as AlarmManager
@@ -27,25 +27,15 @@ class MainActivity : AppCompatActivity(), NotificationHandler {
         MedicationActionListener()
     }
 
-    val database by lazy {
-        Room.databaseBuilder(
-            this,
-            AppDataBase::class.java,
-            "database"
-        ).build()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        database.getPillDao().getAll().forEach { Log.e("ENT", it.toString()) }
-
-        database.getPillDao().add(
-            Fill(
-                name = "Fiil1"
-            )
-        )
+        pillViewModel = ViewModelProvider(this)[PillsViewModel::class.java]
+        pillViewModel.pillsData.observe(this){Toast.makeText(this , pillViewModel.pillsData.value?.get(
+        pillViewModel.pillsData.value!!.lastIndex)!!.name, Toast.LENGTH_SHORT).show()}
+        pillViewModel.AddPill(Fill(0, "Аспирин"))
 
         onNewIntent(intent)
 
