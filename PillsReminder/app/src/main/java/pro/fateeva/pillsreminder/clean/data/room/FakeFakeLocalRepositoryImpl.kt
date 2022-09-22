@@ -58,7 +58,7 @@ class FakeFakeLocalRepositoryImpl : FakeLocalRepository {
 
     override fun getMedicationSchedule(): List<MedicationScheduleItemDomain> {
         return fakeDao.getMedicationSchedule()
-            .map { MapperEntityToDomain().convertToMedicationScheduleItemDomain(it) }
+            .map { MedicationEntityMapper().convertToMedicationScheduleItemDomain(it) }
     }
 }
 
