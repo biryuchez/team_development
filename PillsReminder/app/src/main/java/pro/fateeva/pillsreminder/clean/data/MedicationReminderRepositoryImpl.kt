@@ -3,6 +3,7 @@ package pro.fateeva.pillsreminder.clean.data
 import pro.fateeva.pillsreminder.clean.data.room.MedicationDao
 import pro.fateeva.pillsreminder.clean.data.room.entity.MedicationIntakeEntity
 import pro.fateeva.pillsreminder.clean.data.room.entity.MedicationReminderEntity
+import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 
 class MedicationReminderRepositoryImpl(
@@ -35,13 +36,42 @@ class MedicationReminderRepositoryImpl(
     }
 
     override fun getMedicationReminder(id: Int): MedicationReminder {
-        return medicationReminders.first {
-            it.id == id
-        }
+        val medicationReminderEntity = medicationDao.getMedicationReminder(id)
+        val medicationIntakeEntityList = medicationDao.getMedicationIntakes(id)
+        return MedicationReminder(
+            id = medicationReminderEntity.pillID,
+            medicationName = medicationReminderEntity.medicationName,
+            medicationIntakes = medicationIntakeEntityList.map {
+                MedicationIntake(
+                    dosage = it.dosage,
+                    time = it.medicationTime
+                )
+            },
+            endDate = medicationReminderEntity.endDate
+        )
     }
 
     override fun getMedicationReminders(): List<MedicationReminder> {
-        return medicationReminders
+        val medicationReminderEntityList = medicationDao.getAllMedicationReminders()
+        val medicationRemindersList = mutableListOf<MedicationReminder>()
+        for (medicationReminderEntity in medicationReminderEntityList) {
+            val medicationIntakeEntityList =
+                medicationDao.getMedicationIntakes(medicationReminderEntity.pillID)
+            medicationRemindersList.add(
+                MedicationReminder(
+                    id = medicationReminderEntity.pillID,
+                    medicationName = medicationReminderEntity.medicationName,
+                    medicationIntakes = medicationIntakeEntityList.map {
+                        MedicationIntake(
+                            dosage = it.dosage,
+                            time = it.medicationTime
+                        )
+                    },
+                    endDate = medicationReminderEntity.endDate
+                )
+            )
+        }
+        return medicationRemindersList
     }
 
     override fun deleteMedicationReminder(id: Int) {
