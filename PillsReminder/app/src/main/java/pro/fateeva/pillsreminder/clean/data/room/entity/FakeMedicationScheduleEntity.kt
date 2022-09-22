@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.clean.data.local.entity
+package pro.fateeva.pillsreminder.clean.data.room.entity
 
 data class FakeMedicationScheduleEntity(
     val id: Int = -1,

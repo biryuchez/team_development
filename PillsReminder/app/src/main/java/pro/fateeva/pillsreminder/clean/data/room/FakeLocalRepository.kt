@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.clean.data.local
+package pro.fateeva.pillsreminder.clean.data.room
 
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 

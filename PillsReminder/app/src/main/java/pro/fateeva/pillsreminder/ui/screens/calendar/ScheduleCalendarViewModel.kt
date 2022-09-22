@@ -3,7 +3,7 @@ package pro.fateeva.pillsreminder.ui.screens.calendar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import pro.fateeva.pillsreminder.clean.data.local.FakeLocalRepository
+import pro.fateeva.pillsreminder.clean.data.room.FakeLocalRepository
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 
 class ScheduleCalendarViewModel(
