@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 class MedicationReminderEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = false)
     val pillID: Int,
     val medicationName: String,
     val endDate: Long,
