@@ -1,6 +1,6 @@
 package pro.fateeva.pillsreminder.clean.data.room
 
-import pro.fateeva.pillsreminder.clean.data.room.entity.FakeMedicationScheduleEntity
+import pro.fateeva.pillsreminder.clean.data.room.fake.FakeMedicationScheduleEntity
 import pro.fateeva.pillsreminder.clean.data.room.entity.MedicationIntakeEntity
 import pro.fateeva.pillsreminder.clean.data.room.entity.MedicationReminderEntity
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake

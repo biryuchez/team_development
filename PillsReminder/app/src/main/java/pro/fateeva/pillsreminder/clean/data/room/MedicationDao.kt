@@ -21,7 +21,7 @@ interface MedicationDao {
     @Query("SELECT * FROM MedicationReminderEntity WHERE pillID = :pillID")
     fun getMedicationReminder(pillID: Int): MedicationReminderEntity
 
-    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime DESC")
+    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime ASC")
     fun getMedicationIntakes(intakeID: Int): List<MedicationIntakeEntity>
 
     @Query("DELETE FROM MedicationReminderEntity WHERE pillID = :pillID")
