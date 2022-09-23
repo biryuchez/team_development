@@ -7,9 +7,8 @@ import pro.fateeva.pillsreminder.clean.data.MedicationReminderRepository
 import pro.fateeva.pillsreminder.clean.data.MedicationReminderRepositoryImpl
 import pro.fateeva.pillsreminder.clean.data.NotificationManager
 import pro.fateeva.pillsreminder.clean.data.NotificationManagerImpl
-import pro.fateeva.pillsreminder.clean.data.room.*
-import pro.fateeva.pillsreminder.clean.data.room.fake.FakeFakeLocalRepositoryImpl
-import pro.fateeva.pillsreminder.clean.data.room.fake.FakeLocalRepository
+import pro.fateeva.pillsreminder.clean.data.room.LocalMedicationDatabase
+import pro.fateeva.pillsreminder.clean.data.room.MedicationEntityMapper
 import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
 import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarViewModel
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewModel

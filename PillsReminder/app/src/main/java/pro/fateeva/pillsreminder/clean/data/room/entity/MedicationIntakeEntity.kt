@@ -11,6 +11,7 @@ class MedicationIntakeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val intakeID: Int,
+    val pillName: String,
     val intakeIndex: Int,
     val dosage: Int,
     val medicationTime: Long,

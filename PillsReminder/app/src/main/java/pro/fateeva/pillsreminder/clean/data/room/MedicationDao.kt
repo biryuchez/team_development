@@ -24,7 +24,7 @@ interface MedicationDao {
     @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime ASC")
     fun getMedicationIntakes(intakeID: Int): List<MedicationIntakeEntity>
 
-    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime DESC LIMIT :limit")
+    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime ASC LIMIT :limit")
     fun getMedicationIntakes(intakeID: Int, limit: Int): List<MedicationIntakeEntity>
 
     @Query("DELETE FROM MedicationReminderEntity WHERE pillID = :pillID")

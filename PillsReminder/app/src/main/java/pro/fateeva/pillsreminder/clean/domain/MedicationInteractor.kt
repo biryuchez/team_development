@@ -11,7 +11,7 @@ import java.util.*
 
 class MedicationInteractor(
     private val notificationManager: NotificationManager,
-    private val medicationReminderRepository: MedicationReminderRepository
+    private val medicationReminderRepository: MedicationReminderRepository,
 ) {
     fun saveMedicationReminder(quantityOfDays: Int, medicationReminder: MedicationReminder) {
         val calendar = Calendar.getInstance()
@@ -20,32 +20,26 @@ class MedicationInteractor(
 
         updateRemindersTime(medicationReminder)
 
-        notificationManager.planNotification(
-            medicationReminder,
-            0
-        )
+        notificationManager.planNotification(medicationReminder, 0)
 
-        medicationReminderRepository.saveMedicationReminder(medicationReminder, quantityOfDays)
+        medicationReminderRepository.saveMedicationReminder(medicationReminder)
     }
 
     fun editMedicationReminder(medicationReminder: MedicationReminder) {
         updateRemindersTime(medicationReminder)
 
-        notificationManager.planNotification(
-            medicationReminder,
-            0
-        )
+        notificationManager.planNotification(medicationReminder, 0)
 
-        medicationReminderRepository.updateMedicationReminder(medicationReminder)
+        medicationReminderRepository.saveMedicationReminder(medicationReminder)
     }
 
-    fun planMedicationReminders(){
+    fun planMedicationReminders() {
         medicationReminderRepository.getMedicationReminders().forEach {
             planReminder(it)
         }
     }
 
-    private fun planReminder(medicationReminder: MedicationReminder){
+    private fun planReminder(medicationReminder: MedicationReminder) {
         updateRemindersTime(medicationReminder)
         val now = System.currentTimeMillis()
         val nextIndex = medicationReminder.medicationIntakes.indexOfFirst { it.time >= now }
@@ -62,15 +56,16 @@ class MedicationInteractor(
     }
 
     fun onNotificationShown(medicationReminder: MedicationReminder, previousReminderTime: Long) {
-        Log.d(TAG, "onNotificationShown. Prev reminder time ${previousReminderTime.toCalendar().time}")
+        Log.d(TAG,
+            "onNotificationShown. Prev reminder time ${previousReminderTime.toCalendar().time}")
         planReminder(medicationReminder)
     }
 
-    fun getMedicationReminders() : List<MedicationReminder>{
+    fun getMedicationReminders(): List<MedicationReminder> {
         return medicationReminderRepository.getMedicationReminders()
     }
 
-    fun getMedicationReminder(id: Int) : MedicationReminder{
+    fun getMedicationReminder(id: Int): MedicationReminder {
         return medicationReminderRepository.getMedicationReminder(id)
     }
 
@@ -89,7 +84,7 @@ class MedicationInteractor(
         return calendarReminder.timeInMillis
     }
 
-    fun deleteMedicationReminder(id: Int){
+    fun deleteMedicationReminder(id: Int) {
         medicationReminderRepository.deleteMedicationReminder(id)
     }
 

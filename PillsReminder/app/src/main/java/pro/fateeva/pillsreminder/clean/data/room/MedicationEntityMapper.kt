@@ -1,6 +1,5 @@
 package pro.fateeva.pillsreminder.clean.data.room
 
-import pro.fateeva.pillsreminder.clean.data.room.fake.FakeMedicationScheduleEntity
 import pro.fateeva.pillsreminder.clean.data.room.entity.MedicationIntakeEntity
 import pro.fateeva.pillsreminder.clean.data.room.entity.MedicationReminderEntity
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationIntake
@@ -9,14 +8,13 @@ import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomai
 
 class MedicationEntityMapper {
     fun mapToMedicationScheduleItemDomain(
-        medicationIntakeEntity: MedicationIntakeEntity,
-        name: String,
+        medicationIntakeEntity: MedicationIntakeEntity
     ): MedicationScheduleItemDomain {
         return with(medicationIntakeEntity) {
             MedicationScheduleItemDomain(
                 pillId = intakeID,
                 medicationTime = medicationTime,
-                pillName = name,
+                pillName = medicationIntakeEntity.pillName,
                 actualMedicationTime = actualMedicationTime
             )
         }
@@ -25,7 +23,7 @@ class MedicationEntityMapper {
     fun mapMedicationReminderDomainToEntity(medicationReminder: MedicationReminder): MedicationReminderEntity {
         return MedicationReminderEntity(
             pillID = medicationReminder.id,
-            medicationName = medicationReminder.medicationName,
+            pillName = medicationReminder.medicationName,
             endDate = medicationReminder.endDate
         )
     }
@@ -36,7 +34,7 @@ class MedicationEntityMapper {
     ): MedicationReminder {
         return MedicationReminder(
             id = medicationReminderEntity.pillID,
-            medicationName = medicationReminderEntity.medicationName,
+            medicationName = medicationReminderEntity.pillName,
             medicationIntakes = medicationIntakeEntityList.map {
                 mapMedicationIntakeEntityToDomain((it))
             },
@@ -56,13 +54,14 @@ class MedicationEntityMapper {
     fun createMedicationIntakeEntity(
         medicationReminder: MedicationReminder,
         index: Int,
-        dayOffset: Int
+        medicationTime: Long
     ): MedicationIntakeEntity {
         return MedicationIntakeEntity(
             intakeID = medicationReminder.id,
+            pillName = medicationReminder.medicationName,
             intakeIndex = index,
             dosage = medicationReminder.medicationIntakes[index].dosage,
-            medicationTime = medicationReminder.medicationIntakes[index].time + (86400000 * dayOffset),
+            medicationTime = medicationTime,
         )
     }
 }
