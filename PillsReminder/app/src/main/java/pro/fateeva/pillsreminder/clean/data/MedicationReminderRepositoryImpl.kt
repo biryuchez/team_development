@@ -80,7 +80,6 @@ class MedicationReminderRepositoryImpl(
         return medicationRemindersList
     }
 
-
     override fun deleteMedicationReminder(id: Int) {
         reminderDao.deleteMedicationReminder(id)
         intakeDao.deleteMedicationIntake(id)
