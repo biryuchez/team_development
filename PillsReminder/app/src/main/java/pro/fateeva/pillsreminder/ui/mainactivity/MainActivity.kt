@@ -15,11 +15,11 @@ import pro.fateeva.pillsreminder.ui.navigation.NavigationFragment
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActionListener
 import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarFragment
-import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
-import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsFragment
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
+import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
+import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 
 private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
 

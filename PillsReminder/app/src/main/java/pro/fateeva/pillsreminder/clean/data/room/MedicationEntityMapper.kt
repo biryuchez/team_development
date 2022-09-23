@@ -51,7 +51,7 @@ class MedicationEntityMapper {
         )
     }
 
-    fun createMedicationIntakeEntity(
+    fun mapMedicationReminderToIntakeEntity(
         medicationReminder: MedicationReminder,
         index: Int,
         medicationTime: Long

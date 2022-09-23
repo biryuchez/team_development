@@ -14,7 +14,8 @@ private const val DB_NAME = "LocalMedicationDB"
     version = 1,
     exportSchema = true)
 abstract class LocalMedicationDatabase: RoomDatabase() {
-    abstract val medicationDao: MedicationDao
+    abstract val medicationReminderDao: MedicationReminderDao
+    abstract val medicationIntakeDao: MedicationIntakeDao
 
     companion object {
         private var INSTANCE: LocalMedicationDatabase? = null

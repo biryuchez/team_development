@@ -19,9 +19,12 @@ object Di {
     val mainModule = module {
         single<MedicationInteractor> { MedicationInteractor(get(), get()) }
         single<NotificationManager> { NotificationManagerImpl(get()) }
-        single<MedicationReminderRepository> { MedicationReminderRepositoryImpl(
-            medicationDao = get(),
-            mapper = get()) }
+        single<MedicationReminderRepository> {
+            MedicationReminderRepositoryImpl(
+                reminderDao = get(),
+                intakeDao = get(),
+                mapper = get())
+        }
         factory { MedicationEntityMapper() }
 
         viewModel { OncePerDaySettingsViewModel(get(), get()) }
@@ -31,6 +34,7 @@ object Di {
     }
 
     val roomModule = module {
-        single { LocalMedicationDatabase.getUserDatabase(androidContext()).medicationDao }
+        single { LocalMedicationDatabase.getUserDatabase(androidContext()).medicationReminderDao }
+        single { LocalMedicationDatabase.getUserDatabase(androidContext()).medicationIntakeDao }
     }
 }
