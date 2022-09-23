@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(indices = [Index(
-    value = ["intakeID", "intakeIndex"],
+    value = ["intakeID", "intakeIndex", "medicationTime"],
     unique = true)])
 class MedicationIntakeEntity(
     @PrimaryKey(autoGenerate = true)

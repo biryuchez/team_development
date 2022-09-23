@@ -8,16 +8,16 @@ import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 
 class MedicationEntityMapper {
-    fun convertToMedicationScheduleItemDomain(
-        fakeItem: FakeMedicationScheduleEntity,
+    fun mapToMedicationScheduleItemDomain(
+        medicationIntakeEntity: MedicationIntakeEntity,
+        name: String,
     ): MedicationScheduleItemDomain {
-        return with(fakeItem) {
+        return with(medicationIntakeEntity) {
             MedicationScheduleItemDomain(
-                id = id,
+                pillId = intakeID,
                 medicationTime = medicationTime,
-                pillId = pillId,
-                pillName = pillName,
-                medicationSuccessTime = medicationSuccessTime
+                pillName = name,
+                actualMedicationTime = actualMedicationTime
             )
         }
     }
@@ -56,12 +56,13 @@ class MedicationEntityMapper {
     fun createMedicationIntakeEntity(
         medicationReminder: MedicationReminder,
         index: Int,
+        dayOffset: Int
     ): MedicationIntakeEntity {
         return MedicationIntakeEntity(
             intakeID = medicationReminder.id,
             intakeIndex = index,
             dosage = medicationReminder.medicationIntakes[index].dosage,
-            medicationTime = medicationReminder.medicationIntakes[index].time,
+            medicationTime = medicationReminder.medicationIntakes[index].time + (86400000 * dayOffset),
         )
     }
 }

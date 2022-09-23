@@ -7,7 +7,7 @@ import kotlin.random.Random
 
 private const val FAKE_MEDICATION_EVENTS_COUNT = 50
 
-class FakeFakeLocalRepositoryImpl : FakeLocalRepository {
+class FakeFakeLocalRepositoryImpl  {
 
     // имитация Dao, пока нет реализации room
     private val fakeDao = object : FakeDao {
@@ -56,10 +56,10 @@ class FakeFakeLocalRepositoryImpl : FakeLocalRepository {
 
     }
 
-    override fun getMedicationSchedule(): List<MedicationScheduleItemDomain> {
-        return fakeDao.getMedicationSchedule()
-            .map { MedicationEntityMapper().convertToMedicationScheduleItemDomain(it) }
-    }
+//    override fun getMedicationSchedule(): List<MedicationScheduleItemDomain> {
+//        return fakeDao.getMedicationSchedule()
+//            .map { MedicationEntityMapper().mapToMedicationScheduleItemDomain(it) }
+//    }
 }
 
 // имитация Dao, пока нет реализации room

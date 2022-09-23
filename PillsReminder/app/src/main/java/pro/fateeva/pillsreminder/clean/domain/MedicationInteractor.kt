@@ -25,7 +25,7 @@ class MedicationInteractor(
             0
         )
 
-        medicationReminderRepository.saveMedicationReminder(medicationReminder)
+        medicationReminderRepository.saveMedicationReminder(medicationReminder, quantityOfDays)
     }
 
     fun editMedicationReminder(medicationReminder: MedicationReminder) {
@@ -36,7 +36,7 @@ class MedicationInteractor(
             0
         )
 
-        medicationReminderRepository.saveMedicationReminder(medicationReminder)
+        medicationReminderRepository.updateMedicationReminder(medicationReminder)
     }
 
     fun planMedicationReminders(){

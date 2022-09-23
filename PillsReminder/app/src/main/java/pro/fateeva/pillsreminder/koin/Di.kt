@@ -23,13 +23,12 @@ object Di {
         single<MedicationReminderRepository> { MedicationReminderRepositoryImpl(
             medicationDao = get(),
             mapper = get()) }
-        single<FakeLocalRepository> { FakeFakeLocalRepositoryImpl() }
         factory { MedicationEntityMapper() }
 
         viewModel { OncePerDaySettingsViewModel(get(), get()) }
         viewModel { PillsListViewModel(get()) }
         viewModel { TwicePerDaySettingsViewModel(get(), get()) }
-        viewModel { ScheduleCalendarViewModel(fakeLocalRepository = get()) }
+        viewModel { ScheduleCalendarViewModel(repository = get()) }
     }
 
     val roomModule = module {
