@@ -46,19 +46,19 @@ class MedicationReminderRepositoryImpl(
 
     override fun getMedicationReminder(id: Int): MedicationReminder {
         val calendar = Calendar.getInstance()
-        val startTime = calendar.getDayBeginningTime()
-        val endTime = calendar.getDayEndTime()
 
         return mapper.mapMedicationReminderEntityToDomain(
             reminderDao.getMedicationReminder(id),
-            intakeDao.getMedicationIntakes(id, startTime, endTime)
+            intakeDao.getMedicationIntakes(
+                id,
+                calendar.getDayBeginningTime(),
+                calendar.getDayEndTime()
+            )
         )
     }
 
     override fun getMedicationReminders(): List<MedicationReminder> {
         val calendar = Calendar.getInstance()
-        val startTime = calendar.getDayBeginningTime()
-        val endTime = calendar.getDayEndTime()
 
         val medicationRemindersList = mutableListOf<MedicationReminder>()
 
@@ -66,9 +66,11 @@ class MedicationReminderRepositoryImpl(
             medicationRemindersList.add(
                 mapper.mapMedicationReminderEntityToDomain(
                     medicationReminderEntity,
-                    intakeDao.getMedicationIntakes(medicationReminderEntity.pillID,
-                        startTime,
-                        endTime)
+                    intakeDao.getMedicationIntakes(
+                        medicationReminderEntity.pillID,
+                        calendar.getDayBeginningTime(),
+                        calendar.getDayEndTime()
+                    )
                 )
             )
         }
