@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         } else {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.navigation_container, destination)
+                .replace(R.id.navigation_container, destination)
                 .addToBackStack(NAVIGATION_BACKSTACK_NAME)
                 .commit()
         }

@@ -1,16 +1,20 @@
 package pro.fateeva.pillsreminder.ui.screens.twiceperday
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.databinding.FragmentTwicePerDaySettingsBinding
 import pro.fateeva.pillsreminder.extensions.formatTime
 import pro.fateeva.pillsreminder.extensions.initTimePicker
-import pro.fateeva.pillsreminder.ui.SaveState
+import pro.fateeva.pillsreminder.ui.OperationState
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 import java.util.*
 
@@ -25,7 +29,30 @@ private const val TIME_PICKER_TAG = "TIME_PICKER"
 class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBinding>(
     FragmentTwicePerDaySettingsBinding::inflate
 ) {
+    private val medicationReminderId by lazy {
+        requireArguments().getInt(MEDICATION_REMINDER_ID_ARG_KEY)
+    }
+
     private val viewModel: TwicePerDaySettingsViewModel by stateViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edit_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.delete -> {
+                viewModel.deleteReminder(medicationReminderId)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,12 +66,10 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
         }
 
         viewModel.successErrorSaveState.observe(viewLifecycleOwner){
-            if (it == SaveState.SUCCESS){
+            if (it == OperationState.SUCCESS) {
                 navigator.navigateToPillListScreen()
             }
         }
-
-        val medicationReminderId = arguments?.getInt(MEDICATION_REMINDER_ID_ARG_KEY) ?: 0
 
         val selectedDrug = arguments?.getParcelable(DRUG_ARG_KEY) ?: DrugDomain()
         val medicationDaysCount = arguments?.getInt(DAYS_COUNT_ARG_KEY)
@@ -126,6 +151,16 @@ class TwicePerDaySettingsFragment : BaseFragment<FragmentTwicePerDaySettingsBind
             ) {
                 viewModel.setMedicationReminderTime(it.timeInMillis, 1)
                 binding.secondTimePickerTextView.text = it.formatTime()
+            }
+        }
+
+        viewModel.canDelete.observe(viewLifecycleOwner) {
+            setHasOptionsMenu(it)
+        }
+
+        viewModel.deleteState.observe(viewLifecycleOwner) {
+            if (it == OperationState.SUCCESS) {
+                navigator.navigateToPillListScreen()
             }
         }
     }

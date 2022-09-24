@@ -1,6 +1,6 @@
 package pro.fateeva.pillsreminder.ui
 
-enum class SaveState {
+enum class OperationState {
     SUCCESS,
     ERROR
 }
