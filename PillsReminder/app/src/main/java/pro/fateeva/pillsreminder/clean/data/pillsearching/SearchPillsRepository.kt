@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.clean.domain.usecase
+package pro.fateeva.pillsreminder.clean.data.pillsearching
 
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 
@@ -7,6 +7,6 @@ import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
  * по поисковому запросу.
  * Скорректируйте при необходимости
  */
-interface SearchPillsUsecase {
+interface SearchPillsRepository {
     suspend fun searchPills(query: String): List<DrugDomain>
 }
