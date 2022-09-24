@@ -2,18 +2,9 @@ package pro.fateeva.pillsreminder.ui.navigation
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import pro.fateeva.pillsreminder.R
-import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.databinding.FragmentNavigationBinding
-import pro.fateeva.pillsreminder.ui.mainactivity.AppNavigation
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
-import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarFragment
-import pro.fateeva.pillsreminder.ui.screens.frequency.FrequencyFragment
-import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsFragment
-import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillFragment
-import pro.fateeva.pillsreminder.ui.screens.pillslist.PillsListFragment
-import pro.fateeva.pillsreminder.ui.screens.twiceperday.TwicePerDaySettingsFragment
 
 class NavigationFragment :
     BaseFragment<FragmentNavigationBinding>(FragmentNavigationBinding::inflate) {

@@ -119,12 +119,12 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
 
                 dateFormat.parse(currentDate)?.let { date ->
                     if (date.before(dateFormat.parse(todayDate))) {
-                        if (fakeMedicationScheduleEntity.medicationSuccessTime != -1L) {
+                        if (fakeMedicationScheduleEntity.actualMedicationTime != -1L) {
                             scheduleEntityMedicationMarkerView
                                 .setBackgroundColor(getColor(R.color.success_medication))
                             scheduleEntitySuccessFlagTextView.text = getString(
                                 R.string.medication_success_message,
-                                timeFormat.format(fakeMedicationScheduleEntity.medicationSuccessTime)
+                                timeFormat.format(fakeMedicationScheduleEntity.actualMedicationTime)
                             )
                         } else {
                             scheduleEntityMedicationMarkerView

@@ -3,6 +3,7 @@ package pro.fateeva.pillsreminder.ui.mainactivity
 import android.app.AlarmManager
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -33,9 +34,10 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        Log.d("@@@@@", "onCreate() called with: savedInstanceState = $savedInstanceState")
         setContentView(R.layout.activity_main)
 
         onNewIntent(intent)

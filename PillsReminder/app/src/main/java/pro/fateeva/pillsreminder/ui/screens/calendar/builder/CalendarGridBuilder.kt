@@ -177,7 +177,7 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
                 .forEach {
                     markerView.isVisible = true
                     if (date.before(dateFormat.parse(todayDate))) {
-                        if (it.medicationSuccessTime == -1L) {
+                        if (it.actualMedicationTime == -1L) {
                             isMedicationSuccess = false
                         }
                         setScheduleItemMarkerColor(markerView, isMedicationSuccess)
