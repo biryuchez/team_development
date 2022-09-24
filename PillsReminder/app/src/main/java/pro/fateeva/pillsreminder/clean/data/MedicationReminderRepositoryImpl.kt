@@ -5,6 +5,8 @@ import pro.fateeva.pillsreminder.clean.data.room.MedicationEntityMapper
 import pro.fateeva.pillsreminder.clean.data.room.MedicationIntakeDao
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationReminder
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
+import pro.fateeva.pillsreminder.extensions.getDayBeginningTime
+import pro.fateeva.pillsreminder.extensions.getDayEndTime
 import java.util.*
 
 private const val ONE_DAY_IN_MILLIS = 86_400_000L
@@ -43,36 +45,30 @@ class MedicationReminderRepositoryImpl(
     }
 
     override fun getMedicationReminder(id: Int): MedicationReminder {
-        val intakeIndexSet = mutableSetOf<Int>()
-        val intakeEntityList = intakeDao.getMedicationIntakes(id)
-
-        for (intake in intakeEntityList) {
-            intakeIndexSet.add(intake.intakeIndex)
-        }
+        val calendar = Calendar.getInstance()
+        val startTime = calendar.getDayBeginningTime()
+        val endTime = calendar.getDayEndTime()
 
         return mapper.mapMedicationReminderEntityToDomain(
             reminderDao.getMedicationReminder(id),
-            intakeDao.getMedicationIntakes(id, intakeIndexSet.size)
+            intakeDao.getMedicationIntakes(id, startTime, endTime)
         )
     }
 
     override fun getMedicationReminders(): List<MedicationReminder> {
+        val calendar = Calendar.getInstance()
+        val startTime = calendar.getDayBeginningTime()
+        val endTime = calendar.getDayEndTime()
+
         val medicationRemindersList = mutableListOf<MedicationReminder>()
 
         for (medicationReminderEntity in reminderDao.getAllMedicationReminders()) {
-            val intakeIndexSet = mutableSetOf<Int>()
-            val intakeEntityList =
-                intakeDao.getMedicationIntakes(medicationReminderEntity.pillID)
-
-            for (intake in intakeEntityList) {
-                intakeIndexSet.add(intake.intakeIndex)
-            }
-
             medicationRemindersList.add(
                 mapper.mapMedicationReminderEntityToDomain(
                     medicationReminderEntity,
                     intakeDao.getMedicationIntakes(medicationReminderEntity.pillID,
-                        intakeIndexSet.size)
+                        startTime,
+                        endTime)
                 )
             )
         }

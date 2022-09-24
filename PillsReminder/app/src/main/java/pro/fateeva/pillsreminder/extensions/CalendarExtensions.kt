@@ -30,3 +30,18 @@ fun Long.toCalendarDateOnly(): Calendar {
 fun Calendar.formatTime() : String {
     return SimpleDateFormat("HH:mm", Locale.getDefault()).format(time)
 }
+
+fun Calendar.getDayBeginningTime(): Long {
+    return this@getDayBeginningTime.apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+    }.timeInMillis
+}
+
+fun Calendar.getDayEndTime(): Long {
+    val calendar = Calendar.getInstance()
+    return calendar.apply {
+        set(Calendar.HOUR_OF_DAY, 23)
+        set(Calendar.MINUTE, 59)
+    }.timeInMillis
+}
