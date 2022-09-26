@@ -56,4 +56,5 @@
     <string name="pills_list_title">Список напоминаний</string>
     <string name="schedule_calendar_title">Календарь</string>
     <string name="pill_name_error">Ошибка получения названия лекарства</string>
+    <string name="Delete">Удалить</string>
 </resources>

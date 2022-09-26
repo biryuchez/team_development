@@ -23,6 +23,22 @@ class NotificationManagerImpl(
         medicationReminder: MedicationReminder,
         medicationIntakeIndex: Int,
     ) {
+        Log.d(
+            "NotificationManager",
+            "Planning notification for ${medicationReminder.medicationIntakes[medicationIntakeIndex].time}"
+        )
+
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            medicationReminder.medicationIntakes[medicationIntakeIndex].time,
+            getPendingIntent(medicationReminder, medicationIntakeIndex)
+        )
+    }
+
+    private fun getPendingIntent(
+        medicationReminder: MedicationReminder,
+        medicationIntakeIndex: Int,
+    ): PendingIntent {
         val medicationReminderIntent = Intent(context, MedicationEventReceiver::class.java).apply {
 
             putExtra(
@@ -35,8 +51,10 @@ class NotificationManagerImpl(
                 medicationReminder.medicationName
             )
 
-            putExtra(MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY,
-                medicationReminder.medicationIntakes[medicationIntakeIndex].dosage)
+            putExtra(
+                MedicationNotifier.NOTIFICATION_DOSAGE_EXTRA_KEY,
+                medicationReminder.medicationIntakes[medicationIntakeIndex].dosage
+            )
 
             putExtra(
                 MedicationNotifier.NOTIFICATION_ID_EXTRA_KEY,
@@ -49,21 +67,15 @@ class NotificationManagerImpl(
             )
         }
 
-        val pendingEventIntent: PendingIntent =
-            PendingIntent.getBroadcast(
-                context,
-                medicationReminder.id,
-                medicationReminderIntent,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
-
-        Log.d("NotificationManager",
-            "Planning notification for ${medicationReminder.medicationIntakes[medicationIntakeIndex].time}")
-
-        alarmManager.setExact(
-            AlarmManager.RTC_WAKEUP,
-            medicationReminder.medicationIntakes[medicationIntakeIndex].time,
-            pendingEventIntent
+        return PendingIntent.getBroadcast(
+            context,
+            medicationReminder.id,
+            medicationReminderIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+    }
+
+    override fun deleteNotification(medicationReminder: MedicationReminder) {
+        alarmManager.cancel(getPendingIntent(medicationReminder, 0)) //Index does not matter
     }
 }
