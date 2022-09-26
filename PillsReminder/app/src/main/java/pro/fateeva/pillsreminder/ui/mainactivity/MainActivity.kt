@@ -50,11 +50,8 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         }
     }
 
-    override fun onGetDrugAction(message: String) {
-        Toast.makeText(
-            this@MainActivity,
-            message,
-            Toast.LENGTH_SHORT).show()
+    override fun onGetDrugAction(pillID: Int, plannedMedicationTime: Long) {
+        Log.d("@#@#@", "-------------------- $pillID -- $plannedMedicationTime ")
     }
 
     override fun onCancelDrugAction(message: String) {
