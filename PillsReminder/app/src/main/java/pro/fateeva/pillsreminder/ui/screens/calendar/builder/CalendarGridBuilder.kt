@@ -180,13 +180,13 @@ class CalendarGridBuilder(private val dateFormat: SimpleDateFormat) {
                         if (it.actualMedicationTime == -1L) {
                             isMedicationSuccess = false
                         }
-                        setScheduleItemMarkerColor(markerView, isMedicationSuccess)
+                        setCalendarItemMarkerColor(markerView, isMedicationSuccess)
                     }
                 }
         }
     }
 
-    private fun setScheduleItemMarkerColor(markerView: View, isMedicationSuccess: Boolean) {
+    private fun setCalendarItemMarkerColor(markerView: View, isMedicationSuccess: Boolean) {
         markerView.apply {
             setBackgroundColor(context.getColor(if (isMedicationSuccess) {
                 R.color.success_medication

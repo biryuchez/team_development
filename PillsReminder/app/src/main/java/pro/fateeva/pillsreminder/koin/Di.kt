@@ -16,6 +16,7 @@ import pro.fateeva.pillsreminder.clean.data.pillsearching.SearchPillsRepository
 import pro.fateeva.pillsreminder.clean.data.room.LocalMedicationDatabase
 import pro.fateeva.pillsreminder.clean.data.room.MedicationEntityMapper
 import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
+import pro.fateeva.pillsreminder.clean.domain.NotificationHandlingInteractor
 import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarViewModel
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewModel
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillViewModel
@@ -28,7 +29,8 @@ private const val BASE_API_URL = "https://app.rlsnet.ru/api/"
 
 object Di {
     val mainModule = module {
-        single<MedicationInteractor> { MedicationInteractor(get(), get()) }
+        single { MedicationInteractor(get(), get()) }
+        single { NotificationHandlingInteractor(repository = get()) }
         single<NotificationManager> { NotificationManagerImpl(get()) }
         single<MedicationReminderRepository> {
             MedicationReminderRepositoryImpl(

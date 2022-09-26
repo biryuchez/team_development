@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import org.koin.android.ext.android.inject
 import pro.fateeva.pillsreminder.R
+import pro.fateeva.pillsreminder.clean.domain.NotificationHandlingInteractor
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.navigation.NavigationFragment
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
@@ -25,6 +27,8 @@ private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
 
 class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
 
+    private val interactor by inject<NotificationHandlingInteractor>()
+
     override val alarmManager: AlarmManager by lazy {
         getSystemService(ALARM_SERVICE) as AlarmManager
     }
@@ -37,7 +41,6 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        Log.d("@@@@@", "onCreate() called with: savedInstanceState = $savedInstanceState")
         setContentView(R.layout.activity_main)
 
         onNewIntent(intent)
@@ -51,6 +54,7 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
     }
 
     override fun onGetDrugAction(pillID: Int, plannedMedicationTime: Long) {
+        interactor.setActualMedicationTime(pillID, plannedMedicationTime, System.currentTimeMillis())
         Log.d("@#@#@", "-------------------- $pillID -- $plannedMedicationTime ")
     }
 

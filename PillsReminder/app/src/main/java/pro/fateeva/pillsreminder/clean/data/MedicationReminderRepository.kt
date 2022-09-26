@@ -9,4 +9,5 @@ interface MedicationReminderRepository {
     fun getMedicationReminders(): List<MedicationReminder>
     fun deleteMedicationReminder(id: Int)
     fun getCalendarData(): List<MedicationScheduleItemDomain>
+    fun updateMedicationIntake(pillID: Int, medicationTime: Long, actualMedicationTime: Long)
 }

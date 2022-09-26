@@ -78,4 +78,12 @@ class MedicationReminderRepositoryImpl(
         }
         return scheduleList
     }
+
+    override fun updateMedicationIntake(
+        pillID: Int,
+        medicationTime: Long,
+        actualMedicationTime: Long,
+    ) {
+        intakeDao.updateMedicationIntake(pillID, medicationTime, actualMedicationTime)
+    }
 }
