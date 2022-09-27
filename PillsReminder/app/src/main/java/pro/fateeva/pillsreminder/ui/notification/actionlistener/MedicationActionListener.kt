@@ -28,8 +28,9 @@ class MedicationActionListener : NotificationActionListener {
                 if (extras != null) {
                     if (extras.containsKey(GET_DRUG_ACTION_EXTRA_KEY)) {
                         notificationHandler.onGetDrugAction(
-                            extras.getInt(GET_DRUG_ACTION_EXTRA_KEY),
+                            extras.getInt(NOTIFICATION_ID_EXTRA_KEY),
                             extras.getLong(NOTIFICATION_REMINDER_TIME_EXTRA_KEY),
+                            extras.getInt(GET_DRUG_ACTION_EXTRA_KEY).toString()
                         )
                     } else if (extras.containsKey(CANCEL_DRUG_ACTION_EXTRA_KEY)) {
                         notificationHandler.onCancelDrugAction(

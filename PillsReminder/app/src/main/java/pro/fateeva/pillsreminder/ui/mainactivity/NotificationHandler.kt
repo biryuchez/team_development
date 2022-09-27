@@ -9,6 +9,6 @@ import pro.fateeva.pillsreminder.ui.notification.actionlistener.NotificationActi
 interface NotificationHandler {
     val alarmManager: AlarmManager
     val actionListener: NotificationActionListener
-    fun onGetDrugAction(pillID: Int, plannedMedicationTime: Long)
+    fun onGetDrugAction(pillID: Int, plannedMedicationTime: Long, message: String)
     fun onCancelDrugAction(message: String)
 }

@@ -17,6 +17,7 @@ import pro.fateeva.pillsreminder.clean.data.room.LocalMedicationDatabase
 import pro.fateeva.pillsreminder.clean.data.room.MedicationEntityMapper
 import pro.fateeva.pillsreminder.clean.domain.MedicationInteractor
 import pro.fateeva.pillsreminder.clean.domain.NotificationHandlingInteractor
+import pro.fateeva.pillsreminder.ui.mainactivity.MainViewModel
 import pro.fateeva.pillsreminder.ui.screens.calendar.ScheduleCalendarViewModel
 import pro.fateeva.pillsreminder.ui.screens.onceperday.OncePerDaySettingsViewModel
 import pro.fateeva.pillsreminder.ui.screens.pillsearching.SearchPillViewModel
@@ -46,6 +47,7 @@ object Di {
         viewModel { TwicePerDaySettingsViewModel(get(), get()) }
         viewModel { ScheduleCalendarViewModel(repository = get()) }
         viewModel { SearchPillViewModel(searchPillRepository = get()) }
+        viewModel { MainViewModel(interactor = get()) }
     }
 
     val roomModule = module {
