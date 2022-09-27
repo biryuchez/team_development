@@ -12,6 +12,7 @@ import pro.fateeva.pillsreminder.ui.mainactivity.MainActivity
 import pro.fateeva.pillsreminder.ui.notification.actionlistener.MedicationActionListener
 
 private const val DEFAULT_REQUEST_CODE = -1
+private const val DEFAULT_REMINDER_TIME = -1L
 private const val CHANNEL_ID = "Прием лекарств"
 
 class MedicationNotifier : MedicationNotification {
@@ -35,14 +36,16 @@ class MedicationNotifier : MedicationNotification {
         val dosage = (intent.extras?.getInt(NOTIFICATION_DOSAGE_EXTRA_KEY))
             ?: context.getString(R.string.dosage_error)
 
-        val requestCode =
-            (intent.extras?.getInt(NOTIFICATION_ID_EXTRA_KEY)) ?: DEFAULT_REQUEST_CODE
+        val requestCode = intent.extras?.getInt(NOTIFICATION_ID_EXTRA_KEY) ?: DEFAULT_REQUEST_CODE
+
+        val reminderTime = intent.extras?.getLong(REMINDER_TIME_EXTRA_KEY) ?: DEFAULT_REMINDER_TIME
 
         val onGetDrugActionIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             addCategory(MedicationActionListener.MEDICATION_EVENT_INTENT_CATEGORY)
             putExtra(MedicationActionListener.NOTIFICATION_ID_EXTRA_KEY, requestCode)
+            putExtra(MedicationActionListener.NOTIFICATION_REMINDER_TIME_EXTRA_KEY, reminderTime)
         }
 
         val onCancelDrugActionIntent = Intent(context, MainActivity::class.java).apply {
@@ -57,7 +60,7 @@ class MedicationNotifier : MedicationNotification {
                 context,
                 requestCode,
                 onGetDrugActionIntent.putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
-                    "(ТЕСТ) Пользователь подтвердил прием лекарства"),
+                    context.getString(R.string.confirmed_medication_action)),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val onCancelDrugPendingIntent =
@@ -65,7 +68,7 @@ class MedicationNotifier : MedicationNotification {
                 context,
                 -requestCode, // requestCode со знаком "-", чтобы в системе могло быть 2 уникальных PendingIntent
                 onCancelDrugActionIntent.putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
-                    "(ТЕСТ) Пользователь отменил прием лекарства"),
+                    context.getString(R.string.canceled_medication_action)),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder: NotificationCompat.Builder =

@@ -1,4 +1,4 @@
-package pro.fateeva.pillsreminder.ui
+package pro.fateeva.pillsreminder.extensions
 
 import android.content.Context
 import android.view.View

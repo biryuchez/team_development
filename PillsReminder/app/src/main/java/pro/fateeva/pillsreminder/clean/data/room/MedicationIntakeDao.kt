@@ -14,15 +14,21 @@ interface MedicationIntakeDao {
     @Query("SELECT * FROM MedicationIntakeEntity")
     fun getAllMedicationIntakes(): List<MedicationIntakeEntity>
 
-    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime ASC")
+    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime ASC LIMIT 2")
     fun getMedicationIntakes(intakeID: Int): List<MedicationIntakeEntity>
 
-    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID AND medicationTime >= :currentTime AND medicationTime <= (:currentTime + 86400000) ORDER BY intakeIndex ASC")
-    fun getMedicationIntakesForNext24H(intakeID: Int, currentTime: Long): List<MedicationIntakeEntity>
+    @Query("SELECT * FROM MedicationIntakeEntity WHERE intakeID = :intakeID ORDER BY medicationTime ASC LIMIT :limit")
+    fun getMedicationIntakesByIndicesLimit(intakeID: Int, limit: Int): List<MedicationIntakeEntity>
+
+    @Query("SELECT DISTINCT intakeIndex FROM MedicationIntakeEntity WHERE intakeID = :pillID")
+    fun getMedicationIntakeIndices(pillID: Int): List<Int>
 
     @Query("DELETE FROM MedicationIntakeEntity WHERE intakeID = :pillID")
     fun deleteMedicationIntake(pillID: Int)
 
-    @Query("DELETE FROM MedicationIntakeEntity  WHERE intakeID == :id AND medicationTime > :currentTime")
+    @Query("DELETE FROM MedicationIntakeEntity WHERE intakeID == :id AND medicationTime > :currentTime")
     fun deletePlannedIntakes(id: Int, currentTime: Long)
+
+    @Query("UPDATE MedicationIntakeEntity SET actualMedicationTime = :actualMedicationTime WHERE intakeID = :pillID AND medicationTime = :medicationTime")
+    fun updateMedicationIntake(pillID: Int, medicationTime: Long, actualMedicationTime: Long)
 }

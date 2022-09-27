@@ -15,6 +15,7 @@ class MedicationActionListener : NotificationActionListener {
         const val GET_DRUG_ACTION_EXTRA_KEY = "GET_DRUG_ACTION"
         const val CANCEL_DRUG_ACTION_EXTRA_KEY = "CANCEL_DRUG_ACTION"
         const val NOTIFICATION_ID_EXTRA_KEY = "NOTIFICATION_ID"
+        const val NOTIFICATION_REMINDER_TIME_EXTRA_KEY = "REMINDER_TIME"
     }
 
     override fun onNotificationAction(notificationHandler: NotificationHandler, context: Context, intent: Intent) {
@@ -27,7 +28,10 @@ class MedicationActionListener : NotificationActionListener {
                 if (extras != null) {
                     if (extras.containsKey(GET_DRUG_ACTION_EXTRA_KEY)) {
                         notificationHandler.onGetDrugAction(
-                            extras.getString(GET_DRUG_ACTION_EXTRA_KEY).toString())
+                            extras.getInt(NOTIFICATION_ID_EXTRA_KEY),
+                            extras.getLong(NOTIFICATION_REMINDER_TIME_EXTRA_KEY),
+                            extras.getString(GET_DRUG_ACTION_EXTRA_KEY).toString()
+                        )
                     } else if (extras.containsKey(CANCEL_DRUG_ACTION_EXTRA_KEY)) {
                         notificationHandler.onCancelDrugAction(
                             extras.getString(CANCEL_DRUG_ACTION_EXTRA_KEY).toString())

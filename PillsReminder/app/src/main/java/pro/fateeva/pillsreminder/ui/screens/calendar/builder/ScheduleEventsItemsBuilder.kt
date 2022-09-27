@@ -9,7 +9,6 @@ import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.MedicationScheduleItemDomain
 import pro.fateeva.pillsreminder.databinding.ItemScheduleEntityBinding
 import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Класс, отвечающий за отображение событий "прием лекарства" по клику на ячейку
@@ -25,7 +24,6 @@ private const val PILL_NAME_TEXT_SIZE = 20f
 
 @SuppressLint("SimpleDateFormat")
 class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
-    private val todayDate = dateFormat.format(Calendar.getInstance().time)
 
     fun showScheduleEvents(
         scheduleEventsContainer: LinearLayout,
@@ -58,7 +56,7 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
                 .filter { dateFormat.format(it.medicationTime) == currentDate }
                 .filter { it.pillId == pillId }
                 .sortedBy { it.medicationTime }
-                .forEach { addScheduleView(scheduleEventsContainer, params, it, currentDate) }
+                .forEach { addScheduleView(scheduleEventsContainer, params, it) }
         }
 
         scheduleEventsContainer.animate()
@@ -102,8 +100,7 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
     private fun addScheduleView(
         scheduleEventsContainer: LinearLayout,
         params: LinearLayout.LayoutParams,
-        fakeMedicationScheduleEntity: MedicationScheduleItemDomain,
-        currentDate: String,
+        medicationScheduleEntity: MedicationScheduleItemDomain
     ) {
         with(scheduleEventsContainer.context) {
             val scheduleItemViewBinding =
@@ -115,23 +112,22 @@ class ScheduleEventsItemsBuilder(private val dateFormat: SimpleDateFormat) {
                 root.layoutParams = params
 
                 scheduleEntityTimeTextView.text =
-                    timeFormat.format(fakeMedicationScheduleEntity.medicationTime)
+                    timeFormat.format(medicationScheduleEntity.medicationTime)
 
-                dateFormat.parse(currentDate)?.let { date ->
-                    if (date.before(dateFormat.parse(todayDate))) {
-                        if (fakeMedicationScheduleEntity.actualMedicationTime != -1L) {
-                            scheduleEntityMedicationMarkerView
-                                .setBackgroundColor(getColor(R.color.success_medication))
-                            scheduleEntitySuccessFlagTextView.text = getString(
-                                R.string.medication_success_message,
-                                timeFormat.format(fakeMedicationScheduleEntity.actualMedicationTime)
-                            )
-                        } else {
-                            scheduleEntityMedicationMarkerView
-                                .setBackgroundColor(getColor(R.color.failure_medication))
-                        }
+                if (medicationScheduleEntity.medicationTime <= System.currentTimeMillis()) {
+                    if (medicationScheduleEntity.actualMedicationTime != -1L) {
+                        scheduleEntityMedicationMarkerView
+                            .setBackgroundColor(getColor(R.color.success_medication))
+                        scheduleEntitySuccessFlagTextView.text = getString(
+                            R.string.medication_success_message,
+                            timeFormat.format(medicationScheduleEntity.actualMedicationTime)
+                        )
+                    } else {
+                        scheduleEntityMedicationMarkerView
+                            .setBackgroundColor(getColor(R.color.failure_medication))
                     }
                 }
+
                 scheduleEventsContainer.addView(root)
             }
         }

@@ -39,12 +39,11 @@ class MedicationReminderRepositoryImpl(
     }
 
     override fun getMedicationReminder(id: Int): MedicationReminder {
+        val intakeIndicesCount = intakeDao.getMedicationIntakeIndices(id).size
+
         return mapper.mapMedicationReminderEntityToDomain(
             reminderDao.getMedicationReminder(id),
-            intakeDao.getMedicationIntakesForNext24H(
-                id,
-                System.currentTimeMillis()
-            )
+            intakeDao.getMedicationIntakesByIndicesLimit(id, intakeIndicesCount)
         )
     }
 
@@ -52,13 +51,14 @@ class MedicationReminderRepositoryImpl(
         val medicationRemindersList = mutableListOf<MedicationReminder>()
 
         for (medicationReminderEntity in reminderDao.getAllMedicationReminders()) {
+            val intakeIndicesCount = intakeDao.getMedicationIntakeIndices(medicationReminderEntity.pillID).size
+
             medicationRemindersList.add(
                 mapper.mapMedicationReminderEntityToDomain(
                     medicationReminderEntity,
-                    intakeDao.getMedicationIntakesForNext24H(
+                    intakeDao.getMedicationIntakesByIndicesLimit(
                         medicationReminderEntity.pillID,
-                        System.currentTimeMillis()
-                    )
+                        intakeIndicesCount)
                 )
             )
         }
@@ -77,5 +77,13 @@ class MedicationReminderRepositoryImpl(
             scheduleList.add(mapper.mapToMedicationScheduleItemDomain(intake))
         }
         return scheduleList
+    }
+
+    override fun updateMedicationIntake(
+        pillID: Int,
+        medicationTime: Long,
+        actualMedicationTime: Long,
+    ) {
+        intakeDao.updateMedicationIntake(pillID, medicationTime, actualMedicationTime)
     }
 }

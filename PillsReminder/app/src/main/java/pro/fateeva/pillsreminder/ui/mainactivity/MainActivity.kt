@@ -3,12 +3,12 @@ package pro.fateeva.pillsreminder.ui.mainactivity
 import android.app.AlarmManager
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.R
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.ui.navigation.NavigationFragment
@@ -25,6 +25,8 @@ private const val NAVIGATION_BACKSTACK_NAME = "NAVIGATION_BACKSTACK"
 
 class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
 
+    private val viewModel by viewModel<MainViewModel>()
+
     override val alarmManager: AlarmManager by lazy {
         getSystemService(ALARM_SERVICE) as AlarmManager
     }
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        Log.d("@@@@@", "onCreate() called with: savedInstanceState = $savedInstanceState")
         setContentView(R.layout.activity_main)
 
         onNewIntent(intent)
@@ -50,18 +51,13 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
         }
     }
 
-    override fun onGetDrugAction(message: String) {
-        Toast.makeText(
-            this@MainActivity,
-            message,
-            Toast.LENGTH_SHORT).show()
+    override fun onGetDrugAction(pillID: Int, plannedMedicationTime: Long, message: String) {
+        viewModel.setActualMedicationTime(pillID, plannedMedicationTime, System.currentTimeMillis())
+        showToast(message)
     }
 
     override fun onCancelDrugAction(message: String) {
-        Toast.makeText(
-            this@MainActivity,
-            message,
-            Toast.LENGTH_SHORT).show()
+        showToast(message)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -114,5 +110,9 @@ class MainActivity : AppCompatActivity(), NotificationHandler, AppNavigation {
                 .addToBackStack(NAVIGATION_BACKSTACK_NAME)
                 .commit()
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

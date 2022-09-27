@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pro.fateeva.pillsreminder.clean.domain.entity.DrugDomain
 import pro.fateeva.pillsreminder.databinding.FragmentSearchPillBinding
-import pro.fateeva.pillsreminder.ui.hideKeyboard
+import pro.fateeva.pillsreminder.extensions.hideKeyboard
 import pro.fateeva.pillsreminder.ui.screens.BaseFragment
 
 private const val DEFAULT_DEBOUNCE = 400L
