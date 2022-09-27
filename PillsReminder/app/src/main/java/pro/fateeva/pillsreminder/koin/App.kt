@@ -8,7 +8,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            modules(Di.mainModule, Di.roomModule)
+            modules(Di.mainModule, Di.roomModule, Di.retrofitModule)
             androidContext(this@App)
         }
     }

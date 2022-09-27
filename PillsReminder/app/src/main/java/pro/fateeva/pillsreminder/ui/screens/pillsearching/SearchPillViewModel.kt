@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pro.fateeva.pillsreminder.clean.data.pillsearching.PillsRepository
-import pro.fateeva.pillsreminder.clean.domain.usecase.SearchPillsUsecase
+import pro.fateeva.pillsreminder.clean.data.pillsearching.SearchPillsRepository
 
-class SearchPillViewModel : ViewModel() {
-    private val searchPillRepository: SearchPillsUsecase = PillsRepository()
+class SearchPillViewModel(private val searchPillRepository: SearchPillsRepository) : ViewModel() {
+
     private val liveData = MutableLiveData<SearchPillState>()
     private val searchingScope = viewModelScope
 
