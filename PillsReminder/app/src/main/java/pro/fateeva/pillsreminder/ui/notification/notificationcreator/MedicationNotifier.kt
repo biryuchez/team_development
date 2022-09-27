@@ -60,7 +60,7 @@ class MedicationNotifier : MedicationNotification {
                 context,
                 requestCode,
                 onGetDrugActionIntent.putExtra(MedicationActionListener.GET_DRUG_ACTION_EXTRA_KEY,
-                    "Прием лекарства подтвержден"),
+                    context.getString(R.string.confirmed_medication_action)),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val onCancelDrugPendingIntent =
@@ -68,7 +68,7 @@ class MedicationNotifier : MedicationNotification {
                 context,
                 -requestCode, // requestCode со знаком "-", чтобы в системе могло быть 2 уникальных PendingIntent
                 onCancelDrugActionIntent.putExtra(MedicationActionListener.CANCEL_DRUG_ACTION_EXTRA_KEY,
-                    "Прием лекарства пропущен"),
+                    context.getString(R.string.canceled_medication_action)),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder: NotificationCompat.Builder =

@@ -59,4 +59,6 @@
     <string name="Delete">Удалить</string>
     <string name="null_extras_id_error_msg">ID can not be null</string>
     <string name="null_extras_time_error_msg">ReminderTime can not be null</string>
+    <string name="confirmed_medication_action">Прием лекарства подтвержден</string>
+    <string name="canceled_medication_action">Прием лекарства пропущен</string>
 </resources>
